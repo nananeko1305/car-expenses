@@ -7,31 +7,23 @@
 </radialGradient>
 <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0" stop-color="#FFD166"/><stop offset="1" stop-color="#F59E0B"/>
-</linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(0.86) translate(-574 -458)">
-<!-- soft shadow -->
-<ellipse cx="540" cy="735" rx="300" ry="26" fill="#0B1E5B" opacity="0.28"/>
-<!-- wheels -->
-<rect x="290" y="630" width="96" height="92" rx="28" fill="#1E3A8A"/>
-<rect x="694" y="630" width="96" height="92" rx="28" fill="#1E3A8A"/>
-<!-- cabin -->
-<path d="M388 360 H692 Q722 360 736 388 L792 500 H288 L344 388 Q358 360 388 360 Z" fill="#FFFFFF"/>
-<path d="M398 396 H682 Q694 396 700 408 L740 488 H340 L380 408 Q386 396 398 396 Z" fill="#3B63C9"/>
-<path d="M398 396 H560 L500 488 H340 L380 408 Q386 396 398 396 Z" fill="#FFFFFF" opacity="0.18"/>
-<!-- body -->
-<rect x="240" y="480" width="600" height="190" rx="70" fill="#FFFFFF"/>
-<!-- headlights -->
-<circle cx="336" cy="562" r="38" fill="url(#amber)"/>
-<circle cx="744" cy="562" r="38" fill="url(#amber)"/>
-<!-- grille -->
-<rect x="436" y="590" width="208" height="34" rx="17" fill="#1E3A8A"/>
-<!-- wrench badge -->
-<g transform="translate(790 300)">
-  <circle r="118" fill="url(#amber)" stroke="#FFFFFF" stroke-width="18"/>
-  <g transform="rotate(45)" fill="#1E3A8A">
+</linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(0.96) translate(-553 -440)">
+<g fill="none" stroke="#FFFFFF" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M272 450 L330 342 Q346 312 382 312 H642 Q678 312 694 342 L752 450"/>
+  <rect x="200" y="450" width="624" height="190" rx="70"/>
+  <path d="M262 640 V690 Q262 712 284 712 H340 Q362 712 362 690 V640"/>
+  <path d="M662 640 V690 Q662 712 684 712 H740 Q762 712 762 690 V640"/>
+  <circle cx="300" cy="540" r="30"/>
+  <circle cx="724" cy="540" r="30"/>
+  <path d="M440 575 H584"/>
+</g>
+<g transform="translate(812 262)">
+  <circle r="104" fill="url(#amber)" stroke="#FFFFFF" stroke-width="18"/>
+  <g transform="rotate(45) scale(0.88)" fill="#1E3A8A">
     <rect x="-19" y="-20" width="38" height="104" rx="19"/>
     <circle cx="0" cy="-42" r="46"/>
   </g>
-  <g transform="rotate(45)" fill="url(#amber)">
+  <g transform="rotate(45) scale(0.88)" fill="url(#amber)">
     <rect x="-17" y="-104" width="34" height="58" rx="6"/>
   </g>
 </g></g></svg>
