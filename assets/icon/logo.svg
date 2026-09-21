@@ -4,17 +4,17 @@
 </linearGradient>
 <radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
   <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.12) translate(-519 -541)">
-<g fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M178 610 L160 574 Q152 536 192 522 L300 504
-           C362 470 432 420 522 408 C592 400 642 416 690 454 L742 484
-           C804 494 852 500 874 520 Q892 540 886 578 Q882 606 850 610
-           L800 610 A86 86 0 0 0 630 610 L396 610 A86 86 0 0 0 224 610 Z"/>
-  <path d="M362 500 C420 456 480 434 540 430 C590 428 626 440 656 464 L668 478 Z"/>
-  <path d="M190 520 L162 494 L232 494"/>
-  <path d="M812 506 L852 516"/>
-  <circle cx="310" cy="612" r="62"/>
-  <circle cx="715" cy="612" r="62"/>
-  <circle cx="310" cy="612" r="16" fill="#FFFFFF" stroke="none"/>
-  <circle cx="715" cy="612" r="16" fill="#FFFFFF" stroke="none"/>
+</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.14) translate(-512 -551)">
+<g fill="none" stroke="#FFFFFF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M338 468 L392 396 Q402 382 422 382 H602 Q622 382 632 396 L686 468"/>
+  <path d="M334 452 L292 446 Q276 448 282 464 L322 470"/>
+  <path d="M690 452 L732 446 Q748 448 742 464 L702 470"/>
+  <path d="M196 548 Q200 484 272 470 H752 Q824 484 828 548 L838 616 Q842 660 798 662 H226 Q182 660 186 616 Z"/>
+  <path d="M242 526 L358 550"/>
+  <path d="M782 526 L666 550"/>
+  <path d="M366 590 H658 L624 640 H400 Z"/>
+  <path d="M224 606 L292 614"/>
+  <path d="M800 606 L732 614"/>
+  <path d="M212 662 V702 Q212 720 230 720 H290 Q308 720 308 702 V662"/>
+  <path d="M716 662 V702 Q716 720 734 720 H794 Q812 720 812 702 V662"/>
 </g></g></svg>
