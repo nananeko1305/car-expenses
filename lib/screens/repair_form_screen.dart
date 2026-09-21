@@ -10,6 +10,8 @@ import '../services/repair_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/date_field.dart';
 import '../widgets/money_fields.dart';
+import '../widgets/option_sheet.dart';
+import '../widgets/picker_field.dart';
 
 /// Create or edit a service. Anyone can view one; only its author or
 /// the admin can change or delete it.
@@ -97,6 +99,10 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final vehicles = widget.data.vehicles!;
+    final serviceCount = <String, int>{};
+    for (final r in widget.data.repairs!) {
+      serviceCount[r.vehicleId] = (serviceCount[r.vehicleId] ?? 0) + 1;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(_old == null ? t.newRepair : t.editRepair),
@@ -115,20 +121,20 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
           padding: const EdgeInsets.all(16),
           children: [
             if (_old != null) ...[_authorNote(t), const SizedBox(height: 14)],
-            DropdownButtonFormField<String>(
-              borderRadius: BorderRadius.circular(16),
-              initialValue: _vehicleId,
-              decoration: InputDecoration(
-                labelText: t.vehicle,
-                prefixIcon: const Icon(Icons.directions_car_rounded),
-              ),
-              items: [
+            PickerField(
+              label: t.vehicle,
+              icon: Icons.directions_car_rounded,
+              value: _vehicleId,
+              enabled: _canEdit,
+              options: [
                 for (final v in vehicles)
-                  DropdownMenuItem(value: v.id, child: Text(v.label)),
+                  SheetOption(
+                    id: v.id,
+                    label: v.label,
+                    subtitle: t.repairsCount(serviceCount[v.id] ?? 0),
+                  ),
               ],
-              onChanged: _canEdit
-                  ? (id) => setState(() => _vehicleId = id!)
-                  : null,
+              onChanged: (id) => setState(() => _vehicleId = id),
             ),
             const SizedBox(height: 14),
             DateField(

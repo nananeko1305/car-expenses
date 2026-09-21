@@ -11,6 +11,8 @@ import '../services/wallet_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/date_field.dart';
 import '../widgets/money_fields.dart';
+import '../widgets/option_sheet.dart';
+import '../widgets/picker_field.dart';
 
 /// Add funds to, or spend from, the wallet: amount, what for, date and
 /// who. Only the person who recorded it (or the admin) can change it.
@@ -138,21 +140,20 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
               onChanged: (d) => setState(() => _date = d),
             ),
             const SizedBox(height: 14),
-            DropdownButtonFormField<String>(
-              borderRadius: BorderRadius.circular(16),
-              initialValue: users.any((u) => u.uid == _userId) ? _userId : null,
-              decoration: InputDecoration(
-                labelText: _spending ? t.spentBy : t.addedBy,
-                prefixIcon: const Icon(Icons.person_rounded),
-              ),
-              items: [
+            PickerField(
+              label: _spending ? t.spentBy : t.addedBy,
+              icon: Icons.person_rounded,
+              value: _userId,
+              enabled: _canEdit,
+              options: [
                 for (final u in users)
-                  DropdownMenuItem(value: u.uid, child: Text(u.displayName)),
+                  SheetOption(
+                    id: u.uid,
+                    label: u.displayName,
+                    subtitle: u.email,
+                  ),
               ],
-              onChanged: _canEdit
-                  ? (id) => setState(() => _userId = id!)
-                  : null,
-              validator: (v) => v == null ? t.required : null,
+              onChanged: (id) => setState(() => _userId = id),
             ),
             if (_canEdit) ...[
               const SizedBox(height: 24),
