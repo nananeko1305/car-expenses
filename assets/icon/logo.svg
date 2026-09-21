@@ -1,24 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs>
-<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#6A9BFF"/><stop offset="1" stop-color="#2A4FB0"/>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4A4A4A"/><stop offset="0.5" stop-color="#1C1C1C"/><stop offset="1" stop-color="#050505"/>
 </linearGradient>
-<radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
-  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.14) translate(-512 -552)">
-<g fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M344 462 L394 392 Q404 378 424 378 H600 Q620 378 630 392 L680 462"/>
-  <path d="M338 448 L296 442 Q280 444 286 460 L326 466"/>
-  <path d="M686 448 L728 442 Q744 444 738 460 L698 466"/>
-  <path d="M190 548 Q194 480 268 464 H756 Q830 480 834 548 L846 620 Q850 666 804 668 H220 Q174 666 178 620 Z"/>
-  <path d="M228 512 L384 540"/>
-  <path d="M796 512 L640 540"/>
-  <path d="M410 578 H614 L650 634 H374 Z"/>
-  <path d="M212 668 V708 Q212 726 230 726 H292 Q310 726 310 708 V668"/>
-  <path d="M714 668 V708 Q714 726 732 726 H794 Q812 726 812 708 V668"/>
-</g>
-<g fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round">
-  <path d="M270 546 V580"/><path d="M310 553 V587"/><path d="M350 560 V594"/>
-  <path d="M754 546 V580"/><path d="M714 553 V587"/><path d="M674 560 V594"/>
-  <path d="M448 470 L466 512"/><path d="M576 470 L558 512"/>
-  <path d="M224 604 L238 638"/><path d="M800 604 L786 638"/>
+<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.02"/>
+</linearGradient>
+<mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+  <g fill="#000000" stroke="#000000" stroke-width="10" stroke-linejoin="round">
+    <path d="M410 408 H614 L660 476 H364 Z"/>
+    <path d="M234 530 Q236 520 250 522 L356 540 Q366 542 360 552 L346 574 Q342 580 334 579 L252 572 Q236 570 234 556 Z"/>
+    <path d="M790 530 Q788 520 774 522 L668 540 Q658 542 664 552 L678 574 Q682 580 690 579 L772 572 Q788 570 790 556 Z"/>
+    <path d="M404 590 H620 Q630 590 626 600 L612 626 Q608 632 600 632 H424 Q416 632 412 626 L398 600 Q394 590 404 590 Z"/>
+    <path d="M226 604 L282 612 L276 630 L232 626 Z"/>
+    <path d="M798 604 L742 612 L748 630 L792 626 Z"/>
+  </g>
+</mask></defs><clipPath id="r"><rect width="1024" height="1024" rx="230"/></clipPath><g clip-path="url(#r)"><rect width="1024" height="1024" fill="url(#bg)"/><path d="M0 0 H1024 V430 Q512 540 0 430 Z" fill="url(#gloss)"/></g><g transform="translate(512 512) scale(1.08) translate(-512 -553)">
+<g fill="#FFFFFF" mask="url(#cut)" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round">
+  <path d="M196 560 Q200 500 258 488 L332 480 L380 402 Q392 382 416 382 H608 Q632 382 644 402 L692 480 L766 488 Q824 500 828 560 L838 638 Q840 664 814 666 H210 Q184 664 186 638 Z"/>
+  <path d="M336 468 L290 460 Q270 460 276 480 L326 490 Z"/>
+  <path d="M688 468 L734 460 Q754 460 748 480 L698 490 Z"/>
+  <rect x="212" y="640" width="94" height="84" rx="18"/>
+  <rect x="718" y="640" width="94" height="84" rx="18"/>
 </g></g></svg>
