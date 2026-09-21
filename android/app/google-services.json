@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "947153287081",
+    "project_id": "car-expenses-260921",
+    "storage_bucket": "car-expenses-260921.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947153287081:android:7687c70bb30a175d0876b8",
+        "android_client_info": {
+          "package_name": "com.example.car_expenses"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGf-3DQXbmUxUvRiKU5EhQHZDWEjoIoJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947153287081:android:9186a50c23ca87150876b8",
+        "android_client_info": {
+          "package_name": "com.nananeko.car_expenses"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGf-3DQXbmUxUvRiKU5EhQHZDWEjoIoJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

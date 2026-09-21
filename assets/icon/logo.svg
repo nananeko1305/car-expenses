@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#6A9BFF"/><stop offset="1" stop-color="#2A4FB0"/>
+</linearGradient>
+<radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFD166"/><stop offset="1" stop-color="#F59E0B"/>
+</linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(0.86) translate(-574 -458)">
+<!-- soft shadow -->
+<ellipse cx="540" cy="735" rx="300" ry="26" fill="#0B1E5B" opacity="0.28"/>
+<!-- wheels -->
+<rect x="290" y="630" width="96" height="92" rx="28" fill="#1E3A8A"/>
+<rect x="694" y="630" width="96" height="92" rx="28" fill="#1E3A8A"/>
+<!-- cabin -->
+<path d="M388 360 H692 Q722 360 736 388 L792 500 H288 L344 388 Q358 360 388 360 Z" fill="#FFFFFF"/>
+<path d="M398 396 H682 Q694 396 700 408 L740 488 H340 L380 408 Q386 396 398 396 Z" fill="#3B63C9"/>
+<path d="M398 396 H560 L500 488 H340 L380 408 Q386 396 398 396 Z" fill="#FFFFFF" opacity="0.18"/>
+<!-- body -->
+<rect x="240" y="480" width="600" height="190" rx="70" fill="#FFFFFF"/>
+<!-- headlights -->
+<circle cx="336" cy="562" r="38" fill="url(#amber)"/>
+<circle cx="744" cy="562" r="38" fill="url(#amber)"/>
+<!-- grille -->
+<rect x="436" y="590" width="208" height="34" rx="17" fill="#1E3A8A"/>
+<!-- wrench badge -->
+<g transform="translate(790 300)">
+  <circle r="118" fill="url(#amber)" stroke="#FFFFFF" stroke-width="18"/>
+  <g transform="rotate(45)" fill="#1E3A8A">
+    <rect x="-19" y="-20" width="38" height="104" rx="19"/>
+    <circle cx="0" cy="-42" r="46"/>
+  </g>
+  <g transform="rotate(45)" fill="url(#amber)">
+    <rect x="-17" y="-104" width="34" height="58" rx="6"/>
+  </g>
+</g></g></svg>

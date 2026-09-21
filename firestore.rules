@@ -1,0 +1,131 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function userPath(uid) {
+      return /databases/$(database)/documents/users/$(uid);
+    }
+    function adminMarker() {
+      return /databases/$(database)/documents/meta/admin;
+    }
+    // Signed in, registered by the admin, and not disabled.
+    function isActive() {
+      return signedIn()
+        && exists(userPath(request.auth.uid))
+        && get(userPath(request.auth.uid)).data.disabled == false;
+    }
+    function isAdmin() {
+      return isActive() && get(userPath(request.auth.uid)).data.role == 'admin';
+    }
+    function validName(d) {
+      // get() with defaults: profiles made before names existed lack them.
+      return d.get('firstName', '') is string && d.get('firstName', '').size() <= 50
+        && d.get('lastName', '') is string && d.get('lastName', '').size() <= 50;
+    }
+    function validMoney(d) {
+      return d.amountMinor is int && d.amountMinor > 0
+        && d.currency in ['RSD', 'EUR']
+        && d.date is timestamp;
+    }
+    // Shared records: everyone active reads; the author field must be the
+    // caller on create; only the author or the admin may change/delete,
+    // and nobody may reassign the author.
+    function authorCreates(field) {
+      return isActive() && request.resource.data[field] == request.auth.uid;
+    }
+    function authorOrAdmin(field) {
+      return isActive() && (resource.data[field] == request.auth.uid || isAdmin());
+    }
+    function keepsAuthor(field) {
+      return request.resource.data[field] == resource.data[field];
+    }
+
+    // Written once by the first account to claim admin; never changes.
+    match /meta/admin {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && getAfter(userPath(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{uid} {
+      // Everyone active sees names (for "entered by" and filters).
+      allow read: if (signedIn() && request.auth.uid == uid) || isActive();
+
+      // Either the admin adds a regular user, or the one-time admin claim
+      // (created in the same batch as meta/admin).
+      allow create: if request.resource.data.keys().hasOnly(['email', 'role', 'disabled', 'firstName', 'lastName', 'createdAt'])
+        && request.resource.data.email is string
+        && request.resource.data.disabled == false
+        && validName(request.resource.data)
+        && (
+          (isAdmin() && request.resource.data.role == 'user')
+          || (signedIn() && request.auth.uid == uid
+              && request.resource.data.role == 'admin'
+              && !exists(adminMarker())
+              && existsAfter(adminMarker()))
+        );
+
+      // A user edits their own name; the admin also toggles `disabled`
+      // on others (never on themselves).
+      allow update: if isActive() && validName(request.resource.data) && (
+        (request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['firstName', 'lastName']))
+        || (isAdmin() && uid != request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['firstName', 'lastName', 'disabled'])
+          && request.resource.data.disabled is bool)
+      );
+    }
+
+    match /vehicles/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validVehicle();
+      allow update: if authorOrAdmin('ownerId') && keepsAuthor('ownerId') && validVehicle();
+      allow delete: if authorOrAdmin('ownerId');
+
+      function validVehicle() {
+        let d = request.resource.data;
+        return d.name is string && d.name.size() > 0 && d.name.size() <= 100
+          && d.plate is string && d.plate.size() <= 20;
+      }
+    }
+
+    match /repairs/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validRepair();
+      allow update: if authorOrAdmin('ownerId') && keepsAuthor('ownerId') && validRepair();
+      allow delete: if authorOrAdmin('ownerId');
+
+      function validRepair() {
+        let d = request.resource.data;
+        return d.vehicleId is string
+          && exists(/databases/$(database)/documents/vehicles/$(d.vehicleId))
+          && validMoney(d)
+          && d.description is string && d.description.size() > 0
+          && d.description.size() <= 2000
+          && (d.mileage == null || (d.mileage is int && d.mileage >= 0))
+          && d.get('toWallet', true) is bool;
+      }
+    }
+
+    match /walletEntries/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('createdBy') && validEntry();
+      allow update: if authorOrAdmin('createdBy') && keepsAuthor('createdBy') && validEntry();
+      allow delete: if authorOrAdmin('createdBy');
+
+      function validEntry() {
+        let d = request.resource.data;
+        return d.type in ['deposit', 'withdrawal']
+          && validMoney(d)
+          && d.description is string && d.description.size() <= 2000
+          && (d.type == 'deposit' || d.description.size() > 0)
+          && d.userId is string
+          && exists(userPath(d.userId));
+      }
+    }
+  }
+}

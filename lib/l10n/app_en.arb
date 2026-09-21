@@ -1,0 +1,162 @@
+{
+  "@@locale": "en",
+  "appTitle": "Car Expenses",
+  "appTagline": "Every service and every dinar, in one place",
+  "loginTitle": "Sign in",
+  "loginSubtitle": "Use the account the admin created for you.",
+  "email": "Email",
+  "password": "Password",
+  "invalidEmail": "Enter a valid email",
+  "minChars6": "At least 6 characters",
+  "signIn": "Sign in",
+  "wait": "Please wait...",
+  "forgotPassword": "Forgot password?",
+  "resetSent": "Password reset email sent.",
+  "errInvalidEmail": "The email is not valid.",
+  "errEmailInUse": "An account with this email already exists.",
+  "errWeakPassword": "Password is too weak (min. 6 characters).",
+  "errWrongCredentials": "Wrong email or password.",
+  "errUserDisabled": "This account is disabled.",
+  "errNoNetwork": "No internet connection.",
+  "errPermission": "You don't have permission for this action.",
+  "errGeneric": "Something went wrong. Please try again.",
+  "setupTitle": "Finishing setup",
+  "claimAdminTitle": "Become the admin",
+  "claimAdminBody": "No admin exists yet. Enter your name; your account will become the admin and will be able to add other users.",
+  "claimAdmin": "Become admin",
+  "noAccessTitle": "No access",
+  "noAccessBody": "This account is not registered in the app. Ask the admin to add you.",
+  "disabledTitle": "Account disabled",
+  "disabledBody": "The admin has disabled this account.",
+  "signOut": "Sign out",
+  "repairs": "Services",
+  "noRepairs": "No services yet.\nTap + to add the first one.",
+  "noVehiclesYet": "Add a car before adding services.",
+  "addVehicle": "Add car",
+  "allVehicles": "All cars",
+  "total": "Total",
+  "repairsCount": "{count, plural, =1{1 service} other{{count} services}}",
+  "@repairsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newRepair": "New service",
+  "editRepair": "Edit service",
+  "vehicle": "Car",
+  "date": "Date",
+  "amount": "Amount",
+  "currency": "Currency",
+  "mileage": "Mileage (km)",
+  "mileageOptional": "Optional",
+  "description": "Description",
+  "descriptionHint": "What was done, parts...",
+  "required": "Required",
+  "invalidAmount": "Enter an amount greater than 0",
+  "invalidNumber": "Enter a whole number",
+  "save": "Save",
+  "saving": "Saving...",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "deleteRepairQ": "Delete this service?",
+  "deleted": "Deleted",
+  "saved": "Saved",
+  "vehicles": "Cars",
+  "noVehicles": "No cars yet.",
+  "newVehicle": "New car",
+  "editVehicle": "Edit car",
+  "vehicleName": "Make and model",
+  "vehicleNameHint": "e.g. Škoda Octavia",
+  "plate": "License plate",
+  "plateHint": "e.g. BG-123-AB",
+  "deleteVehicleQ": "Delete {name}?",
+  "@deleteVehicleQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteVehicleBody": "This can't be undone.",
+  "users": "Users",
+  "addUser": "Add user",
+  "newUserPassword": "Initial password",
+  "userCreated": "User {email} created",
+  "@userCreated": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "roleAdmin": "Admin",
+  "roleUser": "User",
+  "disabled": "Disabled",
+  "you": "you",
+  "disableUser": "Disable",
+  "enableUser": "Enable",
+  "settings": "Settings",
+  "language": "Language",
+  "systemLanguage": "Phone language",
+  "theme": "Color",
+  "darkMode": "Dark mode",
+  "syncing": "Syncing...",
+  "synced": "Synced",
+  "vehicleHasServices": "This car has services, so it can't be deleted.",
+  "addToWallet": "Add amount to wallet",
+  "addToWalletHint": "The service amount goes into the shared wallet.",
+  "person": "Person",
+  "allPeople": "Everyone",
+  "enteredBy": "Entered by {name}",
+  "@enteredBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "readOnlyNotice": "Only {name} or the admin can change this.",
+  "@readOnlyNotice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "wallet": "Wallet",
+  "balance": "Balance",
+  "addFunds": "Add funds",
+  "spendFunds": "Spend",
+  "newDeposit": "Add funds",
+  "newWithdrawal": "Spend from wallet",
+  "editEntry": "Edit entry",
+  "spentOn": "What was it spent on",
+  "depositNote": "Note",
+  "depositNoteHint": "e.g. cash from the office",
+  "spentBy": "Spent by",
+  "addedBy": "Added by",
+  "serviceIncome": "Service",
+  "deposit": "Deposit",
+  "withdrawal": "Spending",
+  "noMovements": "No wallet movements yet.",
+  "deleteEntryQ": "Delete this entry?",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "profile": "Profile",
+  "editName": "Edit name",
+  "changePassword": "Change password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm new password",
+  "passwordsNoMatch": "Passwords do not match",
+  "passwordChanged": "Password changed.",
+  "searchPlate": "Search by plate",
+  "searchHint": "License plate or car",
+  "noResults": "No cars found.",
+  "serviceHistory": "Service history",
+  "lastMileage": "Last mileage",
+  "edit": "Edit",
+  "noServicesForCar": "No services for this car yet."
+}
