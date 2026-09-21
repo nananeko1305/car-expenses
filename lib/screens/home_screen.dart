@@ -5,8 +5,10 @@ import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../services/auth_service.dart';
 import '../services/live_data.dart';
+import '../services/update_checker.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/sync_banner.dart';
+import '../widgets/update_dialog.dart';
 import 'services_tab.dart';
 import 'settings_screen.dart';
 import 'users_screen.dart';
@@ -27,6 +29,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final LiveData _data = LiveData();
   int _tab = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkForUpdate();
+  }
+
+  /// Once per app start; silent when offline or already up to date.
+  Future<void> _checkForUpdate() async {
+    final result = await UpdateChecker.instance.check();
+    if (!mounted || result is! UpdateAvailable) return;
+    await showUpdateDialog(context, result);
+  }
 
   @override
   void dispose() {

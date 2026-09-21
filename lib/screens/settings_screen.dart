@@ -10,6 +10,7 @@ import '../theme/app_palette.dart';
 import '../theme/theme_controller.dart';
 import '../widgets/change_password_dialog.dart';
 import '../widgets/name_fields.dart';
+import '../widgets/update_tiles.dart';
 
 /// Profile (name, password) plus language, color and dark mode. The
 /// look-and-feel settings are stored on the device only.
@@ -69,6 +70,7 @@ class SettingsScreen extends StatelessWidget {
                 onChanged: themeController.setDark,
               ),
               const SizedBox(height: 16),
+              const UpdateTiles(),
               ListTile(
                 leading: const Icon(Icons.logout_rounded),
                 title: Text(t.signOut),

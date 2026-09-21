@@ -150,6 +150,10 @@ jobs:
           cp .github/pages/index.html _site/index.html
           cp assets/icon/logo.png _site/logo.png
           qrencode -o _site/qr.png -s 8 -m 2 "$DL"
+          # Read by the app's update check (UpdateChecker in lib/services).
+          cat > _site/version.json <<EOF
+          {"version":"${{ needs.build.outputs.version }}","build":${{ github.run_number }},"url":"$DL"}
+          EOF
           sed -i \
             -e "s|__DOWNLOAD_URL__|$DL|g" \
             -e "s|__VERSION__|${{ needs.build.outputs.version }}|g" \

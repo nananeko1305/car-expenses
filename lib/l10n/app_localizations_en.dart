@@ -400,4 +400,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noServicesForCar => 'No services for this car yet.';
+
+  @override
+  String get newVersionTitle => 'New version available';
+
+  @override
+  String newVersionBody(String version, int build, int current) {
+    return 'Version $version (build $build) is ready to download. You have build $current.';
+  }
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get later => 'Later';
+
+  @override
+  String get checkUpdates => 'Check for updates';
+
+  @override
+  String get upToDate => 'You have the latest version.';
+
+  @override
+  String get updateCheckFailed => 'Couldn\'t check for updates.';
+
+  @override
+  String appVersion(String version, String build) {
+    return 'Version $version (build $build)';
+  }
 }

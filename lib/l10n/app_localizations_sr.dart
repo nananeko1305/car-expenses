@@ -400,4 +400,32 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get noServicesForCar => 'Ovaj auto još nema servisa.';
+
+  @override
+  String get newVersionTitle => 'Dostupna je nova verzija';
+
+  @override
+  String newVersionBody(String version, int build, int current) {
+    return 'Verzija $version (build $build) je spremna za preuzimanje. Ti imaš build $current.';
+  }
+
+  @override
+  String get download => 'Preuzmi';
+
+  @override
+  String get later => 'Kasnije';
+
+  @override
+  String get checkUpdates => 'Proveri ažuriranja';
+
+  @override
+  String get upToDate => 'Imaš najnoviju verziju.';
+
+  @override
+  String get updateCheckFailed => 'Provera ažuriranja nije uspela.';
+
+  @override
+  String appVersion(String version, String build) {
+    return 'Verzija $version (build $build)';
+  }
 }

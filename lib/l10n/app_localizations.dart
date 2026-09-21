@@ -841,6 +841,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No services for this car yet.'**
   String get noServicesForCar;
+
+  /// No description provided for @newVersionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New version available'**
+  String get newVersionTitle;
+
+  /// No description provided for @newVersionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} (build {build}) is ready to download. You have build {current}.'**
+  String newVersionBody(String version, int build, int current);
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
+
+  /// No description provided for @checkUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get checkUpdates;
+
+  /// No description provided for @upToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the latest version.'**
+  String get upToDate;
+
+  /// No description provided for @updateCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check for updates.'**
+  String get updateCheckFailed;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} (build {build})'**
+  String appVersion(String version, String build);
 }
 
 class _AppLocalizationsDelegate

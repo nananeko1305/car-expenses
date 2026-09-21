@@ -130,5 +130,13 @@
   "serviceHistory": "Istorija servisa",
   "lastMileage": "Poslednja kilometraža",
   "edit": "Izmeni",
-  "noServicesForCar": "Ovaj auto još nema servisa."
+  "noServicesForCar": "Ovaj auto još nema servisa.",
+  "newVersionTitle": "Dostupna je nova verzija",
+  "newVersionBody": "Verzija {version} (build {build}) je spremna za preuzimanje. Ti imaš build {current}.",
+  "download": "Preuzmi",
+  "later": "Kasnije",
+  "checkUpdates": "Proveri ažuriranja",
+  "upToDate": "Imaš najnoviju verziju.",
+  "updateCheckFailed": "Provera ažuriranja nije uspela.",
+  "appVersion": "Verzija {version} (build {build})"
 }
