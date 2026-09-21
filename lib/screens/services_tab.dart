@@ -5,6 +5,7 @@ import '../models/app_user.dart';
 import '../models/repair.dart';
 import '../services/live_data.dart';
 import '../widgets/filter_pill.dart';
+import '../widgets/option_sheet.dart';
 import '../widgets/repair_card.dart';
 import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
@@ -78,7 +79,7 @@ class _ServicesTabState extends State<ServicesTab> {
                   value: _vehicleId,
                   options: [
                     for (final v in vehicles)
-                      FilterOption(
+                      SheetOption(
                         id: v.id,
                         label: v.label,
                         shortLabel: v.plate.isEmpty ? v.name : v.plate,
@@ -97,7 +98,7 @@ class _ServicesTabState extends State<ServicesTab> {
                   value: _userId,
                   options: [
                     for (final u in _data.users!)
-                      FilterOption(
+                      SheetOption(
                         id: u.uid,
                         label: u.displayName,
                         subtitle: t.repairsCount(perUser[u.uid] ?? 0),
