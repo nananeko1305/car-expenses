@@ -4,7 +4,7 @@ import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../models/repair.dart';
 import '../services/live_data.dart';
-import '../widgets/filter_dropdown.dart';
+import '../widgets/filter_pill.dart';
 import '../widgets/repair_card.dart';
 import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
@@ -44,6 +44,13 @@ class _ServicesTabState extends State<ServicesTab> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final vehicles = _data.vehicles!;
+    // Services per car / per person, shown in the filter sheets.
+    final perVehicle = <String, int>{};
+    final perUser = <String, int>{};
+    for (final r in _data.repairs!) {
+      perVehicle[r.vehicleId] = (perVehicle[r.vehicleId] ?? 0) + 1;
+      perUser[r.ownerId] = (perUser[r.ownerId] ?? 0) + 1;
+    }
     final repairs = _data.repairs!
         .where((r) => _vehicleId == null || r.vehicleId == _vehicleId)
         .where((r) => _userId == null || r.ownerId == _userId)
@@ -64,21 +71,38 @@ class _ServicesTabState extends State<ServicesTab> {
           Row(
             children: [
               Expanded(
-                child: FilterDropdown(
+                child: FilterPill(
                   icon: Icons.directions_car_rounded,
+                  title: t.vehicle,
                   allLabel: t.allVehicles,
                   value: _vehicleId,
-                  options: {for (final v in vehicles) v.id: v.label},
+                  options: [
+                    for (final v in vehicles)
+                      FilterOption(
+                        id: v.id,
+                        label: v.label,
+                        shortLabel: v.plate.isEmpty ? v.name : v.plate,
+                        subtitle: t.repairsCount(perVehicle[v.id] ?? 0),
+                      ),
+                  ],
                   onChanged: (id) => setState(() => _vehicleId = id),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: FilterDropdown(
+                child: FilterPill(
                   icon: Icons.person_rounded,
+                  title: t.person,
                   allLabel: t.allPeople,
                   value: _userId,
-                  options: {for (final u in _data.users!) u.uid: u.displayName},
+                  options: [
+                    for (final u in _data.users!)
+                      FilterOption(
+                        id: u.uid,
+                        label: u.displayName,
+                        subtitle: t.repairsCount(perUser[u.uid] ?? 0),
+                      ),
+                  ],
                   onChanged: (id) => setState(() => _userId = id),
                 ),
               ),

@@ -116,6 +116,7 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
           children: [
             if (_old != null) ...[_authorNote(t), const SizedBox(height: 14)],
             DropdownButtonFormField<String>(
+              borderRadius: BorderRadius.circular(16),
               initialValue: _vehicleId,
               decoration: InputDecoration(
                 labelText: t.vehicle,

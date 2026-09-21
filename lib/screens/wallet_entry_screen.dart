@@ -139,6 +139,7 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
             ),
             const SizedBox(height: 14),
             DropdownButtonFormField<String>(
+              borderRadius: BorderRadius.circular(16),
               initialValue: users.any((u) => u.uid == _userId) ? _userId : null,
               decoration: InputDecoration(
                 labelText: _spending ? t.spentBy : t.addedBy,
