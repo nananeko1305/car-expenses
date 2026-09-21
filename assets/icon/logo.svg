@@ -4,17 +4,21 @@
 </linearGradient>
 <radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
   <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.14) translate(-512 -551)">
-<g fill="none" stroke="#FFFFFF" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M338 468 L392 396 Q402 382 422 382 H602 Q622 382 632 396 L686 468"/>
-  <path d="M334 452 L292 446 Q276 448 282 464 L322 470"/>
-  <path d="M690 452 L732 446 Q748 448 742 464 L702 470"/>
-  <path d="M196 548 Q200 484 272 470 H752 Q824 484 828 548 L838 616 Q842 660 798 662 H226 Q182 660 186 616 Z"/>
-  <path d="M242 526 L358 550"/>
-  <path d="M782 526 L666 550"/>
-  <path d="M366 590 H658 L624 640 H400 Z"/>
-  <path d="M224 606 L292 614"/>
-  <path d="M800 606 L732 614"/>
-  <path d="M212 662 V702 Q212 720 230 720 H290 Q308 720 308 702 V662"/>
-  <path d="M716 662 V702 Q716 720 734 720 H794 Q812 720 812 702 V662"/>
+</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.14) translate(-512 -552)">
+<g fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M344 462 L394 392 Q404 378 424 378 H600 Q620 378 630 392 L680 462"/>
+  <path d="M338 448 L296 442 Q280 444 286 460 L326 466"/>
+  <path d="M686 448 L728 442 Q744 444 738 460 L698 466"/>
+  <path d="M190 548 Q194 480 268 464 H756 Q830 480 834 548 L846 620 Q850 666 804 668 H220 Q174 666 178 620 Z"/>
+  <path d="M228 512 L384 540"/>
+  <path d="M796 512 L640 540"/>
+  <path d="M410 578 H614 L650 634 H374 Z"/>
+  <path d="M212 668 V708 Q212 726 230 726 H292 Q310 726 310 708 V668"/>
+  <path d="M714 668 V708 Q714 726 732 726 H794 Q812 726 812 708 V668"/>
+</g>
+<g fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round">
+  <path d="M270 546 V580"/><path d="M310 553 V587"/><path d="M350 560 V594"/>
+  <path d="M754 546 V580"/><path d="M714 553 V587"/><path d="M674 560 V594"/>
+  <path d="M448 470 L466 512"/><path d="M576 470 L558 512"/>
+  <path d="M224 604 L238 638"/><path d="M800 604 L786 638"/>
 </g></g></svg>
