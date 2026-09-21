@@ -95,6 +95,16 @@ jobs:
           --build-number=${{ github.run_number }}
           --obfuscate --split-debug-info=build/symbols
 
+      # The release push references these strings by name (loc keys); if
+      # resource shrinking drops them, notifications arrive empty.
+      - name: Verify notification strings are packaged
+        run: |
+          AAPT2=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/aapt2
+          DUMP=$("$AAPT2" dump resources build/app/outputs/flutter-apk/app-release.apk)
+          for key in update_notification_title update_notification_body; do
+            echo "$DUMP" | grep -q "string/$key" || { echo "::error::string/$key missing from APK"; exit 1; }
+          done
+
       - name: Read app version
         id: ver
         run: echo "version=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)" >> "$GITHUB_OUTPUT"
