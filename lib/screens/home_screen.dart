@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
@@ -5,6 +7,7 @@ import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../services/auth_service.dart';
 import '../services/live_data.dart';
+import '../services/push_service.dart';
 import '../services/update_checker.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/sync_banner.dart';
@@ -34,17 +37,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _checkForUpdate();
+    // A release push (received in the foreground or tapped) re-runs the
+    // same check, which then shows the download dialog.
+    _releaseSub = PushService.instance.onRelease.listen(
+      (_) => _checkForUpdate(),
+    );
+    PushService.instance.start();
   }
 
-  /// Once per app start; silent when offline or already up to date.
+  late final StreamSubscription<void> _releaseSub;
+  bool _updateDialogOpen = false;
+
+  /// On app start and on release pushes; silent when offline or already
+  /// up to date, and never stacks a second dialog on an open one.
   Future<void> _checkForUpdate() async {
+    if (_updateDialogOpen) return;
     final result = await UpdateChecker.instance.check();
-    if (!mounted || result is! UpdateAvailable) return;
+    if (!mounted || result is! UpdateAvailable || _updateDialogOpen) return;
+    _updateDialogOpen = true;
     await showUpdateDialog(context, result);
+    _updateDialogOpen = false;
   }
 
   @override
   void dispose() {
+    _releaseSub.cancel();
     _data.dispose();
     super.dispose();
   }
