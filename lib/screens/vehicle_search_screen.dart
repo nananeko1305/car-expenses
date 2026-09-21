@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../services/live_data.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import 'vehicle_history_screen.dart';
 
 /// Search cars by license plate (or name); tapping one opens its
@@ -77,8 +77,8 @@ class _VehicleSearchScreenState extends State<VehicleSearchScreen> {
                     vertical: 6,
                   ),
                   leading: CircleAvatar(
-                    backgroundColor: AppTheme.peach,
-                    foregroundColor: AppTheme.terracotta,
+                    backgroundColor: context.colors.soft,
+                    foregroundColor: context.colors.primary,
                     child: const Icon(Icons.directions_car_rounded),
                   ),
                   title: Text(

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../l10n/app_localizations.dart';
 import '../models/wallet_entry.dart';
 import '../money/money.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// One wallet history line: kind, description, date, person, +/- amount.
 class MovementTile extends StatelessWidget {
@@ -55,7 +55,7 @@ class MovementTile extends StatelessWidget {
         ),
         subtitle: Text(
           '$kind · $date · $personName',
-          style: TextStyle(color: AppTheme.ink.withValues(alpha: 0.65)),
+          style: TextStyle(color: context.colors.ink.withValues(alpha: 0.65)),
         ),
         trailing: Text(
           '${incoming ? '+' : '−'} $amount',
