@@ -1,25 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs>
-<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#4A4A4A"/><stop offset="0.5" stop-color="#1C1C1C"/><stop offset="1" stop-color="#050505"/>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#6A9BFF"/><stop offset="1" stop-color="#2A4FB0"/>
 </linearGradient>
-<linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.02"/>
+<radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
+  <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFD166"/><stop offset="1" stop-color="#F59E0B"/>
 </linearGradient>
-<mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
-  <rect width="1024" height="1024" fill="#FFFFFF"/>
-  <g fill="#000000" stroke="#000000" stroke-width="10" stroke-linejoin="round">
-    <path d="M410 408 H614 L660 476 H364 Z"/>
-    <path d="M234 530 Q236 520 250 522 L356 540 Q366 542 360 552 L346 574 Q342 580 334 579 L252 572 Q236 570 234 556 Z"/>
-    <path d="M790 530 Q788 520 774 522 L668 540 Q658 542 664 552 L678 574 Q682 580 690 579 L772 572 Q788 570 790 556 Z"/>
-    <path d="M404 590 H620 Q630 590 626 600 L612 626 Q608 632 600 632 H424 Q416 632 412 626 L398 600 Q394 590 404 590 Z"/>
-    <path d="M226 604 L282 612 L276 630 L232 626 Z"/>
-    <path d="M798 604 L742 612 L748 630 L792 626 Z"/>
+<linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4F7BE0"/><stop offset="1" stop-color="#2E56BD"/>
+</linearGradient>
+<linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E6EDFB"/>
+</linearGradient></defs><rect width="1024" height="1024" rx="280" fill="url(#bg)"/><rect width="1024" height="1024" rx="280" fill="url(#glow)"/><g transform="translate(512 512) scale(0.96) translate(-578 -468)">
+<ellipse cx="540" cy="742" rx="300" ry="24" fill="#0B1E5B" opacity="0.25"/>
+<rect x="284" y="640" width="104" height="96" rx="40" fill="#1E3A8A"/>
+<rect x="692" y="640" width="104" height="96" rx="40" fill="#1E3A8A"/>
+<path d="M300 500 C318 452 338 404 360 380 C374 364 392 356 418 356 H662 C688 356 706 364 720 380 C742 404 762 452 780 500 Z" fill="url(#body)"/>
+<path d="M346 490 C360 454 374 420 390 404 C398 396 408 392 422 392 H658 C672 392 682 396 690 404 C706 420 720 454 734 490 Z" fill="url(#glass)"/>
+<path d="M422 392 H540 L472 490 H346 C360 454 374 420 390 404 C398 396 408 392 422 392 Z" fill="#FFFFFF" opacity="0.16"/>
+<ellipse cx="282" cy="486" rx="40" ry="24" fill="url(#body)"/>
+<ellipse cx="798" cy="486" rx="40" ry="24" fill="url(#body)"/>
+<rect x="236" y="478" width="608" height="200" rx="96" fill="url(#body)"/>
+<rect x="286" y="540" width="100" height="56" rx="28" fill="url(#amber)"/>
+<rect x="694" y="540" width="100" height="56" rx="28" fill="url(#amber)"/>
+<rect x="436" y="604" width="208" height="36" rx="18" fill="#1E3A8A"/>
+<g transform="translate(800 292)">
+  <circle r="112" fill="url(#amber)" stroke="#FFFFFF" stroke-width="18"/>
+  <g transform="rotate(45)" fill="#1E3A8A">
+    <rect x="-19" y="-20" width="38" height="104" rx="19"/>
+    <circle cx="0" cy="-42" r="46"/>
   </g>
-</mask></defs><clipPath id="r"><rect width="1024" height="1024" rx="230"/></clipPath><g clip-path="url(#r)"><rect width="1024" height="1024" fill="url(#bg)"/><path d="M0 0 H1024 V430 Q512 540 0 430 Z" fill="url(#gloss)"/></g><g transform="translate(512 512) scale(1.08) translate(-512 -553)">
-<g fill="#FFFFFF" mask="url(#cut)" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round">
-  <path d="M196 560 Q200 500 258 488 L332 480 L380 402 Q392 382 416 382 H608 Q632 382 644 402 L692 480 L766 488 Q824 500 828 560 L838 638 Q840 664 814 666 H210 Q184 664 186 638 Z"/>
-  <path d="M336 468 L290 460 Q270 460 276 480 L326 490 Z"/>
-  <path d="M688 468 L734 460 Q754 460 748 480 L698 490 Z"/>
-  <rect x="212" y="640" width="94" height="84" rx="18"/>
-  <rect x="718" y="640" width="94" height="84" rx="18"/>
+  <g transform="rotate(45)" fill="url(#amber)">
+    <rect x="-17" y="-104" width="34" height="58" rx="6"/>
+  </g>
 </g></g></svg>
