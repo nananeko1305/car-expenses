@@ -4,26 +4,17 @@
 </linearGradient>
 <radialGradient id="glow" cx="0.3" cy="0.2" r="0.8">
   <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-</radialGradient>
-<linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#FFD166"/><stop offset="1" stop-color="#F59E0B"/>
-</linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(0.96) translate(-553 -440)">
-<g fill="none" stroke="#FFFFFF" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M272 450 L330 342 Q346 312 382 312 H642 Q678 312 694 342 L752 450"/>
-  <rect x="200" y="450" width="624" height="190" rx="70"/>
-  <path d="M262 640 V690 Q262 712 284 712 H340 Q362 712 362 690 V640"/>
-  <path d="M662 640 V690 Q662 712 684 712 H740 Q762 712 762 690 V640"/>
-  <circle cx="300" cy="540" r="30"/>
-  <circle cx="724" cy="540" r="30"/>
-  <path d="M440 575 H584"/>
-</g>
-<g transform="translate(812 262)">
-  <circle r="104" fill="url(#amber)" stroke="#FFFFFF" stroke-width="18"/>
-  <g transform="rotate(45) scale(0.88)" fill="#1E3A8A">
-    <rect x="-19" y="-20" width="38" height="104" rx="19"/>
-    <circle cx="0" cy="-42" r="46"/>
-  </g>
-  <g transform="rotate(45) scale(0.88)" fill="url(#amber)">
-    <rect x="-17" y="-104" width="34" height="58" rx="6"/>
-  </g>
+</radialGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#bg)"/><rect width="1024" height="1024" rx="230" fill="url(#glow)"/><g transform="translate(512 512) scale(1.12) translate(-519 -541)">
+<g fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M178 610 L160 574 Q152 536 192 522 L300 504
+           C362 470 432 420 522 408 C592 400 642 416 690 454 L742 484
+           C804 494 852 500 874 520 Q892 540 886 578 Q882 606 850 610
+           L800 610 A86 86 0 0 0 630 610 L396 610 A86 86 0 0 0 224 610 Z"/>
+  <path d="M362 500 C420 456 480 434 540 430 C590 428 626 440 656 464 L668 478 Z"/>
+  <path d="M190 520 L162 494 L232 494"/>
+  <path d="M812 506 L852 516"/>
+  <circle cx="310" cy="612" r="62"/>
+  <circle cx="715" cy="612" r="62"/>
+  <circle cx="310" cy="612" r="16" fill="#FFFFFF" stroke="none"/>
+  <circle cx="715" cy="612" r="16" fill="#FFFFFF" stroke="none"/>
 </g></g></svg>
