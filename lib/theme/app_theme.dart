@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'app_colors.dart';
 import 'app_palette.dart';
@@ -36,6 +37,9 @@ class AppTheme {
         foregroundColor: ink,
         elevation: 0,
         centerTitle: false,
+        // The bar is transparent, so Flutter can't infer the status-bar
+        // icon color from it; set it from the mode explicitly.
+        systemOverlayStyle: overlayStyle(dark),
         titleTextStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.w800,
@@ -87,6 +91,14 @@ class AppTheme {
       ),
     );
   }
+
+  /// Status and navigation bar icons: dark on the light theme, light on
+  /// the dark theme, over a transparent bar.
+  static SystemUiOverlayStyle overlayStyle(bool dark) =>
+      (dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark).copyWith(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      );
 
   static OutlineInputBorder _border(Color color, {double width = 1.5}) {
     return OutlineInputBorder(

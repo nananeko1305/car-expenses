@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
@@ -36,6 +37,12 @@ class CarExpensesApp extends StatelessWidget {
           locale: localeController.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          // Screens without an AppBar (login, admin claim, notices) get the
+          // right status-bar icon color from here.
+          builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+            value: AppTheme.overlayStyle(themeController.isDark),
+            child: child!,
+          ),
           home: const AuthGate(),
         );
       },
