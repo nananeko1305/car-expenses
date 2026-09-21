@@ -5,7 +5,7 @@ import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../services/background_save.dart';
 import '../services/user_repository.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import '../widgets/add_user_dialog.dart';
 import '../widgets/sync_banner.dart';
 
@@ -72,8 +72,10 @@ class _UsersScreenState extends State<UsersScreen> {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         leading: CircleAvatar(
-          backgroundColor: u.disabled ? Colors.grey.shade300 : AppTheme.peach,
-          foregroundColor: u.disabled ? Colors.grey : AppTheme.terracotta,
+          backgroundColor: u.disabled
+              ? Colors.grey.shade300
+              : context.colors.soft,
+          foregroundColor: u.disabled ? Colors.grey : context.colors.primary,
           child: Icon(
             u.isAdmin
                 ? Icons.admin_panel_settings_rounded

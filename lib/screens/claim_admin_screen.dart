@@ -5,7 +5,7 @@ import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
 import '../services/auth_service.dart';
 import '../services/user_repository.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import '../widgets/name_fields.dart';
 
 /// One-time screen shown to the first account while no admin exists:
@@ -57,7 +57,7 @@ class _ClaimAdminScreenState extends State<ClaimAdminScreen> {
     final t = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
-        decoration: AppTheme.warmGradient,
+        decoration: context.colors.softGradient,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -70,7 +70,7 @@ class _ClaimAdminScreenState extends State<ClaimAdminScreen> {
                     Icon(
                       Icons.admin_panel_settings_rounded,
                       size: 72,
-                      color: AppTheme.terracotta,
+                      color: context.colors.primary,
                     ),
                     const SizedBox(height: 20),
                     Text(

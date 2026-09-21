@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/repair.dart';
 import '../money/money.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// Sum of the shown repairs, one line per currency (RSD and EUR are
 /// never mixed, since there is no reliable exchange rate to apply).
@@ -29,7 +29,7 @@ class TotalsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.terracotta,
+        color: context.colors.primary,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(

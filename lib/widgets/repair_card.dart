@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../models/repair.dart';
 import '../models/vehicle.dart';
 import '../money/money.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// One service in the list: date, car, author, description and amount.
 class RepairCard extends StatelessWidget {
@@ -40,8 +40,8 @@ class RepairCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: AppTheme.peach,
-                foregroundColor: AppTheme.terracotta,
+                backgroundColor: context.colors.soft,
+                foregroundColor: context.colors.primary,
                 child: const Icon(Icons.build_rounded, size: 20),
               ),
               const SizedBox(width: 14),
@@ -63,7 +63,7 @@ class RepairCard extends StatelessWidget {
                       meta,
                       style: TextStyle(
                         fontSize: 13,
-                        color: AppTheme.ink.withValues(alpha: 0.65),
+                        color: context.colors.ink.withValues(alpha: 0.65),
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -72,7 +72,7 @@ class RepairCard extends StatelessWidget {
                         Icon(
                           Icons.person_rounded,
                           size: 14,
-                          color: AppTheme.ink.withValues(alpha: 0.55),
+                          color: context.colors.ink.withValues(alpha: 0.55),
                         ),
                         const SizedBox(width: 4),
                         Flexible(
@@ -82,7 +82,7 @@ class RepairCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
-                              color: AppTheme.ink.withValues(alpha: 0.7),
+                              color: context.colors.ink.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -97,7 +97,7 @@ class RepairCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
-                  color: AppTheme.terracotta,
+                  color: context.colors.primary,
                 ),
               ),
             ],

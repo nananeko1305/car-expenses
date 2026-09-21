@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import '../services/auth_service.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// Full-screen notice (no access, disabled, admin claim) with an optional
 /// primary action and a sign-out button.
@@ -29,7 +29,7 @@ class StatusScreen extends StatelessWidget {
     final t = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
-        decoration: AppTheme.warmGradient,
+        decoration: context.colors.softGradient,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -37,7 +37,7 @@ class StatusScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(icon, size: 72, color: AppTheme.terracotta),
+                  Icon(icon, size: 72, color: context.colors.primary),
                   const SizedBox(height: 20),
                   Text(
                     title,

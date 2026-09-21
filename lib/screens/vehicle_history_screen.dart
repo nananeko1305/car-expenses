@@ -6,7 +6,7 @@ import '../models/app_user.dart';
 import '../models/repair.dart';
 import '../models/vehicle.dart';
 import '../services/live_data.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import '../widgets/repair_card.dart';
 import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
@@ -123,8 +123,8 @@ class VehicleHistoryScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 28,
-              backgroundColor: AppTheme.peach,
-              foregroundColor: AppTheme.terracotta,
+              backgroundColor: context.colors.soft,
+              foregroundColor: context.colors.primary,
               child: const Icon(Icons.directions_car_rounded, size: 30),
             ),
             const SizedBox(width: 16),
@@ -154,7 +154,7 @@ class VehicleHistoryScreen extends StatelessWidget {
                       '${t.lastMileage}: '
                       '${NumberFormat.decimalPattern(locale).format(lastKm)} km',
                       style: TextStyle(
-                        color: AppTheme.ink.withValues(alpha: 0.7),
+                        color: context.colors.ink.withValues(alpha: 0.7),
                       ),
                     ),
                   ],

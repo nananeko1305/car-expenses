@@ -7,7 +7,7 @@ import '../models/vehicle.dart';
 import '../services/background_save.dart';
 import '../services/live_data.dart';
 import '../services/vehicle_repository.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/vehicle_dialog.dart';
@@ -88,8 +88,8 @@ class VehiclesScreen extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         leading: CircleAvatar(
-          backgroundColor: AppTheme.peach,
-          foregroundColor: AppTheme.terracotta,
+          backgroundColor: context.colors.soft,
+          foregroundColor: context.colors.primary,
           child: const Icon(Icons.directions_car_rounded),
         ),
         title: Text(

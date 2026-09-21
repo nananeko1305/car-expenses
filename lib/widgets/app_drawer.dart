@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// Where a drawer tap should go. Tabs switch in place; the rest push
 /// a screen (handled by the home screen).
@@ -44,8 +44,8 @@ class AppDrawer extends StatelessWidget {
         leading: Icon(icon),
         title: Text(label),
         selected: selected,
-        selectedColor: AppTheme.terracotta,
-        selectedTileColor: AppTheme.peach.withValues(alpha: 0.6),
+        selectedColor: context.colors.primary,
+        selectedTileColor: context.colors.soft.withValues(alpha: 0.6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         onTap: () {
           Navigator.of(context).pop();
@@ -58,7 +58,7 @@ class AppDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            _header(t),
+            _header(context, t),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -110,13 +110,13 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _header(AppLocalizations t) {
+  Widget _header(BuildContext context, AppLocalizations t) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.all(12),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppTheme.terracotta,
+        color: context.colors.primary,
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(

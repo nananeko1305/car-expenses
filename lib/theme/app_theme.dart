@@ -1,31 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'app_colors.dart';
 import 'app_palette.dart';
 import 'theme_controller.dart';
 
 /// AppTheme combines the selected palette and light/dark mode into
-/// component styling.
-///
-/// The names (terracotta/peach/cream/ink) are historical; they return the
-/// colors of the CURRENT palette and mode.
+/// component styling. Widgets read colors via `context.colors`
+/// ([AppColors]), never from static getters, so they repaint when the
+/// mode or palette changes.
 class AppTheme {
   static bool get _dark => themeController.isDark;
   static AppPalette get _p => themeController.current;
-
-  static Color get terracotta => _dark ? _p.primaryOnDark : _p.primary;
-  static Color get peach => _dark ? _p.darkSoft : _p.soft;
-  static Color get cream => _dark ? _p.darkBg : _p.bg;
-  static Color get ink => _dark ? _p.darkInk : _p.ink;
-  static Color get surface => _dark ? _p.darkSurface : Colors.white;
-  static List<Color> get avatarColors => _p.avatars;
-
-  static BoxDecoration get warmGradient => BoxDecoration(
-    gradient: LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [peach, cream],
-    ),
-  );
 
   /// Theme for the current palette + mode (used by MaterialApp).
   static ThemeData get current => build(_p, _dark);
@@ -42,6 +27,7 @@ class AppTheme {
     final primary = dark ? p.primaryOnDark : p.primary;
 
     return base.copyWith(
+      extensions: [AppColors.from(p, dark: dark)],
       scaffoldBackgroundColor: dark ? p.darkBg : p.bg,
       textTheme: base.textTheme.apply(bodyColor: ink, displayColor: ink),
       appBarTheme: AppBarTheme(

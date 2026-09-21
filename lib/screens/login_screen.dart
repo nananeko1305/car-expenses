@@ -4,7 +4,7 @@ import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
 import '../services/auth_service.dart';
 import '../services/saved_emails.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 import '../widgets/email_autocomplete_field.dart';
 
 /// Email + password sign-in. Accounts are created by the admin only.
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final t = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
-        decoration: AppTheme.warmGradient,
+        decoration: context.colors.softGradient,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/repair.dart';
 import '../money/money.dart';
-import '../theme/app_theme.dart';
+import '../theme/app_colors.dart';
 
 /// Wallet balance per currency, with "add funds" and "spend" actions.
 class BalanceCard extends StatelessWidget {
@@ -27,7 +27,7 @@ class BalanceCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.terracotta,
+        color: context.colors.primary,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
@@ -55,10 +55,17 @@ class BalanceCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _button(Icons.add_rounded, t.addFunds, onAdd)),
+              Expanded(
+                child: _button(context, Icons.add_rounded, t.addFunds, onAdd),
+              ),
               const SizedBox(width: 10),
               Expanded(
-                child: _button(Icons.remove_rounded, t.spendFunds, onSpend),
+                child: _button(
+                  context,
+                  Icons.remove_rounded,
+                  t.spendFunds,
+                  onSpend,
+                ),
               ),
             ],
           ),
@@ -67,11 +74,16 @@ class BalanceCard extends StatelessWidget {
     );
   }
 
-  Widget _button(IconData icon, String label, VoidCallback onPressed) {
+  Widget _button(
+    BuildContext context,
+    IconData icon,
+    String label,
+    VoidCallback onPressed,
+  ) {
     return FilledButton.icon(
       style: FilledButton.styleFrom(
         backgroundColor: Colors.white,
-        foregroundColor: AppTheme.terracotta,
+        foregroundColor: context.colors.primary,
         minimumSize: const Size.fromHeight(46),
       ),
       onPressed: onPressed,
