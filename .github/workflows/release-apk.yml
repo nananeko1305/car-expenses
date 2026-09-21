@@ -159,7 +159,6 @@ jobs:
             -e "s|__VERSION__|${{ needs.build.outputs.version }}|g" \
             -e "s|__BUILD__|${{ github.run_number }}|g" \
             -e "s|__DATE__|$(date -u +%Y-%m-%d)|g" \
-            -e "s|__SHA256__|${{ needs.build.outputs.sha256 }}|g" \
             _site/index.html
 
       - uses: actions/configure-pages@v5
