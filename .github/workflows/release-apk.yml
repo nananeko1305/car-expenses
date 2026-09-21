@@ -172,3 +172,56 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  notify:
+    name: Push release notification
+    needs: [build, deploy-pages]
+    runs-on: ubuntu-latest
+    env:
+      # Secrets can't be tested in `if:` directly; expose presence as a flag.
+      HAS_FCM: ${{ secrets.FCM_SERVICE_ACCOUNT != '' }}
+    steps:
+      - name: Skip (no FCM secret)
+        if: env.HAS_FCM != 'true'
+        run: echo "FCM_SERVICE_ACCOUNT is not set — no push notification sent."
+
+      # Sends to the `releases` topic every install subscribes to. The text
+      # comes from string resources in the app (title/body *_loc_key), so each
+      # phone shows it in its own language.
+      - name: Send FCM message
+        if: env.HAS_FCM == 'true'
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.FCM_SERVICE_ACCOUNT }}
+          VERSION: ${{ needs.build.outputs.version }}
+          BUILD: ${{ github.run_number }}
+        run: |
+          pip install --quiet google-auth requests
+          python3 - <<'PY'
+          import json, os
+          import google.auth.transport.requests
+          from google.oauth2 import service_account
+
+          info = json.loads(os.environ["SERVICE_ACCOUNT"])
+          creds = service_account.Credentials.from_service_account_info(
+              info, scopes=["https://www.googleapis.com/auth/firebase.messaging"])
+          session = google.auth.transport.requests.AuthorizedSession(creds)
+
+          version, build = os.environ["VERSION"], os.environ["BUILD"]
+          message = {"message": {
+              "topic": "releases",
+              "data": {"type": "release", "version": version, "build": build},
+              "android": {
+                  "priority": "high",
+                  "notification": {
+                      "title_loc_key": "update_notification_title",
+                      "body_loc_key": "update_notification_body",
+                      "body_loc_args": [version, build],
+                      "channel_id": "updates",
+                  },
+              },
+          }}
+          url = f"https://fcm.googleapis.com/v1/projects/{info['project_id']}/messages:send"
+          response = session.post(url, json=message, timeout=30)
+          print(response.status_code, response.text)
+          response.raise_for_status()
+          PY
