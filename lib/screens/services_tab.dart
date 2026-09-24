@@ -11,7 +11,7 @@ import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
 import 'repair_form_screen.dart';
 
-/// Every service from every user, filterable by car and by person.
+/// Every service from every user, filterable by car and by who did it.
 class ServicesTab extends StatefulWidget {
   const ServicesTab({super.key, required this.data, required this.profile});
 
@@ -45,16 +45,16 @@ class _ServicesTabState extends State<ServicesTab> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final vehicles = _data.vehicles!;
-    // Services per car / per person, shown in the filter sheets.
+    // Services per car / per person who did them, for the filter sheets.
     final perVehicle = <String, int>{};
     final perUser = <String, int>{};
     for (final r in _data.repairs!) {
       perVehicle[r.vehicleId] = (perVehicle[r.vehicleId] ?? 0) + 1;
-      perUser[r.ownerId] = (perUser[r.ownerId] ?? 0) + 1;
+      perUser[r.performedBy] = (perUser[r.performedBy] ?? 0) + 1;
     }
     final repairs = _data.repairs!
         .where((r) => _vehicleId == null || r.vehicleId == _vehicleId)
-        .where((r) => _userId == null || r.ownerId == _userId)
+        .where((r) => _userId == null || r.performedBy == _userId)
         .toList();
 
     return Scaffold(
@@ -120,7 +120,7 @@ class _ServicesTabState extends State<ServicesTab> {
             RepairCard(
               repair: r,
               vehicle: _data.vehicleById(r.vehicleId),
-              authorName: _data.nameOf(r.ownerId),
+              personName: _data.nameOf(r.performedBy),
               onTap: () => _openForm(r),
             ),
             const SizedBox(height: 10),

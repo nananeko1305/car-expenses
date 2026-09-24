@@ -287,6 +287,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get person => 'Person';
 
   @override
+  String get performedBy => 'Done by';
+
+  @override
   String get allPeople => 'Everyone';
 
   @override

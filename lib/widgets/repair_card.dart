@@ -6,19 +6,19 @@ import '../models/vehicle.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
 
-/// One service in the list: date, car, author, description and amount.
+/// One service in the list: date, car, who did it, description and amount.
 class RepairCard extends StatelessWidget {
   const RepairCard({
     super.key,
     required this.repair,
     required this.vehicle,
-    required this.authorName,
+    required this.personName,
     required this.onTap,
   });
 
   final Repair repair;
   final Vehicle? vehicle;
-  final String authorName;
+  final String personName;
   final VoidCallback onTap;
 
   @override
@@ -70,14 +70,14 @@ class RepairCard extends StatelessWidget {
                     Row(
                       children: [
                         Icon(
-                          Icons.person_rounded,
+                          Icons.handyman_rounded,
                           size: 14,
                           color: context.colors.ink.withValues(alpha: 0.55),
                         ),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
-                            authorName,
+                            personName,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 13,
