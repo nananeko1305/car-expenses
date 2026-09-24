@@ -79,7 +79,7 @@ class WalletMovement {
     signedMinor: r.amountMinor,
     currency: r.currency,
     description: r.description,
-    userId: r.ownerId,
+    userId: r.performedBy,
     repair: r,
   );
 

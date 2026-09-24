@@ -287,6 +287,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get person => 'Osoba';
 
   @override
+  String get performedBy => 'Ko je radio';
+
+  @override
   String get allPeople => 'Svi';
 
   @override

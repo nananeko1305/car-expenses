@@ -10,7 +10,7 @@ extension CurrencyCode on Currency {
 }
 
 /// One car service, stored in `repairs/{id}`. Visible to every user;
-/// [ownerId] is who recorded it.
+/// [ownerId] is who recorded it and [performedBy] is who did the work.
 ///
 /// The amount is kept in minor units (para / cents) as an int, so sums
 /// never suffer from floating point rounding.
@@ -18,6 +18,7 @@ class Repair {
   const Repair({
     required this.id,
     required this.ownerId,
+    required this.performedBy,
     required this.vehicleId,
     required this.date,
     required this.amountMinor,
@@ -29,6 +30,10 @@ class Repair {
 
   final String id;
   final String ownerId;
+
+  /// The person who carried out the service.
+  final String performedBy;
+
   final String vehicleId;
   final DateTime date;
   final int amountMinor;
@@ -43,9 +48,12 @@ class Repair {
 
   factory Repair.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data() ?? const {};
+    final ownerId = data['ownerId'] as String? ?? '';
     return Repair(
       id: doc.id,
-      ownerId: data['ownerId'] as String? ?? '',
+      ownerId: ownerId,
+      // Services recorded before the field existed were done by their author.
+      performedBy: data['performedBy'] as String? ?? ownerId,
       vehicleId: data['vehicleId'] as String? ?? '',
       date: (data['date'] as Timestamp?)?.toDate() ?? DateTime.now(),
       amountMinor: (data['amountMinor'] as num?)?.toInt() ?? 0,
@@ -58,6 +66,7 @@ class Repair {
 
   Map<String, dynamic> toMap() => {
     'ownerId': ownerId,
+    'performedBy': performedBy,
     'vehicleId': vehicleId,
     'date': Timestamp.fromDate(date),
     'amountMinor': amountMinor,
