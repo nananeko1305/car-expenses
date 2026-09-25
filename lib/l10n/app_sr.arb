@@ -94,7 +94,6 @@
   "addToWallet": "Dodaj iznos u wallet",
   "addToWalletHint": "Iznos servisa ulazi u zajednički wallet.",
   "person": "Osoba",
-  "performedBy": "Ko je radio",
   "allPeople": "Svi",
   "enteredBy": "Uneo/la: {name}",
   "readOnlyNotice": "Ovo mogu da menjaju samo {name} ili admin.",

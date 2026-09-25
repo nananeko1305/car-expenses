@@ -94,7 +94,7 @@ class VehicleHistoryScreen extends StatelessWidget {
                 RepairCard(
                   repair: r,
                   vehicle: null,
-                  personName: data.nameOf(r.performedBy),
+                  authorName: data.nameOf(r.ownerId),
                   onTap: () => _openForm(context, r),
                 ),
                 const SizedBox(height: 10),

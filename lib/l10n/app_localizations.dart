@@ -620,12 +620,6 @@ abstract class AppLocalizations {
   /// **'Person'**
   String get person;
 
-  /// No description provided for @performedBy.
-  ///
-  /// In en, this message translates to:
-  /// **'Done by'**
-  String get performedBy;
-
   /// No description provided for @allPeople.
   ///
   /// In en, this message translates to:

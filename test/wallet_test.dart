@@ -2,22 +2,17 @@ import 'package:car_expenses/models/repair.dart';
 import 'package:car_expenses/models/wallet_entry.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Repair _repair(
-  int minor, {
-  bool toWallet = true,
-  Currency c = Currency.rsd,
-  String performedBy = 'u1',
-}) => Repair(
-  id: 'r$minor',
-  ownerId: 'u1',
-  performedBy: performedBy,
-  vehicleId: 'v1',
-  date: DateTime(2026, 9, minor % 28 + 1),
-  amountMinor: minor,
-  currency: c,
-  description: 'service',
-  toWallet: toWallet,
-);
+Repair _repair(int minor, {bool toWallet = true, Currency c = Currency.rsd}) =>
+    Repair(
+      id: 'r$minor',
+      ownerId: 'u1',
+      vehicleId: 'v1',
+      date: DateTime(2026, 9, minor % 28 + 1),
+      amountMinor: minor,
+      currency: c,
+      description: 'service',
+      toWallet: toWallet,
+    );
 
 WalletEntry _entry(
   WalletEntryType type,
@@ -35,13 +30,6 @@ WalletEntry _entry(
 );
 
 void main() {
-  test('service income is credited to whoever did the service', () {
-    final m = WalletMovement.merge([
-      _repair(10000, performedBy: 'u2'),
-    ], const []);
-    expect(m.single.userId, 'u2');
-  });
-
   test('services add to the balance only when toWallet is set', () {
     final m = WalletMovement.merge([
       _repair(10000),
