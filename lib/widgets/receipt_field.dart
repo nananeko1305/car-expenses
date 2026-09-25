@@ -19,11 +19,18 @@ class ReceiptField extends StatefulWidget {
     required this.url,
     required this.onChanged,
     this.enabled = true,
+    this.configured,
   });
 
   final String url;
   final ValueChanged<String> onChanged;
+
+  /// Whether this viewer may change the receipt. Looking is always
+  /// allowed.
   final bool enabled;
+
+  /// Overrides whether the build has upload settings; only tests pass it.
+  final bool? configured;
 
   @override
   State<ReceiptField> createState() => _ReceiptFieldState();
@@ -90,7 +97,9 @@ class _ReceiptFieldState extends State<ReceiptField> {
   Widget build(BuildContext context) {
     // A build made without the upload settings hides the whole thing
     // rather than offering a button that cannot work.
-    if (!ReceiptUpload.isConfigured) return const SizedBox.shrink();
+    if (!(widget.configured ?? ReceiptUpload.isConfigured)) {
+      return const SizedBox.shrink();
+    }
     final t = AppLocalizations.of(context);
     final has = widget.url.isNotEmpty;
 
@@ -127,7 +136,14 @@ class _ReceiptFieldState extends State<ReceiptField> {
               ),
         title: Text(has ? t.receipt : t.addReceipt),
         subtitle: Text(_busy ? t.receiptUploading : t.receiptHint),
-        onTap: _busy || !widget.enabled ? null : (has ? _open : _choose),
+        // Looking at a receipt is not changing it: everyone who can see
+        // the tool can open the picture. Only the author and the admin
+        // get the buttons that replace or remove it.
+        onTap: _busy
+            ? null
+            : has
+            ? _open
+            : (widget.enabled ? _choose : null),
         trailing: !has || _busy || !widget.enabled
             ? null
             : Row(
