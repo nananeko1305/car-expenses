@@ -14,7 +14,7 @@ Future<void> showUpdateDialog(BuildContext context, UpdateAvailable update) {
     builder: (ctx) => AlertDialog(
       icon: const Icon(Icons.system_update_rounded, size: 36),
       title: Text(t.newVersionTitle),
-      content: Text(t.newVersionBody(r.version, r.build, update.currentBuild)),
+      content: Text(t.newVersionBody(r.version, update.currentVersion)),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx), child: Text(t.later)),
         FilledButton(

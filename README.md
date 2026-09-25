@@ -65,6 +65,13 @@ analyze → test → signed release APK (Flutter, pub and Gradle cached) →
 GitHub Release → download page on GitHub Pages with a QR code.
 Day-to-day work goes to `dev`; merge into `main` to ship.
 
+Versions are `major.minor.patch`, worked out in CI from the commit messages
+since the last tag: a `feat` bumps the minor, anything else the patch, and a
+breaking change the major. The version in `pubspec.yaml` is a floor — raise
+it by hand to force a bigger number, such as a deliberate 2.0.0. Android's
+version code is the workflow run number; it keeps installs upgradable and is
+never shown in the app.
+
 Signing uses these repository secrets: `ANDROID_KEYSTORE_BASE64`,
 `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
 Without them the build falls back to debug signing (installs then can't be

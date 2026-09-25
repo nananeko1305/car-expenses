@@ -423,8 +423,8 @@ class AppLocalizationsSr extends AppLocalizations {
   String get newVersionTitle => 'Dostupna je nova verzija';
 
   @override
-  String newVersionBody(String version, int build, int current) {
-    return 'Verzija $version (build $build) je spremna za preuzimanje. Ti imaš build $current.';
+  String newVersionBody(String version, String current) {
+    return 'Verzija $version je spremna za preuzimanje. Ti imaš $current.';
   }
 
   @override
@@ -443,8 +443,8 @@ class AppLocalizationsSr extends AppLocalizations {
   String get updateCheckFailed => 'Provera ažuriranja nije uspela.';
 
   @override
-  String appVersion(String version, String build) {
-    return 'Verzija $version (build $build)';
+  String appVersion(String version) {
+    return 'Verzija $version';
   }
 
   @override

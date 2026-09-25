@@ -166,17 +166,14 @@
   "edit": "Edit",
   "noServicesForCar": "No services for this car yet.",
   "newVersionTitle": "New version available",
-  "newVersionBody": "Version {version} (build {build}) is ready to download. You have build {current}.",
+  "newVersionBody": "Version {version} is ready to download. You have {current}.",
   "@newVersionBody": {
     "placeholders": {
       "version": {
         "type": "String"
       },
-      "build": {
-        "type": "int"
-      },
       "current": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -185,13 +182,10 @@
   "checkUpdates": "Check for updates",
   "upToDate": "You have the latest version.",
   "updateCheckFailed": "Couldn't check for updates.",
-  "appVersion": "Version {version} (build {build})",
+  "appVersion": "Version {version}",
   "@appVersion": {
     "placeholders": {
       "version": {
-        "type": "String"
-      },
-      "build": {
         "type": "String"
       }
     }

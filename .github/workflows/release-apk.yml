@@ -28,7 +28,11 @@ jobs:
       version: ${{ steps.ver.outputs.version }}
       sha256: ${{ steps.sum.outputs.sha256 }}
     steps:
+      # Full history: the release version is derived from the commits
+      # since the last tag.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-java@v4
         with:
@@ -89,12 +93,48 @@ jobs:
           keyPassword=$KEY_PASSWORD
           EOF
 
+      # The version comes from the commit messages since the last tag:
+      # a feat bumps the minor, anything else the patch, and a breaking
+      # change the major. The version in pubspec.yaml acts as a floor,
+      # so raising it by hand forces a bigger number (a deliberate 2.0).
+      - name: Compute the release version
+        id: ver
+        run: |
+          python3 - >> "$GITHUB_OUTPUT" <<'PY'
+          import re, subprocess
+
+          def git(*args):
+              return subprocess.run(
+                  ['git', *args], capture_output=True, text=True, check=True
+              ).stdout.strip()
+
+          tags = [t for t in git('tag', '--list', 'v*', '--sort=-v:refname').splitlines() if t]
+          last = tags[0] if tags else ''
+          found = re.match(r'v?(\d+)\.(\d+)\.(\d+)', last)
+          major, minor, patch = [int(x) for x in found.groups()] if found else (0, 0, 0)
+
+          log = git('log', '--format=%s%n%b', f'{last}..HEAD' if last else 'HEAD')
+          breaking = re.search(r'^BREAKING CHANGE', log, re.M) or re.search(r'^\w+(\([^)]*\))?!:', log, re.M)
+          feature = re.search(r'^feat(\([^)]*\))?!?:', log, re.M)
+          if breaking:
+              nxt = (major + 1, 0, 0)
+          elif feature:
+              nxt = (major, minor + 1, 0)
+          else:
+              nxt = (major, minor, patch + 1)
+
+          floor = re.search(r'^version:\s*(\d+)\.(\d+)\.(\d+)', open('pubspec.yaml').read(), re.M)
+          manual = tuple(int(x) for x in floor.groups()) if floor else (0, 0, 0)
+          print('version=' + '.'.join(str(n) for n in max(nxt, manual)))
+          PY
+
       # The Cloudinary cloud and preset are build inputs, not source: the
       # repository is public and they are enough to upload into the
       # account. Without them the receipt controls stay hidden.
       - name: Build release APK
         run: >
           flutter build apk --release
+          --build-name=${{ steps.ver.outputs.version }}
           --build-number=${{ github.run_number }}
           --dart-define=CLOUDINARY_CLOUD=${{ secrets.CLOUDINARY_CLOUD }}
           --dart-define=CLOUDINARY_PRESET=${{ secrets.CLOUDINARY_PRESET }}
@@ -109,10 +149,6 @@ jobs:
           for key in update_notification_title update_notification_body; do
             echo "$DUMP" | grep -q "string/$key" || { echo "::error::string/$key missing from APK"; exit 1; }
           done
-
-      - name: Read app version
-        id: ver
-        run: echo "version=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)" >> "$GITHUB_OUTPUT"
 
       - name: Rename APK
         run: cp build/app/outputs/flutter-apk/app-release.apk "${{ env.APK_NAME }}"
@@ -130,8 +166,8 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.ver.outputs.version }}-build.${{ github.run_number }}
-          name: Car Expenses v${{ steps.ver.outputs.version }} (build ${{ github.run_number }})
+          tag_name: v${{ steps.ver.outputs.version }}
+          name: Car Expenses ${{ steps.ver.outputs.version }}
           files: |
             ${{ env.APK_NAME }}
             ${{ env.APK_NAME }}.sha256
@@ -141,7 +177,7 @@ jobs:
             Automated build from `main`.
 
             - Commit: ${{ github.sha }}
-            - Build: #${{ github.run_number }}
+            - Android version code: ${{ github.run_number }}
             - SHA-256: `${{ steps.sum.outputs.sha256 }}`
 
             Download `${{ env.APK_NAME }}` below and install it on Android (allow
@@ -172,7 +208,6 @@ jobs:
           sed -i \
             -e "s|__DOWNLOAD_URL__|$DL|g" \
             -e "s|__VERSION__|${{ needs.build.outputs.version }}|g" \
-            -e "s|__BUILD__|${{ github.run_number }}|g" \
             -e "s|__DATE__|$(date -u +%Y-%m-%d)|g" \
             _site/index.html
 
@@ -230,7 +265,7 @@ jobs:
                   "notification": {
                       "title_loc_key": "update_notification_title",
                       "body_loc_key": "update_notification_body",
-                      "body_loc_args": [version, build],
+                      "body_loc_args": [version],
                       "channel_id": "updates",
                   },
               },

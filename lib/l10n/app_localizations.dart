@@ -887,8 +887,8 @@ abstract class AppLocalizations {
   /// No description provided for @newVersionBody.
   ///
   /// In en, this message translates to:
-  /// **'Version {version} (build {build}) is ready to download. You have build {current}.'**
-  String newVersionBody(String version, int build, int current);
+  /// **'Version {version} is ready to download. You have {current}.'**
+  String newVersionBody(String version, String current);
 
   /// No description provided for @download.
   ///
@@ -923,8 +923,8 @@ abstract class AppLocalizations {
   /// No description provided for @appVersion.
   ///
   /// In en, this message translates to:
-  /// **'Version {version} (build {build})'**
-  String appVersion(String version, String build);
+  /// **'Version {version}'**
+  String appVersion(String version);
 
   /// No description provided for @tools.
   ///

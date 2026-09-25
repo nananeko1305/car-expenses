@@ -423,8 +423,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newVersionTitle => 'New version available';
 
   @override
-  String newVersionBody(String version, int build, int current) {
-    return 'Version $version (build $build) is ready to download. You have build $current.';
+  String newVersionBody(String version, String current) {
+    return 'Version $version is ready to download. You have $current.';
   }
 
   @override
@@ -443,8 +443,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateCheckFailed => 'Couldn\'t check for updates.';
 
   @override
-  String appVersion(String version, String build) {
-    return 'Version $version (build $build)';
+  String appVersion(String version) {
+    return 'Version $version';
   }
 
   @override
