@@ -44,9 +44,7 @@ class _UpdateTilesState extends State<UpdateTiles> {
         return ListTile(
           leading: const Icon(Icons.system_update_rounded),
           title: Text(t.checkUpdates),
-          subtitle: app == null
-              ? null
-              : Text(t.appVersion(app.version, app.buildNumber)),
+          subtitle: app == null ? null : Text(t.appVersion(app.version)),
           trailing: _checking
               ? const SizedBox(
                   width: 20,

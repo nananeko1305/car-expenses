@@ -22,14 +22,31 @@ class ReleaseInfo {
   );
 }
 
+/// Orders two `major.minor.patch` versions: negative when [a] is older,
+/// zero when they match, positive when [a] is newer. Missing or
+/// unreadable parts count as zero, so a malformed version is simply old.
+int compareVersions(String a, String b) {
+  List<int> parts(String v) => [
+    for (var i = 0; i < 3; i++)
+      int.tryParse(v.split('.').elementAtOrNull(i)?.split('-').first ?? '') ??
+          0,
+  ];
+  final left = parts(a);
+  final right = parts(b);
+  for (var i = 0; i < 3; i++) {
+    if (left[i] != right[i]) return left[i] - right[i];
+  }
+  return 0;
+}
+
 sealed class UpdateResult {
   const UpdateResult();
 }
 
 class UpdateAvailable extends UpdateResult {
-  const UpdateAvailable(this.release, this.currentBuild);
+  const UpdateAvailable(this.release, this.currentVersion);
   final ReleaseInfo release;
-  final int currentBuild;
+  final String currentVersion;
 }
 
 class UpToDate extends UpdateResult {
@@ -41,8 +58,9 @@ class UpdateCheckFailed extends UpdateResult {
   final Object error;
 }
 
-/// Compares this app's build number (set by CI from the run number)
-/// with the newest release on the download page.
+/// Compares this app's version with the newest release on the download
+/// page. The build number is Android's own version code and says nothing
+/// about what changed, so it is not what decides.
 class UpdateChecker {
   UpdateChecker._();
   static final UpdateChecker instance = UpdateChecker._();
@@ -57,10 +75,9 @@ class UpdateChecker {
   Future<UpdateResult> check() async {
     try {
       final app = await currentApp();
-      final current = int.tryParse(app.buildNumber) ?? 0;
       final release = await _fetchLatest();
-      return release.build > current
-          ? UpdateAvailable(release, current)
+      return compareVersions(release.version, app.version) > 0
+          ? UpdateAvailable(release, app.version)
           : const UpToDate();
     } catch (e) {
       return UpdateCheckFailed(e);

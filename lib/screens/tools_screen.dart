@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../models/tool.dart';
 import '../services/live_data.dart';
@@ -79,6 +80,15 @@ class _ToolsScreenState extends State<ToolsScreen> {
     // loading state: null is "not here yet", empty is "there are none".
     final all = widget.data.tools;
     if (all == null) {
+      // Regression: a failing listener left the list null forever, so
+      // the screen spun instead of saying what was wrong.
+      final error = widget.data.error;
+      if (error != null) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+          child: Text(errorText(t, error), textAlign: TextAlign.center),
+        );
+      }
       return const Center(child: CircularProgressIndicator());
     }
     final tools = all.where((x) => x.archived == _archived).toList();
