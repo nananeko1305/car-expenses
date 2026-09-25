@@ -446,4 +446,135 @@ class AppLocalizationsEn extends AppLocalizations {
   String appVersion(String version, String build) {
     return 'Version $version (build $build)';
   }
+
+  @override
+  String get tools => 'Tools';
+
+  @override
+  String get noTools => 'No tools yet.';
+
+  @override
+  String get noToolsHint =>
+      'A tool is usually added while spending from the wallet, or with the button below.';
+
+  @override
+  String get addTool => 'Add tool';
+
+  @override
+  String get newTool => 'New tool';
+
+  @override
+  String get editTool => 'Edit tool';
+
+  @override
+  String get toolName => 'Tool';
+
+  @override
+  String get toolNameHint => 'e.g. impact driver';
+
+  @override
+  String get addToTools => 'Add to tools';
+
+  @override
+  String get addToToolsHint => 'Everything that is not consumable is a tool.';
+
+  @override
+  String get warranty => 'Warranty';
+
+  @override
+  String get warrantyMonths => 'Months';
+
+  @override
+  String get warrantyYears => 'Years';
+
+  @override
+  String get warrantyMonthsRange => '1 to 12 months, longer ones in years';
+
+  @override
+  String get warrantyYearsMin => 'At least 1 year';
+
+  @override
+  String warrantyUntil(String date) {
+    return 'Warranty until $date';
+  }
+
+  @override
+  String warrantyDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get warrantyEndsToday => 'Warranty ends today';
+
+  @override
+  String get warrantyExpired => 'Warranty expired';
+
+  @override
+  String get purchaseDate => 'Purchase date';
+
+  @override
+  String get purchaseDateHint =>
+      'The date on the receipt; the warranty starts then.';
+
+  @override
+  String get notifyOnExpiry => 'Remind before it expires';
+
+  @override
+  String get notifyOnExpiryHint => '30 days before, and the day before.';
+
+  @override
+  String get toolPriceOptional => 'Optional, when there is no wallet entry';
+
+  @override
+  String get openWalletEntry => 'Open the spending in the wallet';
+
+  @override
+  String get activeTools => 'In use';
+
+  @override
+  String get archivedTools => 'Archived';
+
+  @override
+  String get archive => 'Archive';
+
+  @override
+  String get unarchive => 'Restore';
+
+  @override
+  String archiveToolQ(String name) {
+    return 'Archive $name?';
+  }
+
+  @override
+  String get archiveToolBody =>
+      'It leaves the list. The spending stays in the wallet.';
+
+  @override
+  String get entryHasTool =>
+      'This spending bought a tool, so it can\'t be deleted.';
+
+  @override
+  String get receipt => 'Receipt';
+
+  @override
+  String get addReceipt => 'Add the receipt';
+
+  @override
+  String get receiptHint =>
+      'A photo, so you have it when you claim the warranty.';
+
+  @override
+  String get receiptUploading => 'Sending the photo...';
+
+  @override
+  String get receiptCamera => 'Take a photo';
+
+  @override
+  String get receiptGallery => 'Pick from the gallery';
 }

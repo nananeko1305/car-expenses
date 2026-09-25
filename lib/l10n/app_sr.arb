@@ -144,5 +144,64 @@
   "checkUpdates": "Proveri ažuriranja",
   "upToDate": "Imaš najnoviju verziju.",
   "updateCheckFailed": "Provera ažuriranja nije uspela.",
-  "appVersion": "Verzija {version} (build {build})"
+  "appVersion": "Verzija {version} (build {build})",
+  "tools": "Alat",
+  "noTools": "Još nema alata.",
+  "noToolsHint": "Alat se obično doda pri trošku iz kase, ili dugmetom ispod.",
+  "addTool": "Dodaj alat",
+  "newTool": "Novi alat",
+  "editTool": "Izmena alata",
+  "toolName": "Vrsta alata",
+  "toolNameHint": "npr. udarni odvijač",
+  "addToTools": "Dodaj u alat",
+  "addToToolsHint": "Sve što nije potrošno je alat.",
+  "warranty": "Garancija",
+  "warrantyMonths": "Meseci",
+  "warrantyYears": "Godine",
+  "warrantyMonthsRange": "Od 1 do 12 meseci, duže se unosi u godinama",
+  "warrantyYearsMin": "Najmanje 1 godina",
+  "warrantyUntil": "Garancija do {date}",
+  "@warrantyUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "warrantyDaysLeft": "{count, plural, =1{Još 1 dan} few{Još {count} dana} other{Još {count} dana}}",
+  "@warrantyDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "warrantyEndsToday": "Garancija ističe danas",
+  "warrantyExpired": "Garancija istekla",
+  "purchaseDate": "Datum kupovine",
+  "purchaseDateHint": "Datum sa računa; od njega teče garancija.",
+  "notifyOnExpiry": "Podseti pre isteka",
+  "notifyOnExpiryHint": "30 dana pre, i dan pred istek.",
+  "toolPriceOptional": "Neobavezno, kad nema troška u kasi",
+  "openWalletEntry": "Otvori trošak u kasi",
+  "activeTools": "U upotrebi",
+  "archivedTools": "Arhivirano",
+  "archive": "Arhiviraj",
+  "unarchive": "Vrati iz arhive",
+  "archiveToolQ": "Arhivirati {name}?",
+  "@archiveToolQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "archiveToolBody": "Nestaje iz liste. Trošak ostaje u kasi.",
+  "entryHasTool": "Ovaj trošak je kupio alat, pa ne može da se obriše.",
+  "receipt": "Račun",
+  "addReceipt": "Dodaj račun",
+  "receiptHint": "Slika, da ti je pri ruci kad ideš na reklamaciju.",
+  "receiptUploading": "Šaljem sliku...",
+  "receiptCamera": "Slikaj",
+  "receiptGallery": "Izaberi iz galerije"
 }

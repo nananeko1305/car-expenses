@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../models/repair.dart';
+import '../models/tool.dart';
+import '../models/tool_draft.dart';
 import '../models/wallet_entry.dart';
 import '../money/money.dart';
 import '../services/background_save.dart';
 import '../services/live_data.dart';
+import '../services/purchase_repository.dart';
 import '../services/wallet_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/date_field.dart';
 import '../widgets/money_fields.dart';
 import '../widgets/option_sheet.dart';
 import '../widgets/picker_field.dart';
+import '../widgets/spending_tool_section.dart';
+import 'tool_form_screen.dart';
 
 /// Add funds to, or spend from, the wallet: amount, what for, date and
 /// who. Only the person who recorded it (or the admin) can change it.
+///
+/// Spending can record the tool it bought in the same go. That only
+/// happens while creating the entry — offering it on an edit as well
+/// would make every save produce another tool.
 class WalletEntryScreen extends StatefulWidget {
   const WalletEntryScreen({
     super.key,
@@ -49,11 +59,20 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
   late final _description = TextEditingController(
     text: _old?.description ?? '',
   );
+  late final _tool = ToolDraft();
+  bool _addTool = true;
+
+  /// Everything that is not consumable is a tool, so the switch starts on.
+  bool get _buyingTool => _spending && _old == null && _addTool;
+
+  /// The tool this spending already bought, when editing one.
+  Tool? get _boughtTool => widget.data.toolForEntry(_old?.id ?? '');
 
   @override
   void dispose() {
     _amount.dispose();
     _description.dispose();
+    _tool.dispose();
     super.dispose();
   }
 
@@ -69,14 +88,56 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
       userId: _userId,
       createdBy: _old?.createdBy ?? widget.profile.uid,
     );
-    saveInBackground(context, () => WalletRepository.instance.save(entry));
+    final tool = _buyingTool
+        ? _tool.build(
+            ownerId: widget.profile.uid,
+            purchaseDate: _date,
+            amountMinor: parseMoney(_amount.text),
+            currency: _currency,
+          )
+        : null;
+    saveInBackground(
+      context,
+      tool == null
+          ? () => WalletRepository.instance.save(entry)
+          : () => PurchaseRepository.instance.savePurchase(
+              entry: entry,
+              tool: tool,
+            ),
+    );
     Navigator.of(context).pop();
+  }
+
+  void _openTool() {
+    final tool = _boughtTool;
+    if (tool == null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ToolFormScreen(
+          data: widget.data,
+          profile: widget.profile,
+          tool: tool,
+        ),
+      ),
+    );
   }
 
   Future<void> _delete() async {
     final t = AppLocalizations.of(context);
-    if (!await confirmDelete(context, t.deleteEntryQ) || !mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
     final id = _old!.id;
+    try {
+      // The tool would be left pointing at nothing, and tools stay.
+      if (await PurchaseRepository.instance.hasTool(id)) {
+        messenger.showSnackBar(SnackBar(content: Text(t.entryHasTool)));
+        return;
+      }
+    } catch (e) {
+      messenger.showSnackBar(SnackBar(content: Text(errorText(t, e))));
+      return;
+    }
+    if (!mounted) return;
+    if (!await confirmDelete(context, t.deleteEntryQ) || !mounted) return;
     saveInBackground(context, () => WalletRepository.instance.delete(id));
     Navigator.of(context).pop();
   }
@@ -154,6 +215,16 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
                   ),
               ],
               onChanged: (id) => setState(() => _userId = id),
+            ),
+            SpendingToolSection(
+              draft: _tool,
+              purchaseDate: _date,
+              addTool: _spending && _old == null ? _addTool : null,
+              onAddTool: (v) => setState(() => _addTool = v),
+              onChanged: () => setState(() {}),
+              bought: _spending ? _boughtTool : null,
+              onOpenTool: _openTool,
+              enabled: _canEdit,
             ),
             if (_canEdit) ...[
               const SizedBox(height: 24),

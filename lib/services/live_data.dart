@@ -4,9 +4,11 @@ import 'package:flutter/foundation.dart';
 
 import '../models/app_user.dart';
 import '../models/repair.dart';
+import '../models/tool.dart';
 import '../models/vehicle.dart';
 import '../models/wallet_entry.dart';
 import 'repair_repository.dart';
+import 'tool_repository.dart';
 import 'user_repository.dart';
 import 'vehicle_repository.dart';
 import 'wallet_repository.dart';
@@ -34,6 +36,7 @@ class LiveData extends ChangeNotifier {
         WalletRepository.instance.watchAll(),
         (v) => entries = v,
       ),
+      _listen<List<Tool>>(ToolRepository.instance.watchAll(), (v) => tools = v),
     ];
   }
 
@@ -43,11 +46,32 @@ class LiveData extends ChangeNotifier {
   List<Repair>? repairs;
   List<AppUser>? users;
   List<WalletEntry>? entries;
+
+  /// Left out of [ready] on purpose: the tools screen handles its own
+  /// loading, so a hiccup there cannot hold up services and the wallet.
+  List<Tool>? tools;
+
   Object? error;
   Map<String, AppUser> _usersById = const {};
 
   bool get ready =>
       vehicles != null && repairs != null && users != null && entries != null;
+
+  WalletEntry? entryById(String id) {
+    for (final e in entries ?? const <WalletEntry>[]) {
+      if (e.id == id) return e;
+    }
+    return null;
+  }
+
+  /// The tool a wallet entry bought, if it bought one.
+  Tool? toolForEntry(String entryId) {
+    if (entryId.isEmpty) return null;
+    for (final t in tools ?? const <Tool>[]) {
+      if (t.entryId == entryId) return t;
+    }
+    return null;
+  }
 
   Vehicle? vehicleById(String id) {
     for (final v in vehicles ?? const <Vehicle>[]) {

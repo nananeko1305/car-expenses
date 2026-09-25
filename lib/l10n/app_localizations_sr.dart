@@ -446,4 +446,134 @@ class AppLocalizationsSr extends AppLocalizations {
   String appVersion(String version, String build) {
     return 'Verzija $version (build $build)';
   }
+
+  @override
+  String get tools => 'Alat';
+
+  @override
+  String get noTools => 'Još nema alata.';
+
+  @override
+  String get noToolsHint =>
+      'Alat se obično doda pri trošku iz kase, ili dugmetom ispod.';
+
+  @override
+  String get addTool => 'Dodaj alat';
+
+  @override
+  String get newTool => 'Novi alat';
+
+  @override
+  String get editTool => 'Izmena alata';
+
+  @override
+  String get toolName => 'Vrsta alata';
+
+  @override
+  String get toolNameHint => 'npr. udarni odvijač';
+
+  @override
+  String get addToTools => 'Dodaj u alat';
+
+  @override
+  String get addToToolsHint => 'Sve što nije potrošno je alat.';
+
+  @override
+  String get warranty => 'Garancija';
+
+  @override
+  String get warrantyMonths => 'Meseci';
+
+  @override
+  String get warrantyYears => 'Godine';
+
+  @override
+  String get warrantyMonthsRange =>
+      'Od 1 do 12 meseci, duže se unosi u godinama';
+
+  @override
+  String get warrantyYearsMin => 'Najmanje 1 godina';
+
+  @override
+  String warrantyUntil(String date) {
+    return 'Garancija do $date';
+  }
+
+  @override
+  String warrantyDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Još $count dana',
+      few: 'Još $count dana',
+      one: 'Još 1 dan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get warrantyEndsToday => 'Garancija ističe danas';
+
+  @override
+  String get warrantyExpired => 'Garancija istekla';
+
+  @override
+  String get purchaseDate => 'Datum kupovine';
+
+  @override
+  String get purchaseDateHint => 'Datum sa računa; od njega teče garancija.';
+
+  @override
+  String get notifyOnExpiry => 'Podseti pre isteka';
+
+  @override
+  String get notifyOnExpiryHint => '30 dana pre, i dan pred istek.';
+
+  @override
+  String get toolPriceOptional => 'Neobavezno, kad nema troška u kasi';
+
+  @override
+  String get openWalletEntry => 'Otvori trošak u kasi';
+
+  @override
+  String get activeTools => 'U upotrebi';
+
+  @override
+  String get archivedTools => 'Arhivirano';
+
+  @override
+  String get archive => 'Arhiviraj';
+
+  @override
+  String get unarchive => 'Vrati iz arhive';
+
+  @override
+  String archiveToolQ(String name) {
+    return 'Arhivirati $name?';
+  }
+
+  @override
+  String get archiveToolBody => 'Nestaje iz liste. Trošak ostaje u kasi.';
+
+  @override
+  String get entryHasTool =>
+      'Ovaj trošak je kupio alat, pa ne može da se obriše.';
+
+  @override
+  String get receipt => 'Račun';
+
+  @override
+  String get addReceipt => 'Dodaj račun';
+
+  @override
+  String get receiptHint => 'Slika, da ti je pri ruci kad ideš na reklamaciju.';
+
+  @override
+  String get receiptUploading => 'Šaljem sliku...';
+
+  @override
+  String get receiptCamera => 'Slikaj';
+
+  @override
+  String get receiptGallery => 'Izaberi iz galerije';
 }
