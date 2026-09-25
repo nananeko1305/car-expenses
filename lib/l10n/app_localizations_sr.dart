@@ -268,6 +268,24 @@ class AppLocalizationsSr extends AppLocalizations {
   String get darkMode => 'Tamni režim';
 
   @override
+  String get colorBlue => 'Plava';
+
+  @override
+  String get colorWarm => 'Topla';
+
+  @override
+  String get colorRed => 'Crvena';
+
+  @override
+  String get colorGreen => 'Zelena';
+
+  @override
+  String get colorYellow => 'Žuta';
+
+  @override
+  String get colorPurple => 'Ljubičasta';
+
+  @override
   String get syncing => 'Sinhronizujem...';
 
   @override
@@ -278,10 +296,10 @@ class AppLocalizationsSr extends AppLocalizations {
       'Ovaj auto ima servise, pa ne može da se obriše.';
 
   @override
-  String get addToWallet => 'Dodaj iznos u wallet';
+  String get addToWallet => 'Dodaj iznos u kasu';
 
   @override
-  String get addToWalletHint => 'Iznos servisa ulazi u zajednički wallet.';
+  String get addToWalletHint => 'Iznos servisa ulazi u zajedničku kasu.';
 
   @override
   String get person => 'Osoba';
@@ -300,7 +318,7 @@ class AppLocalizationsSr extends AppLocalizations {
   }
 
   @override
-  String get wallet => 'Wallet';
+  String get wallet => 'Kasa';
 
   @override
   String get balance => 'Stanje';
@@ -315,7 +333,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get newDeposit => 'Dodavanje sredstava';
 
   @override
-  String get newWithdrawal => 'Trošak iz walleta';
+  String get newWithdrawal => 'Trošak iz kase';
 
   @override
   String get editEntry => 'Izmena stavke';
@@ -345,7 +363,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get withdrawal => 'Trošak';
 
   @override
-  String get noMovements => 'Još nema promena u walletu.';
+  String get noMovements => 'Još nema promena u kasi.';
 
   @override
   String get deleteEntryQ => 'Obrisati ovu stavku?';

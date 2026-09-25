@@ -267,6 +267,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get darkMode => 'Dark mode';
 
   @override
+  String get colorBlue => 'Blue';
+
+  @override
+  String get colorWarm => 'Warm';
+
+  @override
+  String get colorRed => 'Red';
+
+  @override
+  String get colorGreen => 'Green';
+
+  @override
+  String get colorYellow => 'Yellow';
+
+  @override
+  String get colorPurple => 'Purple';
+
+  @override
   String get syncing => 'Syncing...';
 
   @override
