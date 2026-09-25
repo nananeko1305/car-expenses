@@ -39,7 +39,6 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
   late final bool _canEdit =
       _old == null || widget.profile.canEdit(_old.ownerId);
   late String _vehicleId = _initialVehicle();
-  late String _performedBy = _old?.performedBy ?? widget.profile.uid;
   late DateTime _date = _old?.date ?? DateUtils.dateOnly(DateTime.now());
   late Currency _currency = _old?.currency ?? Currency.rsd;
   late bool _toWallet = _old?.toWallet ?? true;
@@ -76,7 +75,6 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
       id: _old?.id ?? '',
       // Editing keeps the original author, even when the admin edits.
       ownerId: _old?.ownerId ?? widget.profile.uid,
-      performedBy: _performedBy,
       vehicleId: _vehicleId,
       date: _date,
       amountMinor: parseMoney(_amount.text)!,
@@ -137,22 +135,6 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
                   ),
               ],
               onChanged: (id) => setState(() => _vehicleId = id),
-            ),
-            const SizedBox(height: 14),
-            PickerField(
-              label: t.performedBy,
-              icon: Icons.handyman_rounded,
-              value: _performedBy,
-              enabled: _canEdit,
-              options: [
-                for (final u in widget.data.users!)
-                  SheetOption(
-                    id: u.uid,
-                    label: u.displayName,
-                    subtitle: u.email,
-                  ),
-              ],
-              onChanged: (id) => setState(() => _performedBy = id),
             ),
             const SizedBox(height: 14),
             DateField(

@@ -108,7 +108,6 @@
   "addToWallet": "Add amount to wallet",
   "addToWalletHint": "The service amount goes into the shared wallet.",
   "person": "Person",
-  "performedBy": "Done by",
   "allPeople": "Everyone",
   "enteredBy": "Entered by {name}",
   "@enteredBy": {

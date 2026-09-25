@@ -9,7 +9,6 @@ import 'package:intl/date_symbol_data_local.dart';
 final _repair = Repair(
   id: 'r1',
   ownerId: 'u1',
-  performedBy: 'u1',
   vehicleId: 'v1',
   date: DateTime(2026, 9, 21),
   amountMinor: 1500000,
@@ -23,7 +22,7 @@ Widget _app(bool dark) => MaterialApp(
     body: RepairCard(
       repair: _repair,
       vehicle: null,
-      personName: 'Petar Petrović',
+      authorName: 'Petar Petrović',
       onTap: () {},
     ),
   ),

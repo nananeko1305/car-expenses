@@ -107,9 +107,7 @@ service cloud.firestore {
           && d.description is string && d.description.size() > 0
           && d.description.size() <= 2000
           && (d.mileage == null || (d.mileage is int && d.mileage >= 0))
-          && d.get('toWallet', true) is bool
-          // Older app versions still write services without this field.
-          && (!('performedBy' in d) || exists(userPath(d.performedBy)));
+          && d.get('toWallet', true) is bool;
       }
     }
 
