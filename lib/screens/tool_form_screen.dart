@@ -16,8 +16,13 @@ import '../widgets/money_fields.dart';
 import '../widgets/tool_fields.dart';
 import 'wallet_entry_screen.dart';
 
-/// Create or edit a tool. A tool is never deleted, only archived, so the
-/// spending that bought it is never dragged along.
+/// Create or edit a tool.
+///
+/// Unlike services and wallet entries, a tool belongs to the workshop
+/// rather than to whoever typed it in: anyone may correct a warranty or
+/// add the receipt. Who entered it is still recorded, and a tool is
+/// never deleted, only archived, so the spending that bought it is never
+/// dragged along.
 class ToolFormScreen extends StatefulWidget {
   const ToolFormScreen({
     super.key,
@@ -37,8 +42,6 @@ class ToolFormScreen extends StatefulWidget {
 class _ToolFormScreenState extends State<ToolFormScreen> {
   final _formKey = GlobalKey<FormState>();
   late final Tool? _old = widget.tool;
-  late final bool _canEdit =
-      _old == null || widget.profile.canEdit(_old.ownerId);
   late final _draft = ToolDraft(tool: _old);
   late DateTime _date =
       _old?.purchaseDate ?? DateUtils.dateOnly(DateTime.now());
@@ -102,7 +105,7 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
       appBar: AppBar(
         title: Text(_old == null ? t.newTool : t.editTool),
         actions: [
-          if (_old != null && _canEdit)
+          if (_old != null)
             IconButton(
               tooltip: _old.archived ? t.unarchive : t.archive,
               icon: Icon(
@@ -125,11 +128,7 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
                   const Icon(Icons.person_rounded, size: 18),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(
-                      _canEdit
-                          ? t.enteredBy(widget.data.nameOf(_old.ownerId))
-                          : t.readOnlyNotice(widget.data.nameOf(_old.ownerId)),
-                    ),
+                    child: Text(t.enteredBy(widget.data.nameOf(_old.ownerId))),
                   ),
                 ],
               ),
@@ -138,14 +137,12 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
             ToolFields(
               draft: _draft,
               purchaseDate: _date,
-              enabled: _canEdit,
               onChanged: () => setState(() {}),
             ),
             const SizedBox(height: 6),
             DateField(
               label: t.purchaseDate,
               value: _date,
-              enabled: _canEdit,
               onChanged: (d) => setState(() => _date = d),
             ),
             const SizedBox(height: 14),
@@ -153,17 +150,14 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
               MoneyFields(
                 amount: _amount,
                 currency: _currency,
-                enabled: _canEdit,
                 optional: true,
                 helperText: t.toolPriceOptional,
                 onCurrency: (c) => setState(() => _currency = c),
               )
             else
               _entryTile(t, entry),
-            if (_canEdit) ...[
-              const SizedBox(height: 20),
-              FilledButton(onPressed: _save, child: Text(t.save)),
-            ],
+            const SizedBox(height: 20),
+            FilledButton(onPressed: _save, child: Text(t.save)),
           ],
         ),
       ),
