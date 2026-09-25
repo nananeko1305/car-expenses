@@ -23,6 +23,22 @@ class ReceiptUpload {
   /// receipt controls then stay hidden instead of failing on use.
   static bool get isConfigured => _cloud.isNotEmpty && _preset.isNotEmpty;
 
+  /// The same image, delivered small.
+  ///
+  /// A list tile is 40 points wide but the stored photo is 1600 pixels,
+  /// and downloading all of it to shrink it on the phone is the fastest
+  /// way to spend the free bandwidth. Cloudinary resizes on its side
+  /// when the recipe is in the URL. Anything that is not one of its URLs
+  /// is left alone.
+  static String thumbnail(String url, {int size = 160}) {
+    const marker = '/image/upload/';
+    final at = url.indexOf(marker);
+    if (!url.startsWith('https://res.cloudinary.com/') || at < 0) return url;
+    final cut = at + marker.length;
+    return '${url.substring(0, cut)}w_$size,h_$size,c_fill,q_auto,f_auto/'
+        '${url.substring(cut)}';
+  }
+
   /// The secure URL of the uploaded image.
   static Future<String> send(XFile file) async {
     final request =
