@@ -1153,6 +1153,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick from the gallery'**
   String get receiptGallery;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
 }
 
 class _AppLocalizationsDelegate

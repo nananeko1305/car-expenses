@@ -576,4 +576,7 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get receiptGallery => 'Izaberi iz galerije';
+
+  @override
+  String get share => 'Podeli';
 }

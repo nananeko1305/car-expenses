@@ -203,5 +203,6 @@
   "receiptHint": "Slika, da ti je pri ruci kad ideš na reklamaciju.",
   "receiptUploading": "Šaljem sliku...",
   "receiptCamera": "Slikaj",
-  "receiptGallery": "Izaberi iz galerije"
+  "receiptGallery": "Izaberi iz galerije",
+  "share": "Podeli"
 }

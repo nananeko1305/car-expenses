@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
+import '../screens/receipt_screen.dart';
 import '../services/receipt_upload.dart';
 import '../theme/app_colors.dart';
 
@@ -77,6 +77,15 @@ class _ReceiptFieldState extends State<ReceiptField> {
     if (source != null) await _pick(source);
   }
 
+  void _open() {
+    final t = AppLocalizations.of(context);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ReceiptScreen(url: widget.url, title: t.receipt),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // A build made without the upload settings hides the whole thing
@@ -103,7 +112,7 @@ class _ReceiptFieldState extends State<ReceiptField> {
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  widget.url,
+                  ReceiptUpload.thumbnail(widget.url),
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
@@ -118,9 +127,7 @@ class _ReceiptFieldState extends State<ReceiptField> {
               ),
         title: Text(has ? t.receipt : t.addReceipt),
         subtitle: Text(_busy ? t.receiptUploading : t.receiptHint),
-        onTap: _busy || !widget.enabled
-            ? null
-            : (has ? () => launchUrl(Uri.parse(widget.url)) : _choose),
+        onTap: _busy || !widget.enabled ? null : (has ? _open : _choose),
         trailing: !has || _busy || !widget.enabled
             ? null
             : Row(

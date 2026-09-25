@@ -248,5 +248,6 @@
   "receiptHint": "A photo, so you have it when you claim the warranty.",
   "receiptUploading": "Sending the photo...",
   "receiptCamera": "Take a photo",
-  "receiptGallery": "Pick from the gallery"
+  "receiptGallery": "Pick from the gallery",
+  "share": "Share"
 }
