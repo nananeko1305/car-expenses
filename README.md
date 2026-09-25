@@ -33,6 +33,11 @@ Users change their own name and password in Settings.
   link back to that spending. A tool is archived, never deleted, so the
   spending is never dragged along with it; spending that bought a tool
   cannot be deleted either.
+- **Receipts** are photographed in the app and stored on Cloudinary, not in
+  Firebase. The cloud and preset names are build inputs
+  (`--dart-define=CLOUDINARY_CLOUD=…`, `--dart-define=CLOUDINARY_PRESET=…`,
+  set as repository secrets); a build without them simply hides the receipt
+  controls.
 - A car that has services cannot be deleted.
 
 ## Data model
@@ -43,7 +48,7 @@ Users change their own name and password in Settings.
 | `vehicles/{id}`      | `ownerId` (author), `name`, `plate`                                 |
 | `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
-| `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `notify`, `archived` |
+| `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
 
 `warrantyEndsAt` mirrors the date computed from `purchaseDate` and the

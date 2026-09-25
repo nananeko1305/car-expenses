@@ -1117,6 +1117,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This spending bought a tool, so it can\'t be deleted.'**
   String get entryHasTool;
+
+  /// No description provided for @receipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get receipt;
+
+  /// No description provided for @addReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the receipt'**
+  String get addReceipt;
+
+  /// No description provided for @receiptHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A photo, so you have it when you claim the warranty.'**
+  String get receiptHint;
+
+  /// No description provided for @receiptUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the photo...'**
+  String get receiptUploading;
+
+  /// No description provided for @receiptCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get receiptCamera;
+
+  /// No description provided for @receiptGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from the gallery'**
+  String get receiptGallery;
 }
 
 class _AppLocalizationsDelegate

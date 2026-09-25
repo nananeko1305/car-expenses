@@ -13,6 +13,7 @@ class ToolDraft {
         text: (tool?.warrantyAmount ?? _defaultYears).toString(),
       ),
       unit = tool?.warrantyUnit ?? WarrantyUnit.years,
+      receiptUrl = tool?.receiptUrl ?? '',
       notify = tool?.notify ?? true;
 
   /// Two years is the legal warranty on most things, so it is the guess
@@ -22,6 +23,7 @@ class ToolDraft {
   final TextEditingController name;
   final TextEditingController warranty;
   WarrantyUnit unit;
+  String receiptUrl;
   bool notify;
 
   void dispose() {
@@ -49,6 +51,7 @@ class ToolDraft {
     amountMinor: amountMinor,
     currency: currency,
     entryId: entryId,
+    receiptUrl: receiptUrl,
     notify: notify,
     archived: archived,
   );

@@ -248,5 +248,11 @@
     }
   },
   "archiveToolBody": "It leaves the list. The spending stays in the wallet.",
-  "entryHasTool": "This spending bought a tool, so it can't be deleted."
+  "entryHasTool": "This spending bought a tool, so it can't be deleted.",
+  "receipt": "Receipt",
+  "addReceipt": "Add the receipt",
+  "receiptHint": "A photo, so you have it when you claim the warranty.",
+  "receiptUploading": "Sending the photo...",
+  "receiptCamera": "Take a photo",
+  "receiptGallery": "Pick from the gallery"
 }

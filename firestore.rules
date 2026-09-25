@@ -134,6 +134,10 @@ service cloud.firestore {
           // Not exists(): a tool and its entry are written in one batch,
           // where exists() still sees the state before the batch.
           && d.entryId is string
+          // Only a link to our own image host, so a bad client cannot
+          // turn the field into a redirect to anywhere.
+          && d.receiptUrl is string
+          && (d.receiptUrl == '' || d.receiptUrl.matches('https://res[.]cloudinary[.]com/.*'))
           && d.notify is bool && d.archived is bool;
       }
     }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/tool_draft.dart';
 import '../models/warranty.dart';
+import 'receipt_field.dart';
 import 'warranty_duration_field.dart';
 
 /// What a tool needs beyond its price and purchase date: what it is, how
@@ -51,6 +52,15 @@ class ToolFields extends StatelessWidget {
           enabled: enabled,
           onUnit: (u) {
             draft.unit = u;
+            onChanged();
+          },
+        ),
+        const SizedBox(height: 14),
+        ReceiptField(
+          url: draft.receiptUrl,
+          enabled: enabled,
+          onChanged: (url) {
+            draft.receiptUrl = url;
             onChanged();
           },
         ),

@@ -558,4 +558,22 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get entryHasTool =>
       'Ovaj trošak je kupio alat, pa ne može da se obriše.';
+
+  @override
+  String get receipt => 'Račun';
+
+  @override
+  String get addReceipt => 'Dodaj račun';
+
+  @override
+  String get receiptHint => 'Slika, da ti je pri ruci kad ideš na reklamaciju.';
+
+  @override
+  String get receiptUploading => 'Šaljem sliku...';
+
+  @override
+  String get receiptCamera => 'Slikaj';
+
+  @override
+  String get receiptGallery => 'Izaberi iz galerije';
 }

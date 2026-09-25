@@ -83,11 +83,23 @@ class ToolCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  if (tool.receiptUrl.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 6),
+                      child: Icon(
+                        Icons.receipt_long_rounded,
+                        size: 18,
+                        color: context.colors.ink.withValues(alpha: 0.45),
+                      ),
+                    ),
                   if (tool.notify && !tool.archived)
-                    Icon(
-                      Icons.notifications_active_rounded,
-                      size: 18,
-                      color: context.colors.ink.withValues(alpha: 0.45),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 6),
+                      child: Icon(
+                        Icons.notifications_active_rounded,
+                        size: 18,
+                        color: context.colors.ink.withValues(alpha: 0.45),
+                      ),
                     ),
                 ],
               ),

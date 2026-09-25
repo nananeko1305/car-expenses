@@ -558,4 +558,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get entryHasTool =>
       'This spending bought a tool, so it can\'t be deleted.';
+
+  @override
+  String get receipt => 'Receipt';
+
+  @override
+  String get addReceipt => 'Add the receipt';
+
+  @override
+  String get receiptHint =>
+      'A photo, so you have it when you claim the warranty.';
+
+  @override
+  String get receiptUploading => 'Sending the photo...';
+
+  @override
+  String get receiptCamera => 'Take a photo';
+
+  @override
+  String get receiptGallery => 'Pick from the gallery';
 }

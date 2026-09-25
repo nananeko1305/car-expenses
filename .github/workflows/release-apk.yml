@@ -89,10 +89,15 @@ jobs:
           keyPassword=$KEY_PASSWORD
           EOF
 
+      # The Cloudinary cloud and preset are build inputs, not source: the
+      # repository is public and they are enough to upload into the
+      # account. Without them the receipt controls stay hidden.
       - name: Build release APK
         run: >
           flutter build apk --release
           --build-number=${{ github.run_number }}
+          --dart-define=CLOUDINARY_CLOUD=${{ secrets.CLOUDINARY_CLOUD }}
+          --dart-define=CLOUDINARY_PRESET=${{ secrets.CLOUDINARY_PRESET }}
           --obfuscate --split-debug-info=build/symbols
 
       # The release push references these strings by name (loc keys); if

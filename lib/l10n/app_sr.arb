@@ -197,5 +197,11 @@
     }
   },
   "archiveToolBody": "Nestaje iz liste. Trošak ostaje u kasi.",
-  "entryHasTool": "Ovaj trošak je kupio alat, pa ne može da se obriše."
+  "entryHasTool": "Ovaj trošak je kupio alat, pa ne može da se obriše.",
+  "receipt": "Račun",
+  "addReceipt": "Dodaj račun",
+  "receiptHint": "Slika, da ti je pri ruci kad ideš na reklamaciju.",
+  "receiptUploading": "Šaljem sliku...",
+  "receiptCamera": "Slikaj",
+  "receiptGallery": "Izaberi iz galerije"
 }

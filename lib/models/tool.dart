@@ -20,6 +20,7 @@ class Tool {
     this.amountMinor,
     this.currency,
     this.entryId = '',
+    this.receiptUrl = '',
     this.notify = true,
     this.archived = false,
   });
@@ -44,6 +45,9 @@ class Tool {
 
   /// The `walletEntries/{id}` that bought it, or empty.
   final String entryId;
+
+  /// Photo of the receipt, hosted outside Firebase, or empty.
+  final String receiptUrl;
 
   /// Whether the crew is reminded before the warranty runs out.
   final bool notify;
@@ -76,6 +80,7 @@ class Tool {
       amountMinor: (data['amountMinor'] as num?)?.toInt(),
       currency: currency == null ? null : currencyFromCode(currency),
       entryId: data['entryId'] as String? ?? '',
+      receiptUrl: data['receiptUrl'] as String? ?? '',
       notify: data['notify'] as bool? ?? true,
       archived: data['archived'] as bool? ?? false,
     );
@@ -95,6 +100,7 @@ class Tool {
     'amountMinor': amountMinor,
     'currency': currency?.code,
     'entryId': entryId,
+    'receiptUrl': receiptUrl,
     'notify': notify,
     'archived': archived,
     'updatedAt': FieldValue.serverTimestamp(),

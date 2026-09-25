@@ -69,6 +69,7 @@ void main() {
         'amountMinor',
         'currency',
         'entryId',
+        'receiptUrl',
         'notify',
         'archived',
         'updatedAt',
