@@ -61,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                children: [for (final p in kPalettes) _swatch(p)],
+                children: [for (final p in kPalettes) _swatch(t, p)],
               ),
               const SizedBox(height: 16),
               SwitchListTile(
@@ -129,10 +129,10 @@ class SettingsScreen extends StatelessWidget {
     ),
   );
 
-  Widget _swatch(AppPalette p) {
+  Widget _swatch(AppLocalizations t, AppPalette p) {
     final selected = themeController.current.id == p.id;
     return Tooltip(
-      message: p.label,
+      message: _paletteName(t, p),
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: () => themeController.select(p),
@@ -146,4 +146,16 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
+
+  /// The palette's own [AppPalette.label] is an English fallback; the
+  /// settings screen shows the name in the app language.
+  String _paletteName(AppLocalizations t, AppPalette p) => switch (p.id) {
+    'plava' => t.colorBlue,
+    'topla' => t.colorWarm,
+    'crvena' => t.colorRed,
+    'zelena' => t.colorGreen,
+    'zuta' => t.colorYellow,
+    'ljubicasta' => t.colorPurple,
+    _ => p.label,
+  };
 }
