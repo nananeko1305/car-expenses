@@ -28,7 +28,10 @@ Users change their own name and password in Settings.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
   add funds or record spending (amount, what for, date, who).
-- **Tools**: everything that is not consumable, with its warranty. Spending
+- **Tools** are the one shared record anyone may edit: a warranty or a
+  receipt can be corrected by whoever notices it is wrong, not only by the
+  person who entered it. Everything that is not consumable, with its
+  warranty. Spending
   from the wallet offers to record the tool it bought, and the tool keeps a
   link back to that spending. A tool is archived, never deleted, so the
   spending is never dragged along with it; spending that bought a tool

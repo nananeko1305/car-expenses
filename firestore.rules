@@ -111,12 +111,14 @@ service cloud.firestore {
       }
     }
 
-    // Tools are archived, never deleted: the spending that bought one
+    // Tools belong to the workshop, not to whoever typed them in, so
+    // anyone active may correct one — but not rewrite who entered it.
+    // They are archived, never deleted: the spending that bought one
     // must never be at risk of going with it.
     match /tools/{id} {
       allow read: if isActive();
       allow create: if authorCreates('ownerId') && validTool();
-      allow update: if authorOrAdmin('ownerId') && keepsAuthor('ownerId') && validTool();
+      allow update: if isActive() && keepsAuthor('ownerId') && validTool();
       allow delete: if false;
 
       function validTool() {
