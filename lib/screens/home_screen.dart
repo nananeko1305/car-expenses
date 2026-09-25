@@ -14,6 +14,7 @@ import '../widgets/sync_banner.dart';
 import '../widgets/update_dialog.dart';
 import 'services_tab.dart';
 import 'settings_screen.dart';
+import 'tools_screen.dart';
 import 'users_screen.dart';
 import 'vehicle_search_screen.dart';
 import 'vehicles_screen.dart';
@@ -80,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _openSearch();
       case DrawerDestination.vehicles:
         _open(VehiclesScreen(data: _data, profile: widget.profile));
+      case DrawerDestination.tools:
+        _open(ToolsScreen(data: _data, profile: widget.profile));
       case DrawerDestination.users:
         _open(UsersScreen(currentUid: widget.profile.uid));
       case DrawerDestination.settings:

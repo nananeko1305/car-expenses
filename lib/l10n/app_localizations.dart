@@ -925,6 +925,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version} (build {build})'**
   String appVersion(String version, String build);
+
+  /// No description provided for @tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get tools;
+
+  /// No description provided for @noTools.
+  ///
+  /// In en, this message translates to:
+  /// **'No tools yet.'**
+  String get noTools;
+
+  /// No description provided for @noToolsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A tool is usually added while spending from the wallet, or with the button below.'**
+  String get noToolsHint;
+
+  /// No description provided for @addTool.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tool'**
+  String get addTool;
+
+  /// No description provided for @newTool.
+  ///
+  /// In en, this message translates to:
+  /// **'New tool'**
+  String get newTool;
+
+  /// No description provided for @editTool.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit tool'**
+  String get editTool;
+
+  /// No description provided for @toolName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tool'**
+  String get toolName;
+
+  /// No description provided for @toolNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. impact driver'**
+  String get toolNameHint;
+
+  /// No description provided for @addToTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to tools'**
+  String get addToTools;
+
+  /// No description provided for @addToToolsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything that is not consumable is a tool.'**
+  String get addToToolsHint;
+
+  /// No description provided for @warranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty'**
+  String get warranty;
+
+  /// No description provided for @warrantyMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Months'**
+  String get warrantyMonths;
+
+  /// No description provided for @warrantyYears.
+  ///
+  /// In en, this message translates to:
+  /// **'Years'**
+  String get warrantyYears;
+
+  /// No description provided for @warrantyMonthsRange.
+  ///
+  /// In en, this message translates to:
+  /// **'1 to 12 months, longer ones in years'**
+  String get warrantyMonthsRange;
+
+  /// No description provided for @warrantyYearsMin.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 1 year'**
+  String get warrantyYearsMin;
+
+  /// No description provided for @warrantyUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty until {date}'**
+  String warrantyUntil(String date);
+
+  /// No description provided for @warrantyDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day left} other{{count} days left}}'**
+  String warrantyDaysLeft(int count);
+
+  /// No description provided for @warrantyEndsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty ends today'**
+  String get warrantyEndsToday;
+
+  /// No description provided for @warrantyExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty expired'**
+  String get warrantyExpired;
+
+  /// No description provided for @purchaseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase date'**
+  String get purchaseDate;
+
+  /// No description provided for @purchaseDateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The date on the receipt; the warranty starts then.'**
+  String get purchaseDateHint;
+
+  /// No description provided for @notifyOnExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind before it expires'**
+  String get notifyOnExpiry;
+
+  /// No description provided for @notifyOnExpiryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days before, and the day before.'**
+  String get notifyOnExpiryHint;
+
+  /// No description provided for @toolPriceOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional, when there is no wallet entry'**
+  String get toolPriceOptional;
+
+  /// No description provided for @openWalletEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the spending in the wallet'**
+  String get openWalletEntry;
+
+  /// No description provided for @activeTools.
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get activeTools;
+
+  /// No description provided for @archivedTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get archivedTools;
+
+  /// No description provided for @archive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get archive;
+
+  /// No description provided for @unarchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get unarchive;
+
+  /// No description provided for @archiveToolQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive {name}?'**
+  String archiveToolQ(String name);
+
+  /// No description provided for @archiveToolBody.
+  ///
+  /// In en, this message translates to:
+  /// **'It leaves the list. The spending stays in the wallet.'**
+  String get archiveToolBody;
+
+  /// No description provided for @entryHasTool.
+  ///
+  /// In en, this message translates to:
+  /// **'This spending bought a tool, so it can\'t be deleted.'**
+  String get entryHasTool;
 }
 
 class _AppLocalizationsDelegate

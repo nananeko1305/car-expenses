@@ -195,5 +195,58 @@
         "type": "String"
       }
     }
-  }
+  },
+  "tools": "Tools",
+  "noTools": "No tools yet.",
+  "noToolsHint": "A tool is usually added while spending from the wallet, or with the button below.",
+  "addTool": "Add tool",
+  "newTool": "New tool",
+  "editTool": "Edit tool",
+  "toolName": "Tool",
+  "toolNameHint": "e.g. impact driver",
+  "addToTools": "Add to tools",
+  "addToToolsHint": "Everything that is not consumable is a tool.",
+  "warranty": "Warranty",
+  "warrantyMonths": "Months",
+  "warrantyYears": "Years",
+  "warrantyMonthsRange": "1 to 12 months, longer ones in years",
+  "warrantyYearsMin": "At least 1 year",
+  "warrantyUntil": "Warranty until {date}",
+  "@warrantyUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "warrantyDaysLeft": "{count, plural, =1{1 day left} other{{count} days left}}",
+  "@warrantyDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "warrantyEndsToday": "Warranty ends today",
+  "warrantyExpired": "Warranty expired",
+  "purchaseDate": "Purchase date",
+  "purchaseDateHint": "The date on the receipt; the warranty starts then.",
+  "notifyOnExpiry": "Remind before it expires",
+  "notifyOnExpiryHint": "30 days before, and the day before.",
+  "toolPriceOptional": "Optional, when there is no wallet entry",
+  "openWalletEntry": "Open the spending in the wallet",
+  "activeTools": "In use",
+  "archivedTools": "Archived",
+  "archive": "Archive",
+  "unarchive": "Restore",
+  "archiveToolQ": "Archive {name}?",
+  "@archiveToolQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "archiveToolBody": "It leaves the list. The spending stays in the wallet.",
+  "entryHasTool": "This spending bought a tool, so it can't be deleted."
 }

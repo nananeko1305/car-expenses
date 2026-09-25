@@ -11,6 +11,7 @@ enum DrawerDestination {
   wallet,
   search,
   vehicles,
+  tools,
   users,
   settings,
   signOut,
@@ -84,6 +85,11 @@ class AppDrawer extends StatelessWidget {
                     DrawerDestination.vehicles,
                     Icons.directions_car_rounded,
                     t.vehicles,
+                  ),
+                  item(
+                    DrawerDestination.tools,
+                    Icons.handyman_rounded,
+                    t.tools,
                   ),
                   if (profile.isAdmin)
                     item(DrawerDestination.users, Icons.group_rounded, t.users),

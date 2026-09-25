@@ -28,6 +28,11 @@ Users change their own name and password in Settings.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
   add funds or record spending (amount, what for, date, who).
+- **Tools**: everything that is not consumable, with its warranty. Spending
+  from the wallet offers to record the tool it bought, and the tool keeps a
+  link back to that spending. A tool is archived, never deleted, so the
+  spending is never dragged along with it; spending that bought a tool
+  cannot be deleted either.
 - A car that has services cannot be deleted.
 
 ## Data model
@@ -38,7 +43,11 @@ Users change their own name and password in Settings.
 | `vehicles/{id}`      | `ownerId` (author), `name`, `plate`                                 |
 | `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
+| `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `notify`, `archived` |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
+
+`warrantyEndsAt` mirrors the date computed from `purchaseDate` and the
+duration; the app always recomputes it and never reads it back.
 
 Amounts are stored in minor units (para / cents) as integers. The wallet
 balance is computed from services + entries, never stored, so it cannot

@@ -111,6 +111,33 @@ service cloud.firestore {
       }
     }
 
+    // Tools are archived, never deleted: the spending that bought one
+    // must never be at risk of going with it.
+    match /tools/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validTool();
+      allow update: if authorOrAdmin('ownerId') && keepsAuthor('ownerId') && validTool();
+      allow delete: if false;
+
+      function validTool() {
+        let d = request.resource.data;
+        return d.name is string && d.name.size() > 0 && d.name.size() <= 100
+          && d.purchaseDate is timestamp
+          && d.warrantyAmount is int && d.warrantyAmount > 0
+          && d.warrantyUnit in ['months', 'years']
+          && (d.warrantyUnit == 'years' || d.warrantyAmount <= 12)
+          // Mirrors the computed end date, for the expiry reminders.
+          && d.warrantyEndsAt is timestamp && d.warrantyEndsAt > d.purchaseDate
+          // A tool bought outside the wallet has no price and no entry.
+          && (d.amountMinor == null || (d.amountMinor is int && d.amountMinor > 0))
+          && (d.currency == null || d.currency in ['RSD', 'EUR'])
+          // Not exists(): a tool and its entry are written in one batch,
+          // where exists() still sees the state before the batch.
+          && d.entryId is string
+          && d.notify is bool && d.archived is bool;
+      }
+    }
+
     match /walletEntries/{id} {
       allow read: if isActive();
       allow create: if authorCreates('createdBy') && validEntry();
