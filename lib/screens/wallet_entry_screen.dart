@@ -23,9 +23,10 @@ import 'tool_form_screen.dart';
 /// Add funds to, or spend from, the wallet: amount, what for, date and
 /// who. Only the person who recorded it (or the admin) can change it.
 ///
-/// Spending can record the tool it bought in the same go. That only
-/// happens while creating the entry — offering it on an edit as well
-/// would make every save produce another tool.
+/// Spending can record the tool it bought in the same go, once the
+/// switch for it is turned on. That only happens while creating the
+/// entry — offering it on an edit as well would make every save produce
+/// another tool.
 class WalletEntryScreen extends StatefulWidget {
   const WalletEntryScreen({
     super.key,
@@ -60,9 +61,11 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
     text: _old?.description ?? '',
   );
   late final _tool = ToolDraft();
-  bool _addTool = true;
 
-  /// Everything that is not consumable is a tool, so the switch starts on.
+  /// Off until it is asked for: most spending is not a tool purchase, and
+  /// the extra fields only appear once the switch is on.
+  bool _addTool = false;
+
   bool get _buyingTool => _spending && _old == null && _addTool;
 
   /// The tool this spending already bought, when editing one.
