@@ -249,5 +249,17 @@
   "receiptUploading": "Sending the photo...",
   "receiptCamera": "Take a photo",
   "receiptGallery": "Pick from the gallery",
-  "share": "Share"
+  "share": "Share",
+  "monthlyReport": "Monthly report",
+  "reportByMonth": "By month",
+  "reportAllTime": "All time",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
+  "earnedThisMonth": "Earned this month",
+  "earnedFromServices": "Earned from services",
+  "otherIncome": "Other income",
+  "costs": "Costs",
+  "ofWhichTools": "of which tools",
+  "net": "Net",
+  "openReport": "Report"
 }

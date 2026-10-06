@@ -12,6 +12,7 @@ import '../services/update_checker.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/update_dialog.dart';
+import 'report_screen.dart';
 import 'services_tab.dart';
 import 'settings_screen.dart';
 import 'tools_screen.dart';
@@ -77,6 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() => _tab = 0);
       case DrawerDestination.wallet:
         setState(() => _tab = 1);
+      case DrawerDestination.report:
+        _open(ReportScreen(data: _data));
       case DrawerDestination.search:
         _openSearch();
       case DrawerDestination.vehicles:

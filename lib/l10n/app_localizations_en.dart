@@ -580,4 +580,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get share => 'Share';
+
+  @override
+  String get monthlyReport => 'Monthly report';
+
+  @override
+  String get reportByMonth => 'By month';
+
+  @override
+  String get reportAllTime => 'All time';
+
+  @override
+  String get previousMonth => 'Previous month';
+
+  @override
+  String get nextMonth => 'Next month';
+
+  @override
+  String get earnedThisMonth => 'Earned this month';
+
+  @override
+  String get earnedFromServices => 'Earned from services';
+
+  @override
+  String get otherIncome => 'Other income';
+
+  @override
+  String get costs => 'Costs';
+
+  @override
+  String get ofWhichTools => 'of which tools';
+
+  @override
+  String get net => 'Net';
+
+  @override
+  String get openReport => 'Report';
 }

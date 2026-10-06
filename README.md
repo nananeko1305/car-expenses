@@ -41,6 +41,12 @@ Users change their own name and password in Settings.
   (`--dart-define=CLOUDINARY_CLOUD=…`, `--dart-define=CLOUDINARY_PRESET=…`,
   set as repository secrets); a build without them simply hides the receipt
   controls.
+- **Monthly report** (menu, or the card on Services) covers one month or
+  all time: what services earned (every service, whether or not its money
+  went into the wallet), how many cars and services there were, other
+  income (wallet deposits), costs (wallet spending plus tools paid outside
+  the wallet), how much of the costs went on tools, and the net. Like the
+  balance, it is computed, never stored.
 - A car that has services cannot be deleted.
 
 ## Data model

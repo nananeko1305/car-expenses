@@ -9,6 +9,7 @@ import '../theme/app_colors.dart';
 enum DrawerDestination {
   services,
   wallet,
+  report,
   search,
   vehicles,
   tools,
@@ -75,6 +76,11 @@ class AppDrawer extends StatelessWidget {
                     Icons.account_balance_wallet_rounded,
                     t.wallet,
                     selected: selectedTab == 1,
+                  ),
+                  item(
+                    DrawerDestination.report,
+                    Icons.insights_rounded,
+                    t.monthlyReport,
                   ),
                   item(
                     DrawerDestination.search,
