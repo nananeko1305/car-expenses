@@ -9,6 +9,10 @@ typedef Amounts = Map<Currency, int>;
 /// The first day of the month [d] falls in.
 DateTime monthOf(DateTime d) => DateTime(d.year, d.month);
 
+/// Whether [d] falls in the same calendar month as [month].
+bool inMonth(DateTime d, DateTime month) =>
+    d.year == month.year && d.month == month.month;
+
 /// What the workshop did, took in and spent over one calendar month, or
 /// over all time. Worked out from the live data, never stored.
 class Report {
@@ -32,8 +36,7 @@ class Report {
     List<WalletEntry> entries = const [],
     List<Tool> tools = const [],
   }) {
-    bool within(DateTime d) =>
-        month == null || (d.year == month.year && d.month == month.month);
+    bool within(DateTime d) => month == null || inMonth(d, month);
 
     final earned = <Currency, int>{};
     final cars = <String>{};

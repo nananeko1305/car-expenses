@@ -46,7 +46,9 @@ Users change their own name and password in Settings.
   went into the wallet), how many cars and services there were, other
   income (wallet deposits), costs (wallet spending plus tools paid outside
   the wallet), how much of the costs went on tools, and the net. Like the
-  balance, it is computed, never stored.
+  balance, it is computed, never stored. Services lists only the current
+  month; a month's report lists that month's services, and every car keeps
+  its full history.
 - A car that has services cannot be deleted.
 
 ## Data model

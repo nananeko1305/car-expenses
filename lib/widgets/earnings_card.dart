@@ -6,8 +6,8 @@ import '../models/report.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
 
-/// What the shown services earned this month, with all time beneath it.
-/// Tapping it opens the monthly report.
+/// What the shown services earned this month. All time is left to the
+/// report, which tapping it opens.
 class EarningsCard extends StatelessWidget {
   const EarningsCard({
     super.key,
@@ -23,7 +23,6 @@ class EarningsCard extends StatelessWidget {
     final t = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toLanguageTag();
     final month = Report.of(month: DateTime.now(), repairs: repairs);
-    final allTime = Report.of(repairs: repairs);
     final soft = Colors.white.withValues(alpha: 0.85);
 
     return Material(
@@ -72,50 +71,6 @@ class EarningsCard extends StatelessWidget {
               Text(
                 t.repairsCount(month.services),
                 style: TextStyle(color: soft),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                child: Divider(
-                  height: 1,
-                  color: Colors.white.withValues(alpha: 0.25),
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          t.reportAllTime,
-                          style: TextStyle(
-                            color: soft,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          t.repairsCount(allTime.services),
-                          style: TextStyle(color: soft, fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      for (final line in formatSums(allTime.earned, locale))
-                        Text(
-                          line,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
               ),
             ],
           ),

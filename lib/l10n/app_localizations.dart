@@ -1231,6 +1231,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Report'**
   String get openReport;
+
+  /// No description provided for @noRepairsThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No services this month yet.\nEarlier ones are in the monthly report.'**
+  String get noRepairsThisMonth;
+
+  /// No description provided for @noRepairsInMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No services this month.'**
+  String get noRepairsInMonth;
 }
 
 class _AppLocalizationsDelegate

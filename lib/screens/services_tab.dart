@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../models/repair.dart';
+import '../models/report.dart';
 import '../services/live_data.dart';
 import '../widgets/filter_pill.dart';
 import '../widgets/option_sheet.dart';
@@ -46,14 +47,19 @@ class _ServicesTabState extends State<ServicesTab> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final vehicles = _data.vehicles!;
+    // Only this month's services; earlier ones are in the monthly report.
+    final now = DateTime.now();
+    final thisMonth = _data.repairs!
+        .where((r) => inMonth(r.date, now))
+        .toList();
     // Services per car / per person, shown in the filter sheets.
     final perVehicle = <String, int>{};
     final perUser = <String, int>{};
-    for (final r in _data.repairs!) {
+    for (final r in thisMonth) {
       perVehicle[r.vehicleId] = (perVehicle[r.vehicleId] ?? 0) + 1;
       perUser[r.ownerId] = (perUser[r.ownerId] ?? 0) + 1;
     }
-    final repairs = _data.repairs!
+    final repairs = thisMonth
         .where((r) => _vehicleId == null || r.vehicleId == _vehicleId)
         .where((r) => _userId == null || r.ownerId == _userId)
         .toList();
@@ -114,14 +120,19 @@ class _ServicesTabState extends State<ServicesTab> {
           EarningsCard(
             repairs: repairs,
             onOpenReport: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => ReportScreen(data: _data)),
+              MaterialPageRoute(
+                builder: (_) =>
+                    ReportScreen(data: _data, profile: widget.profile),
+              ),
             ),
           ),
           const SizedBox(height: 16),
           if (vehicles.isEmpty)
             _centered(t.noVehiclesYet)
+          else if (_data.repairs!.isEmpty)
+            _centered(t.noRepairs)
           else if (repairs.isEmpty)
-            _centered(t.noRepairs),
+            _centered(t.noRepairsThisMonth),
           for (final r in repairs) ...[
             RepairCard(
               repair: r,

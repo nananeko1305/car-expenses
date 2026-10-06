@@ -261,5 +261,7 @@
   "costs": "Costs",
   "ofWhichTools": "of which tools",
   "net": "Net",
-  "openReport": "Report"
+  "openReport": "Report",
+  "noRepairsThisMonth": "No services this month yet.\nEarlier ones are in the monthly report.",
+  "noRepairsInMonth": "No services this month."
 }
