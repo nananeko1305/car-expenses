@@ -1159,6 +1159,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share'**
   String get share;
+
+  /// No description provided for @monthlyReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly report'**
+  String get monthlyReport;
+
+  /// No description provided for @reportByMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'By month'**
+  String get reportByMonth;
+
+  /// No description provided for @reportAllTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get reportAllTime;
+
+  /// No description provided for @previousMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get previousMonth;
+
+  /// No description provided for @nextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get nextMonth;
+
+  /// No description provided for @earnedThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned this month'**
+  String get earnedThisMonth;
+
+  /// No description provided for @earnedFromServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned from services'**
+  String get earnedFromServices;
+
+  /// No description provided for @otherIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Other income'**
+  String get otherIncome;
+
+  /// No description provided for @costs.
+  ///
+  /// In en, this message translates to:
+  /// **'Costs'**
+  String get costs;
+
+  /// No description provided for @ofWhichTools.
+  ///
+  /// In en, this message translates to:
+  /// **'of which tools'**
+  String get ofWhichTools;
+
+  /// No description provided for @net.
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get net;
+
+  /// No description provided for @openReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get openReport;
 }
 
 class _AppLocalizationsDelegate

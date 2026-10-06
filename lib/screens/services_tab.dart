@@ -6,10 +6,11 @@ import '../models/repair.dart';
 import '../services/live_data.dart';
 import '../widgets/filter_pill.dart';
 import '../widgets/option_sheet.dart';
+import '../widgets/earnings_card.dart';
 import '../widgets/repair_card.dart';
-import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
 import 'repair_form_screen.dart';
+import 'report_screen.dart';
 
 /// Every service from every user, filterable by car and by person.
 class ServicesTab extends StatefulWidget {
@@ -110,7 +111,12 @@ class _ServicesTabState extends State<ServicesTab> {
             ],
           ),
           const SizedBox(height: 12),
-          TotalsCard(repairs: repairs),
+          EarningsCard(
+            repairs: repairs,
+            onOpenReport: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => ReportScreen(data: _data)),
+            ),
+          ),
           const SizedBox(height: 16),
           if (vehicles.isEmpty)
             _centered(t.noVehiclesYet)

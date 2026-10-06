@@ -11,6 +11,16 @@ String formatMoney(int amountMinor, Currency currency, String locale) {
   return currency == Currency.eur ? '$number €' : '$number RSD';
 }
 
+/// One formatted line per currency, RSD first; "0,00 RSD" when [sums]
+/// is empty, so a card never shows nothing.
+List<String> formatSums(Map<Currency, int> sums, String locale) {
+  if (sums.isEmpty) return [formatMoney(0, Currency.rsd, locale)];
+  return [
+    for (final c in Currency.values)
+      if (sums.containsKey(c)) formatMoney(sums[c]!, c, locale),
+  ];
+}
+
 /// Parses user input such as "12.345,50", "12345.5" or "12 345" into
 /// minor units. Returns null when the input is not a positive amount.
 int? parseMoney(String input) {

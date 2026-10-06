@@ -20,10 +20,6 @@ class TotalsCard extends StatelessWidget {
     for (final r in repairs) {
       sums[r.currency] = (sums[r.currency] ?? 0) + r.amountMinor;
     }
-    final lines = Currency.values
-        .where(sums.containsKey)
-        .map((c) => formatMoney(sums[c]!, c, locale))
-        .toList();
 
     return Container(
       width: double.infinity,
@@ -43,8 +39,7 @@ class TotalsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          for (final line
-              in lines.isEmpty ? [formatMoney(0, Currency.rsd, locale)] : lines)
+          for (final line in formatSums(sums, locale))
             Text(
               line,
               style: const TextStyle(

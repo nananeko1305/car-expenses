@@ -204,5 +204,17 @@
   "receiptUploading": "Šaljem sliku...",
   "receiptCamera": "Slikaj",
   "receiptGallery": "Izaberi iz galerije",
-  "share": "Podeli"
+  "share": "Podeli",
+  "monthlyReport": "Mesečni izveštaj",
+  "reportByMonth": "Po mesecima",
+  "reportAllTime": "Ukupno",
+  "previousMonth": "Prethodni mesec",
+  "nextMonth": "Sledeći mesec",
+  "earnedThisMonth": "Zarađeno ovog meseca",
+  "earnedFromServices": "Zarada od servisa",
+  "otherIncome": "Ostali prihodi",
+  "costs": "Troškovi",
+  "ofWhichTools": "od toga alat",
+  "net": "Neto",
+  "openReport": "Izveštaj"
 }

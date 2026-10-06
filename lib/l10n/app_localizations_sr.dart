@@ -579,4 +579,40 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get share => 'Podeli';
+
+  @override
+  String get monthlyReport => 'Mesečni izveštaj';
+
+  @override
+  String get reportByMonth => 'Po mesecima';
+
+  @override
+  String get reportAllTime => 'Ukupno';
+
+  @override
+  String get previousMonth => 'Prethodni mesec';
+
+  @override
+  String get nextMonth => 'Sledeći mesec';
+
+  @override
+  String get earnedThisMonth => 'Zarađeno ovog meseca';
+
+  @override
+  String get earnedFromServices => 'Zarada od servisa';
+
+  @override
+  String get otherIncome => 'Ostali prihodi';
+
+  @override
+  String get costs => 'Troškovi';
+
+  @override
+  String get ofWhichTools => 'od toga alat';
+
+  @override
+  String get net => 'Neto';
+
+  @override
+  String get openReport => 'Izveštaj';
 }
