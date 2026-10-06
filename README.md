@@ -71,7 +71,9 @@ drift. All access rules live in [firestore.rules](firestore.rules).
 
 Every push to `main` runs [release-apk.yml](.github/workflows/release-apk.yml):
 analyze → test → signed release APK (Flutter, pub and Gradle cached) →
-GitHub Release → download page on GitHub Pages with a QR code.
+GitHub Release → `version.json` on GitHub Pages. There is no download
+page: the apps already installed find new versions through that file, so
+it has to keep being published.
 Day-to-day work goes to `dev`; merge into `main` to ship.
 
 Versions are `major.minor.patch`, worked out in CI from the commit messages

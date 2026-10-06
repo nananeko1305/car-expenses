@@ -58,8 +58,8 @@ class UpdateCheckFailed extends UpdateResult {
   final Object error;
 }
 
-/// Compares this app's version with the newest release on the download
-/// page. The build number is Android's own version code and says nothing
+/// Compares this app's version with the newest release CI published to
+/// GitHub Pages. The build number is Android's own version code and says nothing
 /// about what changed, so it is not what decides.
 class UpdateChecker {
   UpdateChecker._();
