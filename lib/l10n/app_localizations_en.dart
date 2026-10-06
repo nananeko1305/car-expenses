@@ -616,4 +616,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openReport => 'Report';
+
+  @override
+  String get noRepairsThisMonth =>
+      'No services this month yet.\nEarlier ones are in the monthly report.';
+
+  @override
+  String get noRepairsInMonth => 'No services this month.';
 }

@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
+import '../models/app_user.dart';
+import '../models/repair.dart';
 import '../models/report.dart';
 import '../services/live_data.dart';
 import '../widgets/month_switcher.dart';
+import '../widgets/repair_card.dart';
 import '../widgets/report_view.dart';
 import '../widgets/sync_banner.dart';
+import 'repair_form_screen.dart';
 
 /// The workshop's report, one month at a time or over all time: what it
 /// earned, how many cars and services it had, and where the money went.
-/// Stays live while open.
+/// A month also lists its services, since Services shows only the
+/// current one. Stays live while open.
 class ReportScreen extends StatefulWidget {
-  const ReportScreen({super.key, required this.data});
+  const ReportScreen({super.key, required this.data, required this.profile});
 
   final LiveData data;
+  final AppUser profile;
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();
@@ -23,6 +29,18 @@ class ReportScreen extends StatefulWidget {
 class _ReportScreenState extends State<ReportScreen> {
   bool _allTime = false;
   DateTime _month = monthOf(DateTime.now());
+
+  void _openRepair(Repair repair) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RepairFormScreen(
+          data: widget.data,
+          profile: widget.profile,
+          repair: repair,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +114,29 @@ class _ReportScreenState extends State<ReportScreen> {
           ),
         const SizedBox(height: 8),
         ReportView(report: report),
+        if (!_allTime) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 24, 4, 10),
+            child: Text(
+              t.repairs,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+            ),
+          ),
+          if (report.services == 0)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Text(t.noRepairsInMonth, textAlign: TextAlign.center),
+            ),
+          for (final r in repairs.where((r) => inMonth(r.date, _month))) ...[
+            RepairCard(
+              repair: r,
+              vehicle: data.vehicleById(r.vehicleId),
+              authorName: data.nameOf(r.ownerId),
+              onTap: () => _openRepair(r),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ],
       ],
     );
   }

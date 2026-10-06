@@ -216,5 +216,7 @@
   "costs": "Troškovi",
   "ofWhichTools": "od toga alat",
   "net": "Neto",
-  "openReport": "Izveštaj"
+  "openReport": "Izveštaj",
+  "noRepairsThisMonth": "Ovog meseca još nema servisa.\nRaniji su u mesečnom izveštaju.",
+  "noRepairsInMonth": "Tog meseca nije bilo servisa."
 }

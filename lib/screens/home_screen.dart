@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case DrawerDestination.wallet:
         setState(() => _tab = 1);
       case DrawerDestination.report:
-        _open(ReportScreen(data: _data));
+        _open(ReportScreen(data: _data, profile: widget.profile));
       case DrawerDestination.search:
         _openSearch();
       case DrawerDestination.vehicles:

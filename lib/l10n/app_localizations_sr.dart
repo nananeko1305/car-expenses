@@ -615,4 +615,11 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get openReport => 'Izveštaj';
+
+  @override
+  String get noRepairsThisMonth =>
+      'Ovog meseca još nema servisa.\nRaniji su u mesečnom izveštaju.';
+
+  @override
+  String get noRepairsInMonth => 'Tog meseca nije bilo servisa.';
 }

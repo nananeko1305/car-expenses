@@ -55,6 +55,14 @@ Tool _tool(DateTime date, {String entryId = '', int? minor, Currency? c}) =>
     );
 
 void main() {
+  test('a month runs from its first instant to its last', () {
+    expect(inMonth(DateTime(2026, 10, 1), _oct), isTrue);
+    expect(inMonth(DateTime(2026, 10, 31, 23, 59, 59), _oct), isTrue);
+    expect(inMonth(DateTime(2026, 9, 30, 23, 59, 59), _oct), isFalse);
+    expect(inMonth(DateTime(2026, 11, 1), _oct), isFalse);
+    expect(inMonth(DateTime(2025, 10, 15), _oct), isFalse);
+  });
+
   test('counts the month\'s services and the different cars in them', () {
     final r = Report.of(
       month: _oct,
