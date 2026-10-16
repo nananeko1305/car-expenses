@@ -1243,6 +1243,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No services this month.'**
   String get noRepairsInMonth;
+
+  /// No description provided for @calendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get calendar;
+
+  /// No description provided for @book.
+  ///
+  /// In en, this message translates to:
+  /// **'Book'**
+  String get book;
+
+  /// No description provided for @newAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'New booking'**
+  String get newAppointment;
+
+  /// No description provided for @appointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get appointment;
+
+  /// No description provided for @appointmentText.
+  ///
+  /// In en, this message translates to:
+  /// **'What is booked'**
+  String get appointmentText;
+
+  /// No description provided for @appointmentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Opel Astra, Mika, 10:00'**
+  String get appointmentHint;
+
+  /// No description provided for @noAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing booked for this day.'**
+  String get noAppointments;
+
+  /// No description provided for @deleteAppointmentQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this booking?'**
+  String get deleteAppointmentQ;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
 }
 
 class _AppLocalizationsDelegate

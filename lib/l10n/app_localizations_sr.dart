@@ -622,4 +622,31 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get noRepairsInMonth => 'Tog meseca nije bilo servisa.';
+
+  @override
+  String get calendar => 'Kalendar';
+
+  @override
+  String get book => 'Zakaži';
+
+  @override
+  String get newAppointment => 'Novo zakazivanje';
+
+  @override
+  String get appointment => 'Zakazano';
+
+  @override
+  String get appointmentText => 'Šta je zakazano';
+
+  @override
+  String get appointmentHint => 'npr. Opel Astra, Mika, 10h';
+
+  @override
+  String get noAppointments => 'Za ovaj dan nema ničeg zakazanog.';
+
+  @override
+  String get deleteAppointmentQ => 'Obrisati ovo zakazivanje?';
+
+  @override
+  String get close => 'Zatvori';
 }

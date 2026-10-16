@@ -218,5 +218,14 @@
   "net": "Neto",
   "openReport": "Izveštaj",
   "noRepairsThisMonth": "Ovog meseca još nema servisa.\nRaniji su u mesečnom izveštaju.",
-  "noRepairsInMonth": "Tog meseca nije bilo servisa."
+  "noRepairsInMonth": "Tog meseca nije bilo servisa.",
+  "calendar": "Kalendar",
+  "book": "Zakaži",
+  "newAppointment": "Novo zakazivanje",
+  "appointment": "Zakazano",
+  "appointmentText": "Šta je zakazano",
+  "appointmentHint": "npr. Opel Astra, Mika, 10h",
+  "noAppointments": "Za ovaj dan nema ničeg zakazanog.",
+  "deleteAppointmentQ": "Obrisati ovo zakazivanje?",
+  "close": "Zatvori"
 }

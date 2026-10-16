@@ -9,6 +9,7 @@ class DateField extends StatelessWidget {
     required this.value,
     required this.onChanged,
     this.enabled = true,
+    this.lastDate,
   });
 
   final String label;
@@ -16,12 +17,15 @@ class DateField extends StatelessWidget {
   final ValueChanged<DateTime> onChanged;
   final bool enabled;
 
+  /// The latest date the picker offers; a year from today when null.
+  final DateTime? lastDate;
+
   Future<void> _pick(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
       initialDate: value,
       firstDate: DateTime(1990),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      lastDate: lastDate ?? DateTime.now().add(const Duration(days: 365)),
     );
     if (picked != null) onChanged(picked);
   }

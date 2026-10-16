@@ -263,5 +263,14 @@
   "net": "Net",
   "openReport": "Report",
   "noRepairsThisMonth": "No services this month yet.\nEarlier ones are in the monthly report.",
-  "noRepairsInMonth": "No services this month."
+  "noRepairsInMonth": "No services this month.",
+  "calendar": "Calendar",
+  "book": "Book",
+  "newAppointment": "New booking",
+  "appointment": "Booking",
+  "appointmentText": "What is booked",
+  "appointmentHint": "e.g. Opel Astra, Mika, 10:00",
+  "noAppointments": "Nothing booked for this day.",
+  "deleteAppointmentQ": "Delete this booking?",
+  "close": "Close"
 }
