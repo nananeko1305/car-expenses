@@ -623,4 +623,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noRepairsInMonth => 'No services this month.';
+
+  @override
+  String get calendar => 'Calendar';
+
+  @override
+  String get book => 'Book';
+
+  @override
+  String get newAppointment => 'New booking';
+
+  @override
+  String get appointment => 'Booking';
+
+  @override
+  String get appointmentText => 'What is booked';
+
+  @override
+  String get appointmentHint => 'e.g. Opel Astra, Mika, 10:00';
+
+  @override
+  String get noAppointments => 'Nothing booked for this day.';
+
+  @override
+  String get deleteAppointmentQ => 'Delete this booking?';
+
+  @override
+  String get close => 'Close';
 }

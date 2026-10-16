@@ -41,6 +41,9 @@ Users change their own name and password in Settings.
   (`--dart-define=CLOUDINARY_CLOUD=…`, `--dart-define=CLOUDINARY_PRESET=…`,
   set as repository secrets); a build without them simply hides the receipt
   controls.
+- **Calendar** (menu): free text booked for a day, such as "Opel Astra,
+  Mika, 10h". Everyone sees every booking; like services, only its author
+  or the admin may change or delete one.
 - **Monthly report** (menu, or the card on Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other
@@ -60,6 +63,7 @@ Users change their own name and password in Settings.
 | `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
+| `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`             |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
 
 `warrantyEndsAt` mirrors the date computed from `purchaseDate` and the

@@ -3,18 +3,20 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../models/app_user.dart';
+import '../models/appointment.dart';
 import '../models/repair.dart';
 import '../models/tool.dart';
 import '../models/vehicle.dart';
 import '../models/wallet_entry.dart';
+import 'appointment_repository.dart';
 import 'repair_repository.dart';
 import 'tool_repository.dart';
 import 'user_repository.dart';
 import 'vehicle_repository.dart';
 import 'wallet_repository.dart';
 
-/// Live snapshot of the shared collections (cars, services, users and
-/// wallet entries). One instance per signed-in session, owned by the
+/// Live snapshot of the shared collections (cars, services, users,
+/// wallet entries, tools and the calendar). One instance per signed-in session, owned by the
 /// home screen; every tab reads from it instead of opening its own
 /// Firestore listeners.
 class LiveData extends ChangeNotifier {
@@ -27,6 +29,7 @@ class LiveData extends ChangeNotifier {
     });
     _watch(WalletRepository.instance.watchAll, (v) => entries = v);
     _watch(ToolRepository.instance.watchAll, (v) => tools = v);
+    _watch(AppointmentRepository.instance.watchAll, (v) => appointments = v);
   }
 
   static const _firstRetry = Duration(seconds: 5);
@@ -44,6 +47,10 @@ class LiveData extends ChangeNotifier {
   /// Left out of [ready] on purpose: the tools screen handles its own
   /// loading, so a hiccup there cannot hold up services and the wallet.
   List<Tool>? tools;
+
+  /// Also left out of [ready], for the same reason: only the calendar
+  /// needs it, and it handles its own loading.
+  List<Appointment>? appointments;
 
   Object? error;
   Map<String, AppUser> _usersById = const {};
