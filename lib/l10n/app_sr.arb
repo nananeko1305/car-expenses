@@ -227,5 +227,82 @@
   "appointmentHint": "npr. Opel Astra, Mika, 10h",
   "noAppointments": "Za ovaj dan nema ničeg zakazanog.",
   "deleteAppointmentQ": "Obrisati ovo zakazivanje?",
-  "close": "Zatvori"
+  "close": "Zatvori",
+  "tutorials": "Tutorijali",
+  "addBrand": "Dodaj marku",
+  "newBrand": "Nova marka",
+  "renameBrand": "Izmena marke",
+  "brandName": "Marka",
+  "brandHint": "npr. Volkswagen",
+  "noBrands": "Još nema marki.\nDodaj prvu, pa onda njene modele.",
+  "brandExists": "Ta marka već postoji",
+  "deleteBrandQ": "Obrisati {name}?",
+  "@deleteBrandQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "brandHasModels": "Prvo obriši njene modele.",
+  "modelsCount": "{count, plural, one{{count} model} few{{count} modela} other{{count} modela}}",
+  "@modelsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addModel": "Dodaj model",
+  "newModel": "Novi model",
+  "renameModel": "Izmena modela",
+  "modelName": "Model",
+  "modelHint": "npr. Passat",
+  "noModels": "Još nema modela.",
+  "modelExists": "Taj model već postoji",
+  "deleteModelQ": "Obrisati {name}?",
+  "@deleteModelQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteModelBody": "Brišu se i njegovi linkovi i beleške.",
+  "links": "Linkovi",
+  "addLink": "Dodaj link",
+  "addAnotherLink": "Dodaj još jedan link",
+  "removeLink": "Ukloni",
+  "newLink": "Novi link",
+  "link": "Link",
+  "linkTitle": "Naziv",
+  "linkTitleHint": "npr. Zamena kvačila",
+  "linkUrl": "Adresa",
+  "invalidUrl": "Unesi ispravnu web adresu",
+  "noLinks": "Još nema linkova.",
+  "linkOpenFailed": "Link ne može da se otvori.",
+  "deleteLinkQ": "Obrisati ovaj link?",
+  "linksCount": "{count, plural, one{{count} link} few{{count} linka} other{{count} linkova}}",
+  "@linksCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notes": "Beleške",
+  "addNote": "Dodaj belešku",
+  "newNote": "Nova beleška",
+  "note": "Beleška",
+  "noteHint": "Šta je dobro znati sledeći put",
+  "noNotes": "Još nema beleški.",
+  "deleteNoteQ": "Obrisati ovu belešku?",
+  "notesCount": "{count, plural, one{{count} beleška} few{{count} beleške} other{{count} beleški}}",
+  "@notesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

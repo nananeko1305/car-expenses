@@ -6,11 +6,14 @@ import '../models/app_user.dart';
 import '../models/appointment.dart';
 import '../models/repair.dart';
 import '../models/tool.dart';
+import '../models/tutorial.dart';
+import '../models/tutorial_entry.dart';
 import '../models/vehicle.dart';
 import '../models/wallet_entry.dart';
 import 'appointment_repository.dart';
 import 'repair_repository.dart';
 import 'tool_repository.dart';
+import 'tutorial_repository.dart';
 import 'user_repository.dart';
 import 'vehicle_repository.dart';
 import 'wallet_repository.dart';
@@ -30,6 +33,11 @@ class LiveData extends ChangeNotifier {
     _watch(WalletRepository.instance.watchAll, (v) => entries = v);
     _watch(ToolRepository.instance.watchAll, (v) => tools = v);
     _watch(AppointmentRepository.instance.watchAll, (v) => appointments = v);
+    final tutorials = TutorialRepository.instance;
+    _watch(tutorials.watchBrands, (v) => tutorialBrands = v);
+    _watch(tutorials.watchModels, (v) => tutorialModels = v);
+    _watch(tutorials.watchLinks, (v) => tutorialLinks = v);
+    _watch(tutorials.watchNotes, (v) => tutorialNotes = v);
   }
 
   static const _firstRetry = Duration(seconds: 5);
@@ -51,6 +59,19 @@ class LiveData extends ChangeNotifier {
   /// Also left out of [ready], for the same reason: only the calendar
   /// needs it, and it handles its own loading.
   List<Appointment>? appointments;
+
+  /// The tutorials, also outside [ready]; their screens wait for
+  /// [tutorialsReady] themselves.
+  List<TutorialBrand>? tutorialBrands;
+  List<TutorialModel>? tutorialModels;
+  List<TutorialLink>? tutorialLinks;
+  List<TutorialNote>? tutorialNotes;
+
+  bool get tutorialsReady =>
+      tutorialBrands != null &&
+      tutorialModels != null &&
+      tutorialLinks != null &&
+      tutorialNotes != null;
 
   Object? error;
   Map<String, AppUser> _usersById = const {};
@@ -77,6 +98,35 @@ class LiveData extends ChangeNotifier {
   Vehicle? vehicleById(String id) {
     for (final v in vehicles ?? const <Vehicle>[]) {
       if (v.id == id) return v;
+    }
+    return null;
+  }
+
+  TutorialBrand? brandById(String id) =>
+      _firstWhereOrNull(tutorialBrands, (b) => b.id == id);
+
+  TutorialModel? modelById(String id) =>
+      _firstWhereOrNull(tutorialModels, (m) => m.id == id);
+
+  /// A make's models, by name.
+  List<TutorialModel> modelsOf(String brandId) => sortedByName(
+    (tutorialModels ?? const []).where((m) => m.brandId == brandId),
+    (m) => m.name,
+  );
+
+  /// A model's links, in the order they were added.
+  List<TutorialLink> linksOf(String modelId) => TutorialLink.inOrder(
+    (tutorialLinks ?? const []).where((l) => l.modelId == modelId),
+  );
+
+  /// A model's notes, newest first.
+  List<TutorialNote> notesOf(String modelId) => TutorialNote.newestFirst(
+    (tutorialNotes ?? const []).where((n) => n.modelId == modelId),
+  );
+
+  static T? _firstWhereOrNull<T>(List<T>? list, bool Function(T) test) {
+    for (final x in list ?? <T>[]) {
+      if (test(x)) return x;
     }
     return null;
   }

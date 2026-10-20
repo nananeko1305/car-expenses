@@ -272,5 +272,82 @@
   "appointmentHint": "e.g. Opel Astra, Mika, 10:00",
   "noAppointments": "Nothing booked for this day.",
   "deleteAppointmentQ": "Delete this booking?",
-  "close": "Close"
+  "close": "Close",
+  "tutorials": "Tutorials",
+  "addBrand": "Add make",
+  "newBrand": "New make",
+  "renameBrand": "Rename make",
+  "brandName": "Make",
+  "brandHint": "e.g. Volkswagen",
+  "noBrands": "No makes yet.\nAdd the first one, then its models.",
+  "brandExists": "This make already exists",
+  "deleteBrandQ": "Delete {name}?",
+  "@deleteBrandQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "brandHasModels": "Delete its models first.",
+  "modelsCount": "{count, plural, =1{1 model} other{{count} models}}",
+  "@modelsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addModel": "Add model",
+  "newModel": "New model",
+  "renameModel": "Rename model",
+  "modelName": "Model",
+  "modelHint": "e.g. Passat",
+  "noModels": "No models yet.",
+  "modelExists": "This model already exists",
+  "deleteModelQ": "Delete {name}?",
+  "@deleteModelQ": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteModelBody": "Its links and notes go with it.",
+  "links": "Links",
+  "addLink": "Add link",
+  "addAnotherLink": "Add another link",
+  "removeLink": "Remove",
+  "newLink": "New link",
+  "link": "Link",
+  "linkTitle": "Title",
+  "linkTitleHint": "e.g. Clutch replacement",
+  "linkUrl": "Address",
+  "invalidUrl": "Enter a web address",
+  "noLinks": "No links yet.",
+  "linkOpenFailed": "The link can't be opened.",
+  "deleteLinkQ": "Delete this link?",
+  "linksCount": "{count, plural, =1{1 link} other{{count} links}}",
+  "@linksCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notes": "Notes",
+  "addNote": "Add note",
+  "newNote": "New note",
+  "note": "Note",
+  "noteHint": "What is worth knowing next time",
+  "noNotes": "No notes yet.",
+  "deleteNoteQ": "Delete this note?",
+  "notesCount": "{count, plural, =1{1 note} other{{count} notes}}",
+  "@notesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

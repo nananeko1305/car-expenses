@@ -159,6 +159,61 @@ service cloud.firestore {
       }
     }
 
+    // Tutorials are the workshop's shared knowledge, like tools: anyone
+    // active may add, correct or delete a make, a model, a link or a
+    // note, but not rewrite who added it.
+    function validTutorialName(d) {
+      return d.name is string && d.name.size() > 0 && d.name.size() <= 100;
+    }
+
+    match /tutorialBrands/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validTutorialName(request.resource.data);
+      allow update: if isActive() && keepsAuthor('ownerId') && validTutorialName(request.resource.data);
+      allow delete: if isActive();
+    }
+
+    match /tutorialModels/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validModel();
+      allow update: if isActive() && keepsAuthor('ownerId') && validModel();
+      allow delete: if isActive();
+
+      function validModel() {
+        let d = request.resource.data;
+        return validTutorialName(d) && d.brandId is string;
+      }
+    }
+
+    match /tutorialLinks/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validLink();
+      allow update: if isActive() && keepsAuthor('ownerId') && validLink();
+      allow delete: if isActive();
+
+      function validLink() {
+        let d = request.resource.data;
+        // Only web addresses, so a link can never run anything else.
+        return d.modelId is string
+          && d.title is string && d.title.size() <= 100
+          && d.url is string && d.url.size() <= 2000
+          && d.url.matches('https?://.+');
+      }
+    }
+
+    match /tutorialNotes/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validNote();
+      allow update: if isActive() && keepsAuthor('ownerId') && validNote();
+      allow delete: if isActive();
+
+      function validNote() {
+        let d = request.resource.data;
+        return d.modelId is string
+          && d.text is string && d.text.size() > 0 && d.text.size() <= 2000;
+      }
+    }
+
     match /walletEntries/{id} {
       allow read: if isActive();
       allow create: if authorCreates('createdBy') && validEntry();

@@ -28,7 +28,7 @@ Users change their own name and password in Settings.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
   add funds or record spending (amount, what for, date, who).
-- **Tools** are the one shared record anyone may edit: a warranty or a
+- **Tools** are a shared record anyone may edit: a warranty or a
   receipt can be corrected by whoever notices it is wrong, not only by the
   person who entered it. Everything that is not consumable, with its
   warranty. Spending
@@ -44,6 +44,12 @@ Users change their own name and password in Settings.
 - **Calendar** (menu): free text booked for a day, such as "Opel Astra,
   Mika, 10h". Everyone sees every booking; like services, only its author
   or the admin may change or delete one.
+- **Tutorials** (menu) are the workshop's shared knowledge: makes, their
+  models, and for each model links for working on it (a title and an
+  address) and notes with who wrote them and when. Like tools, anyone may
+  add, correct or delete any of it; who added it stays on record. A make
+  with models cannot be deleted; deleting a model takes its links and
+  notes with it.
 - **Monthly report** (menu, or the card on Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other
@@ -64,6 +70,10 @@ Users change their own name and password in Settings.
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
 | `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`             |
+| `tutorialBrands/{id}` | `ownerId` (who added it), `name`                                  |
+| `tutorialModels/{id}` | `ownerId`, `brandId`, `name`                                      |
+| `tutorialLinks/{id}`  | `ownerId`, `modelId`, `title` (may be empty), `url` (http/https)  |
+| `tutorialNotes/{id}`  | `ownerId`, `modelId`, `text`                                      |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
 
 `warrantyEndsAt` mirrors the date computed from `purchaseDate` and the
