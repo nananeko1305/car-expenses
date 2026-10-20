@@ -650,4 +650,158 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get close => 'Close';
+
+  @override
+  String get tutorials => 'Tutorials';
+
+  @override
+  String get addBrand => 'Add make';
+
+  @override
+  String get newBrand => 'New make';
+
+  @override
+  String get renameBrand => 'Rename make';
+
+  @override
+  String get brandName => 'Make';
+
+  @override
+  String get brandHint => 'e.g. Volkswagen';
+
+  @override
+  String get noBrands => 'No makes yet.\nAdd the first one, then its models.';
+
+  @override
+  String get brandExists => 'This make already exists';
+
+  @override
+  String deleteBrandQ(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get brandHasModels => 'Delete its models first.';
+
+  @override
+  String modelsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count models',
+      one: '1 model',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get addModel => 'Add model';
+
+  @override
+  String get newModel => 'New model';
+
+  @override
+  String get renameModel => 'Rename model';
+
+  @override
+  String get modelName => 'Model';
+
+  @override
+  String get modelHint => 'e.g. Passat';
+
+  @override
+  String get noModels => 'No models yet.';
+
+  @override
+  String get modelExists => 'This model already exists';
+
+  @override
+  String deleteModelQ(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteModelBody => 'Its links and notes go with it.';
+
+  @override
+  String get links => 'Links';
+
+  @override
+  String get addLink => 'Add link';
+
+  @override
+  String get addAnotherLink => 'Add another link';
+
+  @override
+  String get removeLink => 'Remove';
+
+  @override
+  String get newLink => 'New link';
+
+  @override
+  String get link => 'Link';
+
+  @override
+  String get linkTitle => 'Title';
+
+  @override
+  String get linkTitleHint => 'e.g. Clutch replacement';
+
+  @override
+  String get linkUrl => 'Address';
+
+  @override
+  String get invalidUrl => 'Enter a web address';
+
+  @override
+  String get noLinks => 'No links yet.';
+
+  @override
+  String get linkOpenFailed => 'The link can\'t be opened.';
+
+  @override
+  String get deleteLinkQ => 'Delete this link?';
+
+  @override
+  String linksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count links',
+      one: '1 link',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get addNote => 'Add note';
+
+  @override
+  String get newNote => 'New note';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get noteHint => 'What is worth knowing next time';
+
+  @override
+  String get noNotes => 'No notes yet.';
+
+  @override
+  String get deleteNoteQ => 'Delete this note?';
+
+  @override
+  String notesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count notes',
+      one: '1 note',
+    );
+    return '$_temp0';
+  }
 }

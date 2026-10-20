@@ -1297,6 +1297,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
+
+  /// No description provided for @tutorials.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorials'**
+  String get tutorials;
+
+  /// No description provided for @addBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Add make'**
+  String get addBrand;
+
+  /// No description provided for @newBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'New make'**
+  String get newBrand;
+
+  /// No description provided for @renameBrand.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename make'**
+  String get renameBrand;
+
+  /// No description provided for @brandName.
+  ///
+  /// In en, this message translates to:
+  /// **'Make'**
+  String get brandName;
+
+  /// No description provided for @brandHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Volkswagen'**
+  String get brandHint;
+
+  /// No description provided for @noBrands.
+  ///
+  /// In en, this message translates to:
+  /// **'No makes yet.\nAdd the first one, then its models.'**
+  String get noBrands;
+
+  /// No description provided for @brandExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This make already exists'**
+  String get brandExists;
+
+  /// No description provided for @deleteBrandQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String deleteBrandQ(String name);
+
+  /// No description provided for @brandHasModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete its models first.'**
+  String get brandHasModels;
+
+  /// No description provided for @modelsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 model} other{{count} models}}'**
+  String modelsCount(int count);
+
+  /// No description provided for @addModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add model'**
+  String get addModel;
+
+  /// No description provided for @newModel.
+  ///
+  /// In en, this message translates to:
+  /// **'New model'**
+  String get newModel;
+
+  /// No description provided for @renameModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename model'**
+  String get renameModel;
+
+  /// No description provided for @modelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get modelName;
+
+  /// No description provided for @modelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Passat'**
+  String get modelHint;
+
+  /// No description provided for @noModels.
+  ///
+  /// In en, this message translates to:
+  /// **'No models yet.'**
+  String get noModels;
+
+  /// No description provided for @modelExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This model already exists'**
+  String get modelExists;
+
+  /// No description provided for @deleteModelQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String deleteModelQ(String name);
+
+  /// No description provided for @deleteModelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its links and notes go with it.'**
+  String get deleteModelBody;
+
+  /// No description provided for @links.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get links;
+
+  /// No description provided for @addLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Add link'**
+  String get addLink;
+
+  /// No description provided for @addAnotherLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another link'**
+  String get addAnotherLink;
+
+  /// No description provided for @removeLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeLink;
+
+  /// No description provided for @newLink.
+  ///
+  /// In en, this message translates to:
+  /// **'New link'**
+  String get newLink;
+
+  /// No description provided for @link.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get link;
+
+  /// No description provided for @linkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get linkTitle;
+
+  /// No description provided for @linkTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Clutch replacement'**
+  String get linkTitleHint;
+
+  /// No description provided for @linkUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get linkUrl;
+
+  /// No description provided for @invalidUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a web address'**
+  String get invalidUrl;
+
+  /// No description provided for @noLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'No links yet.'**
+  String get noLinks;
+
+  /// No description provided for @linkOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The link can\'t be opened.'**
+  String get linkOpenFailed;
+
+  /// No description provided for @deleteLinkQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this link?'**
+  String get deleteLinkQ;
+
+  /// No description provided for @linksCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 link} other{{count} links}}'**
+  String linksCount(int count);
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @addNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add note'**
+  String get addNote;
+
+  /// No description provided for @newNote.
+  ///
+  /// In en, this message translates to:
+  /// **'New note'**
+  String get newNote;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What is worth knowing next time'**
+  String get noteHint;
+
+  /// No description provided for @noNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes yet.'**
+  String get noNotes;
+
+  /// No description provided for @deleteNoteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this note?'**
+  String get deleteNoteQ;
+
+  /// No description provided for @notesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 note} other{{count} notes}}'**
+  String notesCount(int count);
 }
 
 class _AppLocalizationsDelegate

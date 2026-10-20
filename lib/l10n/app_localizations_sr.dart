@@ -649,4 +649,161 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get close => 'Zatvori';
+
+  @override
+  String get tutorials => 'Tutorijali';
+
+  @override
+  String get addBrand => 'Dodaj marku';
+
+  @override
+  String get newBrand => 'Nova marka';
+
+  @override
+  String get renameBrand => 'Izmena marke';
+
+  @override
+  String get brandName => 'Marka';
+
+  @override
+  String get brandHint => 'npr. Volkswagen';
+
+  @override
+  String get noBrands => 'Još nema marki.\nDodaj prvu, pa onda njene modele.';
+
+  @override
+  String get brandExists => 'Ta marka već postoji';
+
+  @override
+  String deleteBrandQ(String name) {
+    return 'Obrisati $name?';
+  }
+
+  @override
+  String get brandHasModels => 'Prvo obriši njene modele.';
+
+  @override
+  String modelsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count modela',
+      few: '$count modela',
+      one: '$count model',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get addModel => 'Dodaj model';
+
+  @override
+  String get newModel => 'Novi model';
+
+  @override
+  String get renameModel => 'Izmena modela';
+
+  @override
+  String get modelName => 'Model';
+
+  @override
+  String get modelHint => 'npr. Passat';
+
+  @override
+  String get noModels => 'Još nema modela.';
+
+  @override
+  String get modelExists => 'Taj model već postoji';
+
+  @override
+  String deleteModelQ(String name) {
+    return 'Obrisati $name?';
+  }
+
+  @override
+  String get deleteModelBody => 'Brišu se i njegovi linkovi i beleške.';
+
+  @override
+  String get links => 'Linkovi';
+
+  @override
+  String get addLink => 'Dodaj link';
+
+  @override
+  String get addAnotherLink => 'Dodaj još jedan link';
+
+  @override
+  String get removeLink => 'Ukloni';
+
+  @override
+  String get newLink => 'Novi link';
+
+  @override
+  String get link => 'Link';
+
+  @override
+  String get linkTitle => 'Naziv';
+
+  @override
+  String get linkTitleHint => 'npr. Zamena kvačila';
+
+  @override
+  String get linkUrl => 'Adresa';
+
+  @override
+  String get invalidUrl => 'Unesi ispravnu web adresu';
+
+  @override
+  String get noLinks => 'Još nema linkova.';
+
+  @override
+  String get linkOpenFailed => 'Link ne može da se otvori.';
+
+  @override
+  String get deleteLinkQ => 'Obrisati ovaj link?';
+
+  @override
+  String linksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count linkova',
+      few: '$count linka',
+      one: '$count link',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get notes => 'Beleške';
+
+  @override
+  String get addNote => 'Dodaj belešku';
+
+  @override
+  String get newNote => 'Nova beleška';
+
+  @override
+  String get note => 'Beleška';
+
+  @override
+  String get noteHint => 'Šta je dobro znati sledeći put';
+
+  @override
+  String get noNotes => 'Još nema beleški.';
+
+  @override
+  String get deleteNoteQ => 'Obrisati ovu belešku?';
+
+  @override
+  String notesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count beleški',
+      few: '$count beleške',
+      one: '$count beleška',
+    );
+    return '$_temp0';
+  }
 }
