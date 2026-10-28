@@ -804,4 +804,17 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get notEnoughMoney => 'Not enough money in the wallet';
+
+  @override
+  String notEnoughMoneyBody(String available, String amount) {
+    return 'Available: $available. This spending is $amount, and the wallet can\'t go below zero.';
+  }
+
+  @override
+  String availableInWallet(String amount) {
+    return 'Available: $amount';
+  }
 }

@@ -27,7 +27,11 @@ Users change their own name and password in Settings.
   author of a record (or the admin) can edit or delete it.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
-  add funds or record spending (amount, what for, date, who).
+  add funds or record spending (amount, what for, date, who). Spending can
+  never take a currency's balance below zero: the form shows what is
+  available and refuses more. The app checks this, not the rules (they
+  cannot add up the wallet), so two people spending at the same moment
+  could still both get through.
 - **Tools** are a shared record anyone may edit: a warranty or a
   receipt can be corrected by whoever notices it is wrong, not only by the
   person who entered it. Everything that is not consumable, with its

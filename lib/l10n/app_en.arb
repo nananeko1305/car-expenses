@@ -349,5 +349,25 @@
         "type": "int"
       }
     }
+  },
+  "notEnoughMoney": "Not enough money in the wallet",
+  "notEnoughMoneyBody": "Available: {available}. This spending is {amount}, and the wallet can't go below zero.",
+  "@notEnoughMoneyBody": {
+    "placeholders": {
+      "available": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "availableInWallet": "Available: {amount}",
+  "@availableInWallet": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

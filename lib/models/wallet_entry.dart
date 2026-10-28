@@ -123,4 +123,37 @@ class WalletMovement {
     }
     return sums;
   }
+
+  /// What can be spent in [currency]: its balance, plus what [old] took
+  /// out already when that spending is the one being edited.
+  static int available(
+    Map<Currency, int> balances,
+    Currency currency, {
+    WalletEntry? old,
+  }) {
+    final givenBack =
+        old != null &&
+            old.type == WalletEntryType.withdrawal &&
+            old.currency == currency
+        ? old.amountMinor
+        : 0;
+    return (balances[currency] ?? 0) + givenBack;
+  }
+
+  /// Whether [spending], saved in place of [old] when editing, would take
+  /// its currency below zero. The wallet is real cash and cannot go short.
+  ///
+  /// A change that leaves the balance no lower than it is now always
+  /// passes, so a wallet that is short from before this rule can still
+  /// have its spending corrected.
+  static bool overdraws(
+    Map<Currency, int> balances,
+    WalletEntry spending, {
+    WalletEntry? old,
+  }) {
+    final now = balances[spending.currency] ?? 0;
+    final after =
+        available(balances, spending.currency, old: old) - spending.amountMinor;
+    return after < 0 && after < now;
+  }
 }

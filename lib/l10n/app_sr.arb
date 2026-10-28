@@ -304,5 +304,25 @@
         "type": "int"
       }
     }
+  },
+  "notEnoughMoney": "Nema dovoljno sredstava u kasi",
+  "notEnoughMoneyBody": "Na raspolaganju je {available}, a ovaj trošak je {amount}. Kasa ne može da ide u minus.",
+  "@notEnoughMoneyBody": {
+    "placeholders": {
+      "available": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "availableInWallet": "Na raspolaganju: {amount}",
+  "@availableInWallet": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

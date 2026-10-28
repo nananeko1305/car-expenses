@@ -806,4 +806,17 @@ class AppLocalizationsSr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get notEnoughMoney => 'Nema dovoljno sredstava u kasi';
+
+  @override
+  String notEnoughMoneyBody(String available, String amount) {
+    return 'Na raspolaganju je $available, a ovaj trošak je $amount. Kasa ne može da ide u minus.';
+  }
+
+  @override
+  String availableInWallet(String amount) {
+    return 'Na raspolaganju: $amount';
+  }
 }
