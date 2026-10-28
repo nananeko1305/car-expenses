@@ -1549,6 +1549,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 note} other{{count} notes}}'**
   String notesCount(int count);
+
+  /// No description provided for @notEnoughMoney.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough money in the wallet'**
+  String get notEnoughMoney;
+
+  /// No description provided for @notEnoughMoneyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Available: {available}. This spending is {amount}, and the wallet can\'t go below zero.'**
+  String notEnoughMoneyBody(String available, String amount);
+
+  /// No description provided for @availableInWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Available: {amount}'**
+  String availableInWallet(String amount);
 }
 
 class _AppLocalizationsDelegate

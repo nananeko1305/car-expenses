@@ -17,6 +17,7 @@ import '../widgets/date_field.dart';
 import '../widgets/money_fields.dart';
 import '../widgets/option_sheet.dart';
 import '../widgets/picker_field.dart';
+import '../widgets/shortfall_dialog.dart';
 import '../widgets/spending_tool_section.dart';
 import 'tool_form_screen.dart';
 
@@ -79,6 +80,14 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
     super.dispose();
   }
 
+  /// Balance per currency right now, from the live data.
+  Map<Currency, int> get _balances => WalletMovement.balances(
+    WalletMovement.merge(
+      widget.data.repairs ?? const [],
+      widget.data.entries ?? const [],
+    ),
+  );
+
   void _save() {
     if (!_formKey.currentState!.validate()) return;
     final entry = WalletEntry(
@@ -91,6 +100,21 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
       userId: _userId,
       createdBy: _old?.createdBy ?? widget.profile.uid,
     );
+    // Checked here, not in the rules: they cannot add up the wallet. Two
+    // people spending at the same moment could still both get through.
+    if (_spending && WalletMovement.overdraws(_balances, entry, old: _old)) {
+      showShortfallDialog(
+        context,
+        available: WalletMovement.available(
+          _balances,
+          entry.currency,
+          old: _old,
+        ),
+        amount: entry.amountMinor,
+        currency: entry.currency,
+      );
+      return;
+    }
     final tool = _buyingTool
         ? _tool.build(
             ownerId: widget.profile.uid,
@@ -152,6 +176,7 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
     final title = _old != null
         ? t.editEntry
         : (_spending ? t.newWithdrawal : t.newDeposit);
+    final locale = Localizations.localeOf(context).toLanguageTag();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -178,6 +203,20 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
               currency: _currency,
               enabled: _canEdit,
               onCurrency: (c) => setState(() => _currency = c),
+              // How far spending can go before the wallet would be short.
+              helperText: _spending && _canEdit
+                  ? t.availableInWallet(
+                      formatMoney(
+                        WalletMovement.available(
+                          _balances,
+                          _currency,
+                          old: _old,
+                        ),
+                        _currency,
+                        locale,
+                      ),
+                    )
+                  : null,
             ),
             const SizedBox(height: 14),
             TextFormField(
