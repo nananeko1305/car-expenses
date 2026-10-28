@@ -402,7 +402,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchPlate => 'Search by plate';
 
   @override
-  String get searchHint => 'License plate or car';
+  String get searchHint => 'License plate, car or VIN';
 
   @override
   String get noResults => 'No cars found.';
@@ -817,4 +817,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String availableInWallet(String amount) {
     return 'Available: $amount';
   }
+
+  @override
+  String get vin => 'VIN (chassis number)';
+
+  @override
+  String get vinHelper =>
+      'Recommended. On the registration certificate, field E.';
+
+  @override
+  String get invalidVin => 'A VIN has 17 letters and digits, never I, O or Q';
+
+  @override
+  String get vinShort => 'VIN';
 }

@@ -402,7 +402,7 @@ class AppLocalizationsSr extends AppLocalizations {
   String get searchPlate => 'Pretraga po tablicama';
 
   @override
-  String get searchHint => 'Registarska oznaka ili auto';
+  String get searchHint => 'Tablica, auto ili broj šasije';
 
   @override
   String get noResults => 'Nema pronađenih automobila.';
@@ -819,4 +819,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String availableInWallet(String amount) {
     return 'Na raspolaganju: $amount';
   }
+
+  @override
+  String get vin => 'Broj šasije (VIN)';
+
+  @override
+  String get vinHelper => 'Preporučeno. Sa saobraćajne dozvole, polje E.';
+
+  @override
+  String get invalidVin => 'Broj šasije ima 17 slova i brojeva, bez I, O i Q';
+
+  @override
+  String get vinShort => 'Šasija';
 }

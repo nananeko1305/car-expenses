@@ -845,7 +845,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchHint.
   ///
   /// In en, this message translates to:
-  /// **'License plate or car'**
+  /// **'License plate, car or VIN'**
   String get searchHint;
 
   /// No description provided for @noResults.
@@ -1567,6 +1567,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Available: {amount}'**
   String availableInWallet(String amount);
+
+  /// No description provided for @vin.
+  ///
+  /// In en, this message translates to:
+  /// **'VIN (chassis number)'**
+  String get vin;
+
+  /// No description provided for @vinHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended. On the registration certificate, field E.'**
+  String get vinHelper;
+
+  /// No description provided for @invalidVin.
+  ///
+  /// In en, this message translates to:
+  /// **'A VIN has 17 letters and digits, never I, O or Q'**
+  String get invalidVin;
+
+  /// No description provided for @vinShort.
+  ///
+  /// In en, this message translates to:
+  /// **'VIN'**
+  String get vinShort;
 }
 
 class _AppLocalizationsDelegate

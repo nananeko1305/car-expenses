@@ -69,7 +69,7 @@ Users change their own name and password in Settings.
 | Collection           | Fields                                                              |
 |----------------------|---------------------------------------------------------------------|
 | `users/{uid}`        | `email`, `firstName`, `lastName`, `role` (`admin`/`user`), `disabled` |
-| `vehicles/{id}`      | `ownerId` (author), `name`, `plate`                                 |
+| `vehicles/{id}`      | `ownerId` (author), `name`, `plate`, `vin` (chassis number, optional) |
 | `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |

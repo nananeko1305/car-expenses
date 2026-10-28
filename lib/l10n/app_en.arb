@@ -159,7 +159,7 @@
   "passwordsNoMatch": "Passwords do not match",
   "passwordChanged": "Password changed.",
   "searchPlate": "Search by plate",
-  "searchHint": "License plate or car",
+  "searchHint": "License plate, car or VIN",
   "noResults": "No cars found.",
   "serviceHistory": "Service history",
   "lastMileage": "Last mileage",
@@ -369,5 +369,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "vin": "VIN (chassis number)",
+  "vinHelper": "Recommended. On the registration certificate, field E.",
+  "invalidVin": "A VIN has 17 letters and digits, never I, O or Q",
+  "vinShort": "VIN"
 }

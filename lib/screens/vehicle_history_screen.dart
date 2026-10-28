@@ -148,6 +148,17 @@ class VehicleHistoryScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  if (vehicle.vin.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    // Selectable, so it can be copied when ordering parts.
+                    SelectableText(
+                      '${t.vinShort}: ${vehicle.vin}',
+                      style: TextStyle(
+                        letterSpacing: 0.5,
+                        color: context.colors.ink.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
                   if (lastKm != null) ...[
                     const SizedBox(height: 4),
                     Text(

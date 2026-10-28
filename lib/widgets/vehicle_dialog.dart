@@ -31,11 +31,13 @@ class _VehicleDialogState extends State<_VehicleDialog> {
   final _formKey = GlobalKey<FormState>();
   late final _name = TextEditingController(text: widget.vehicle?.name ?? '');
   late final _plate = TextEditingController(text: widget.vehicle?.plate ?? '');
+  late final _vin = TextEditingController(text: widget.vehicle?.vin ?? '');
 
   @override
   void dispose() {
     _name.dispose();
     _plate.dispose();
+    _vin.dispose();
     super.dispose();
   }
 
@@ -46,6 +48,7 @@ class _VehicleDialogState extends State<_VehicleDialog> {
       ownerId: widget.ownerId,
       name: _name.text.trim(),
       plate: _plate.text.trim().toUpperCase(),
+      vin: Vehicle.normalizeVin(_vin.text),
     );
     saveInBackground(context, () => VehicleRepository.instance.save(vehicle));
     Navigator.of(context).pop();
@@ -80,6 +83,25 @@ class _VehicleDialogState extends State<_VehicleDialog> {
                 labelText: t.plate,
                 hintText: t.plateHint,
               ),
+            ),
+            const SizedBox(height: 12),
+            // Optional, so a car can be added before the papers are at
+            // hand; when given, it must be a whole VIN.
+            TextFormField(
+              controller: _vin,
+              textCapitalization: TextCapitalization.characters,
+              autocorrect: false,
+              decoration: InputDecoration(
+                labelText: t.vin,
+                helperText: t.vinHelper,
+                helperMaxLines: 2,
+              ),
+              validator: (v) {
+                final vin = Vehicle.normalizeVin(v ?? '');
+                return vin.isEmpty || Vehicle.isValidVin(vin)
+                    ? null
+                    : t.invalidVin;
+              },
             ),
           ],
         ),
