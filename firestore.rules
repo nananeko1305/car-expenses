@@ -89,7 +89,9 @@ service cloud.firestore {
       function validVehicle() {
         let d = request.resource.data;
         return d.name is string && d.name.size() > 0 && d.name.size() <= 100
-          && d.plate is string && d.plate.size() <= 20;
+          && d.plate is string && d.plate.size() <= 20
+          // Cars from before the VIN have none.
+          && d.get('vin', '') is string && d.get('vin', '').size() <= 17;
       }
     }
 

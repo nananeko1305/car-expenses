@@ -131,7 +131,7 @@
   "passwordsNoMatch": "Lozinke se ne poklapaju",
   "passwordChanged": "Lozinka je promenjena.",
   "searchPlate": "Pretraga po tablicama",
-  "searchHint": "Registarska oznaka ili auto",
+  "searchHint": "Tablica, auto ili broj šasije",
   "noResults": "Nema pronađenih automobila.",
   "serviceHistory": "Istorija servisa",
   "lastMileage": "Poslednja kilometraža",
@@ -324,5 +324,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "vin": "Broj šasije (VIN)",
+  "vinHelper": "Preporučeno. Sa saobraćajne dozvole, polje E.",
+  "invalidVin": "Broj šasije ima 17 slova i brojeva, bez I, O i Q",
+  "vinShort": "Šasija"
 }
