@@ -10,6 +10,7 @@ class Appointment {
     required this.date,
     required this.text,
     this.createdAt,
+    this.announced,
   });
 
   final String id;
@@ -22,6 +23,13 @@ class Appointment {
   /// When it was written; null while that write is still on its way to
   /// the server.
   final DateTime? createdAt;
+
+  /// Whether everyone was told about it: false until the push worker marks
+  /// it. Null on bookings from before pushes, which never get one.
+  final bool? announced;
+
+  /// The server has it (see [createdAt]) and nobody was told yet.
+  bool get awaitsPush => announced == false && createdAt != null;
 
   /// The last day a booking can go on: the end of next year.
   static DateTime lastBookable(DateTime now) => DateTime(now.year + 1, 12, 31);
@@ -44,18 +52,22 @@ class Appointment {
     return days;
   }
 
-  factory Appointment.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data() ?? const {};
+  factory Appointment.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) =>
+      Appointment.fromMap(doc.id, doc.data() ?? const {});
+
+  factory Appointment.fromMap(String id, Map<String, dynamic> data) {
     return Appointment(
-      id: doc.id,
+      id: id,
       ownerId: data['ownerId'] as String? ?? '',
       date: (data['date'] as Timestamp?)?.toDate() ?? DateTime.now(),
       text: data['text'] as String? ?? '',
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
+      announced: data['announced'] as bool?,
     );
   }
 
-  /// Leaves out `createdAt`: the repository sets it once, on create.
+  /// Leaves out `createdAt` and `announced`: the repository sets them once,
+  /// on create, and after that only the push worker changes `announced`.
   Map<String, dynamic> toMap() => {
     'ownerId': ownerId,
     'date': Timestamp.fromDate(_dayOf(date)),

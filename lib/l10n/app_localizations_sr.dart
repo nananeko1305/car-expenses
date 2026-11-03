@@ -814,6 +814,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noNotesFound => 'Nema beleški za ovu pretragu.';
 
   @override
+  String appointmentPushTitle(String date) {
+    return 'Novo zakazivanje za $date';
+  }
+
+  @override
+  String appointmentReminderTitle(String date) {
+    return 'Sutra je zakazano, $date';
+  }
+
+  @override
   String notesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

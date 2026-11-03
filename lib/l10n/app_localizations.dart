@@ -1580,6 +1580,18 @@ abstract class AppLocalizations {
   /// **'No notes match this search.'**
   String get noNotesFound;
 
+  /// No description provided for @appointmentPushTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New booking for {date}'**
+  String appointmentPushTitle(String date);
+
+  /// No description provided for @appointmentReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked for tomorrow, {date}'**
+  String appointmentReminderTitle(String date);
+
   /// No description provided for @notesCount.
   ///
   /// In en, this message translates to:

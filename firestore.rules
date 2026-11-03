@@ -219,6 +219,16 @@ service cloud.firestore {
       }
     }
 
+    // Which account each phone belongs to, for the push worker, which alone
+    // reads these. The token is the id, so whoever signs in last takes the
+    // phone over. A disabled account may still take its own phone off.
+    match /pushTokens/{token} {
+      allow create, update: if isActive()
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
     match /walletEntries/{id} {
       allow read: if isActive();
       allow create: if authorCreates('createdBy') && validEntry();

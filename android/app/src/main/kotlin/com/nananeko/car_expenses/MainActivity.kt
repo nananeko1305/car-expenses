@@ -9,18 +9,23 @@ import io.flutter.embedding.android.FlutterActivity
 class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        createUpdatesChannel()
+        createChannels()
     }
 
-    // Channel used by release push notifications (see the FCM meta-data in
-    // AndroidManifest.xml). Creating an existing channel is a no-op.
-    private fun createUpdatesChannel() {
+    // Channels used by push notifications: release ones (see the FCM meta-data
+    // in AndroidManifest.xml) and the calendar's, apart so that either can be
+    // silenced alone. Creating an existing channel is a no-op.
+    private fun createChannels() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
-        val channel = NotificationChannel(
-            "updates",
-            getString(R.string.notification_channel_updates),
-            NotificationManager.IMPORTANCE_HIGH,
+        val manager = getSystemService(NotificationManager::class.java)
+        val channels = listOf(
+            "updates" to R.string.notification_channel_updates,
+            "appointments" to R.string.notification_channel_appointments,
         )
-        getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+        for ((id, name) in channels) {
+            manager.createNotificationChannel(
+                NotificationChannel(id, getString(name), NotificationManager.IMPORTANCE_HIGH),
+            )
+        }
     }
 }
