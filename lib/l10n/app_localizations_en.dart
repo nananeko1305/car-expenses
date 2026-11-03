@@ -813,6 +813,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noNotesFound => 'No notes match this search.';
 
   @override
+  String appointmentPushTitle(String date) {
+    return 'New booking for $date';
+  }
+
+  @override
+  String appointmentReminderTitle(String date) {
+    return 'Booked for tomorrow, $date';
+  }
+
+  @override
   String notesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

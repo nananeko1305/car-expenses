@@ -348,6 +348,22 @@
   "noteEngineHint": "e.g. 2.0 TDI",
   "notesSearchHint": "Make, model, year, engine…",
   "noNotesFound": "No notes match this search.",
+  "appointmentPushTitle": "New booking for {date}",
+  "@appointmentPushTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "appointmentReminderTitle": "Booked for tomorrow, {date}",
+  "@appointmentReminderTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "notesCount": "{count, plural, =1{1 note} other{{count} notes}}",
   "@notesCount": {
     "placeholders": {

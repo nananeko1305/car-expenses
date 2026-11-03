@@ -24,6 +24,7 @@ class AppointmentRepository {
       return _appointments.add({
         ...appointment.toMap(),
         'createdAt': FieldValue.serverTimestamp(),
+        'announced': false,
       });
     }
     return _appointments.doc(appointment.id).update(appointment.toMap());

@@ -303,6 +303,22 @@
   "noteEngineHint": "npr. 2.0 TDI",
   "notesSearchHint": "Marka, model, godište, motor…",
   "noNotesFound": "Nema beleški za ovu pretragu.",
+  "appointmentPushTitle": "Novo zakazivanje za {date}",
+  "@appointmentPushTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "appointmentReminderTitle": "Sutra je zakazano, {date}",
+  "@appointmentReminderTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "notesCount": "{count, plural, one{{count} beleška} few{{count} beleške} other{{count} beleški}}",
   "@notesCount": {
     "placeholders": {

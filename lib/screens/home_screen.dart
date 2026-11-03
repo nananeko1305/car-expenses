@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
 import '../models/app_user.dart';
+import '../models/appointment_push.dart';
+import '../services/appointment_announcer.dart';
 import '../services/auth_service.dart';
 import '../services/live_data.dart';
 import '../services/push_service.dart';
 import '../services/update_checker.dart';
 import '../widgets/app_drawer.dart';
+import '../widgets/appointment_push_snack_bar.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/update_dialog.dart';
 import 'calendar_screen.dart';
@@ -47,11 +50,30 @@ class _HomeScreenState extends State<HomeScreen> {
     _releaseSub = PushService.instance.onRelease.listen(
       (_) => _checkForUpdate(),
     );
+    _appointmentSub = PushService.instance.onAppointment.listen(
+      _showAppointmentPush,
+    );
     PushService.instance.start();
+    PushService.instance.registerToken();
+    _announcer.start();
   }
 
   late final StreamSubscription<void> _releaseSub;
+  late final StreamSubscription<AppointmentPush> _appointmentSub;
+  late final AppointmentAnnouncer _announcer = AppointmentAnnouncer(
+    source: _data,
+    read: () => _data.appointments,
+    uid: widget.profile.uid,
+    announce: announceToWorker,
+  );
   bool _updateDialogOpen = false;
+
+  void _showAppointmentPush(AppointmentPush push) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      appointmentPushSnackBar(AppLocalizations.of(context), push),
+    );
+  }
 
   /// On app start and on release pushes; silent when offline or already
   /// up to date, and never stacks a second dialog on an open one.
@@ -67,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _releaseSub.cancel();
+    _appointmentSub.cancel();
+    _announcer.dispose();
     _data.dispose();
     super.dispose();
   }

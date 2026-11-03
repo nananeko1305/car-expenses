@@ -77,12 +77,14 @@ Users change their own name and password in Settings.
 | `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
-| `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`             |
+| `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`, `announced` (false until the push went out; absent on older bookings) |
 | `tutorialBrands/{id}` | `ownerId` (who added it), `name`                                  |
 | `tutorialModels/{id}` | `ownerId`, `brandId`, `name`                                      |
 | `tutorialLinks/{id}`  | `ownerId`, `modelId`, `title` (may be empty), `url` (http/https)  |
 | `tutorialNotes/{id}`  | `ownerId`, `modelId`, `text`, `year` and `engine` (free text, optional) |
+| `pushTokens/{token}` | `uid` of the account the phone belongs to; read only by the push worker |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
+| `meta/reminder`      | `day` of the last evening reminder; only the push worker touches it |
 
 `warrantyEndsAt` mirrors the date computed from `purchaseDate` and the
 duration; the app always recomputes it and never reads it back.
@@ -90,6 +92,52 @@ duration; the app always recomputes it and never reads it back.
 Amounts are stored in minor units (para / cents) as integers. The wallet
 balance is computed from services + entries, never stored, so it cannot
 drift. All access rules live in [firestore.rules](firestore.rules).
+
+## Calendar pushes
+
+Every active account, the author included, gets a push when a booking is
+added, and at 21:00 Belgrade time one push listing tomorrow's bookings, if
+there are any. Editing or deleting a booking sends nothing, and neither do
+disabled accounts receive anything. Bookings from before this existed never
+get the first push, but do get the reminder.
+
+Cloud Functions need the Blaze plan, and a service account key cannot ship in
+a public APK, so a small [Cloudflare Worker](push_worker) on the free plan does
+the sending and holds the key:
+
+1. The app registers each phone's FCM token in `pushTokens/{token}`.
+2. Once the server has a booking with `announced: false`, its author's app
+   calls `POST /announce` with its Firebase ID token. This one path covers a
+   normal save, a booking written offline, and the worker being down: the app
+   asks again on its next start.
+3. The worker checks the token, the account and the author, marks the booking
+   `announced: true` only if it has not changed since it was read, and then
+   sends. A repeated call therefore sends nothing. If FCM fails right then,
+   that push is lost; duplicates seemed worse.
+4. Two cron triggers (19:00 and 20:00 UTC, because Cloudflare cron runs in UTC)
+   send the reminder; the handler goes on only when it is 21:00 in Belgrade.
+
+A topic would not do for booking text: anyone with the public Firebase config
+could subscribe, and disabled accounts would keep receiving. Limits of the free
+plan: 10 ms of CPU and 50 outside calls per run, which caps a push at 20 phones.
+
+The worker is deployed by hand, not by CI, and it and the rules must be
+deployed before a merge into `main` that depends on them. The service account
+`push-worker` has only `roles/datastore.user` and
+`roles/firebasecloudmessaging.admin`, and its key lives only in Cloudflare:
+
+```sh
+cd push_worker
+npm ci
+npm test
+npx wrangler login
+npx wrangler secret put GOOGLE_SERVICE_ACCOUNT < key.json   # then delete key.json
+npx wrangler deploy
+npx wrangler tail                                           # watch the logs
+```
+
+The deployed address goes in `pushWorkerUrl` in
+[appointment_announcer.dart](lib/services/appointment_announcer.dart).
 
 ## Release
 

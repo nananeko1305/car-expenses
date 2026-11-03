@@ -1,0 +1,18 @@
+name = "car-expenses-push"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+# Preview URLs would keep older versions reachable, with the same key.
+preview_urls = false
+
+[vars]
+FIREBASE_PROJECT_ID = "car-expenses-260921"
+
+# Cloudflare cron runs in UTC. 21:00 in Belgrade is 19:00 UTC in summer and
+# 20:00 UTC in winter, so both fire and the handler keeps the right one.
+[triggers]
+crons = ["0 19 * * *", "0 20 * * *"]
+
+# Logs and CPU time in the Cloudflare dashboard.
+[observability]
+enabled = true

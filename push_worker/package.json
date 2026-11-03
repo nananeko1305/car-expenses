@@ -1,0 +1,11 @@
+{
+  "name": "car-expenses-push",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "jose": "^6.2.15"
+  }
+}

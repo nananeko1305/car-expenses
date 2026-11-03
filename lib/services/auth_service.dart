@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'push_service.dart';
+
 /// Email + password sign-in through Firebase Auth. There is no public
 /// registration: accounts are created by the admin (see [UserRepository]).
 class AuthService {
@@ -37,5 +39,18 @@ class AuthService {
     await user.updatePassword(newPassword);
   }
 
-  Future<void> signOut() => _auth.signOut();
+  /// Takes this phone off the account first, but nothing may stand in the
+  /// way of signing out: a refused delete would trap an account on the
+  /// status screen, and offline the delete never answers.
+  Future<void> signOut() async {
+    try {
+      await PushService.instance.forgetToken().timeout(
+        const Duration(seconds: 2),
+      );
+    } catch (_) {
+      // The next sign-in on this phone takes the token over.
+    } finally {
+      await _auth.signOut();
+    }
+  }
 }
