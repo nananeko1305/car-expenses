@@ -80,28 +80,3 @@ bool nameTaken(String name, Iterable<String> names) {
   final wanted = name.trim().toLowerCase();
   return names.any((n) => n.trim().toLowerCase() == wanted);
 }
-
-/// The item called [name], going by [foldLetters] and ignoring the spaces
-/// around it, so typing "skoda" lands on "Škoda" instead of adding it twice.
-T? findByName<T>(Iterable<T> items, String name, String Function(T) nameOf) {
-  final wanted = foldLetters(name.trim());
-  for (final item in items) {
-    if (foldLetters(nameOf(item).trim()) == wanted) return item;
-  }
-  return null;
-}
-
-const _plainLetters = {
-  'š': 's',
-  'ž': 'z',
-  'č': 'c',
-  'ć': 'c',
-  'đ': 'dj',
-  'ë': 'e', // Citroën
-};
-
-/// [s] in lower case, without the marks people skip when typing a name.
-String foldLetters(String s) => s.toLowerCase().replaceAllMapped(
-  RegExp('[šžčćđë]'),
-  (m) => _plainLetters[m[0]]!,
-);

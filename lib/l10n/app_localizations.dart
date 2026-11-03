@@ -1568,18 +1568,6 @@ abstract class AppLocalizations {
   /// **'e.g. 2.0 TDI'**
   String get noteEngineHint;
 
-  /// No description provided for @notesSearchHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Make, model, year, engine…'**
-  String get notesSearchHint;
-
-  /// No description provided for @noNotesFound.
-  ///
-  /// In en, this message translates to:
-  /// **'No notes match this search.'**
-  String get noNotesFound;
-
   /// No description provided for @appointmentPushTitle.
   ///
   /// In en, this message translates to:

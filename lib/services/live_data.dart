@@ -124,13 +124,6 @@ class LiveData extends ChangeNotifier {
     (tutorialNotes ?? const []).where((n) => n.modelId == modelId),
   );
 
-  /// The make and model a note is about, e.g. "Volkswagen Golf".
-  String carOfNote(TutorialNote note) {
-    final model = modelById(note.modelId);
-    if (model == null) return '';
-    return '${brandById(model.brandId)?.name ?? ''} ${model.name}'.trim();
-  }
-
   static T? _firstWhereOrNull<T>(List<T>? list, bool Function(T) test) {
     for (final x in list ?? <T>[]) {
       if (test(x)) return x;

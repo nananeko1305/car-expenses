@@ -807,12 +807,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noteEngineHint => 'e.g. 2.0 TDI';
 
   @override
-  String get notesSearchHint => 'Make, model, year, engine…';
-
-  @override
-  String get noNotesFound => 'No notes match this search.';
-
-  @override
   String appointmentPushTitle(String date) {
     return 'New booking for $date';
   }
