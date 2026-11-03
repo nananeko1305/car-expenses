@@ -50,14 +50,10 @@ Users change their own name and password in Settings.
   or the admin may change or delete one.
 - **Tutorials** (menu) are the workshop's shared knowledge: makes, their
   models, and for each model links for working on it (a title and an
-  address) and notes with who wrote them and when. Like tools, anyone may
-  add, correct or delete any of it; who added it stays on record. A make
-  with models cannot be deleted; deleting a model takes its links and
-  notes with it.
-- **Notes** (menu) are those same notes in one list, newest first, with a
-  search over make, model, year, engine and text. A note may say which year
-  and engine it is about. A new note takes its make and model by name, with
-  suggestions; one that does not exist yet joins the tutorials with the note.
+  address) and notes with who wrote them and when. A note may say which year
+  and engine it is about. Like tools, anyone may add, correct or delete any
+  of it; who added it stays on record. A make with models cannot be deleted;
+  deleting a model takes its links and notes with it.
 - **Monthly report** (menu, or the card on Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other

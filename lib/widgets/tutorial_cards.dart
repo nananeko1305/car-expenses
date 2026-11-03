@@ -85,7 +85,8 @@ class TutorialLinkCard extends StatelessWidget {
   }
 }
 
-/// One note: which car it is about, its text, then who wrote it and when.
+/// One note: which year and engine it is about, its text, then who wrote it
+/// and when.
 /// Tapping edits it.
 class TutorialNoteCard extends StatelessWidget {
   const TutorialNoteCard({
@@ -93,22 +94,17 @@ class TutorialNoteCard extends StatelessWidget {
     required this.note,
     required this.authorName,
     required this.onTap,
-    this.car = '',
   });
 
   final TutorialNote note;
   final String authorName;
   final VoidCallback onTap;
 
-  /// The make and model; left out under a model, which says it already.
-  final String car;
-
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final date = DateFormat.yMMMd(locale)
         .format(note.createdAt ?? DateTime.now());
-    final muted = context.colors.ink.withValues(alpha: 0.65);
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -118,15 +114,7 @@ class TutorialNoteCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (car.isNotEmpty)
-                Text(
-                  car,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              if (note.details.isNotEmpty)
+              if (note.details.isNotEmpty) ...[
                 Text(
                   note.details,
                   style: TextStyle(
@@ -135,8 +123,8 @@ class TutorialNoteCard extends StatelessWidget {
                     color: context.colors.primary,
                   ),
                 ),
-              if (car.isNotEmpty || note.details.isNotEmpty)
                 const SizedBox(height: 6),
+              ],
               Text(note.text, style: const TextStyle(fontSize: 15)),
               const SizedBox(height: 8),
               Text(
@@ -144,7 +132,7 @@ class TutorialNoteCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: muted,
+                  color: context.colors.ink.withValues(alpha: 0.65),
                 ),
               ),
             ],

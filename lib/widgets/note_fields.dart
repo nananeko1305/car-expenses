@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import '../models/tutorial_entry.dart';
 
-/// The editable year, engine and text of one note, shared by the new-note
-/// form and the note dialog.
+/// The editable year, engine and text of one note, for the note dialog.
 class NoteDraft {
   NoteDraft([TutorialNote? note])
     : year = TextEditingController(text: note?.year ?? ''),

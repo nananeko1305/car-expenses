@@ -808,12 +808,6 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noteEngineHint => 'npr. 2.0 TDI';
 
   @override
-  String get notesSearchHint => 'Marka, model, godište, motor…';
-
-  @override
-  String get noNotesFound => 'Nema beleški za ovu pretragu.';
-
-  @override
   String appointmentPushTitle(String date) {
     return 'Novo zakazivanje za $date';
   }

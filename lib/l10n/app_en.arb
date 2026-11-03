@@ -346,8 +346,6 @@
   "noteYearHint": "e.g. 2016 or 2013-2016",
   "noteEngine": "Engine",
   "noteEngineHint": "e.g. 2.0 TDI",
-  "notesSearchHint": "Make, model, year, engine…",
-  "noNotesFound": "No notes match this search.",
   "appointmentPushTitle": "New booking for {date}",
   "@appointmentPushTitle": {
     "placeholders": {

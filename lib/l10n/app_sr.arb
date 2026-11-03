@@ -301,8 +301,6 @@
   "noteYearHint": "npr. 2016 ili 2013-2016",
   "noteEngine": "Motor",
   "noteEngineHint": "npr. 2.0 TDI",
-  "notesSearchHint": "Marka, model, godište, motor…",
-  "noNotesFound": "Nema beleški za ovu pretragu.",
   "appointmentPushTitle": "Novo zakazivanje za {date}",
   "@appointmentPushTitle": {
     "placeholders": {
