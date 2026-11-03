@@ -15,6 +15,7 @@ enum DrawerDestination {
   vehicles,
   tools,
   tutorials,
+  notes,
   users,
   settings,
   signOut,
@@ -108,6 +109,11 @@ class AppDrawer extends StatelessWidget {
                     DrawerDestination.tutorials,
                     Icons.menu_book_rounded,
                     t.tutorials,
+                  ),
+                  item(
+                    DrawerDestination.notes,
+                    Icons.sticky_note_2_rounded,
+                    t.notes,
                   ),
                   if (profile.isAdmin)
                     item(DrawerDestination.users, Icons.group_rounded, t.users),

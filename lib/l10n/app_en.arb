@@ -342,6 +342,12 @@
   "noteHint": "What is worth knowing next time",
   "noNotes": "No notes yet.",
   "deleteNoteQ": "Delete this note?",
+  "noteYear": "Year",
+  "noteYearHint": "e.g. 2016 or 2013-2016",
+  "noteEngine": "Engine",
+  "noteEngineHint": "e.g. 2.0 TDI",
+  "notesSearchHint": "Make, model, year, engine…",
+  "noNotesFound": "No notes match this search.",
   "notesCount": "{count, plural, =1{1 note} other{{count} notes}}",
   "@notesCount": {
     "placeholders": {

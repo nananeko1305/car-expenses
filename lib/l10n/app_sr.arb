@@ -297,6 +297,12 @@
   "noteHint": "Šta je dobro znati sledeći put",
   "noNotes": "Još nema beleški.",
   "deleteNoteQ": "Obrisati ovu belešku?",
+  "noteYear": "Godište",
+  "noteYearHint": "npr. 2016 ili 2013-2016",
+  "noteEngine": "Motor",
+  "noteEngineHint": "npr. 2.0 TDI",
+  "notesSearchHint": "Marka, model, godište, motor…",
+  "noNotesFound": "Nema beleški za ovu pretragu.",
   "notesCount": "{count, plural, one{{count} beleška} few{{count} beleške} other{{count} beleški}}",
   "@notesCount": {
     "placeholders": {

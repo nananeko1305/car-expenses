@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'tutorial.dart';
+
 /// A link for working on one model, stored in `tutorialLinks/{id}`.
 class TutorialLink {
   const TutorialLink({
@@ -71,6 +73,8 @@ class TutorialNote {
     required this.ownerId,
     required this.modelId,
     required this.text,
+    this.year = '',
+    this.engine = '',
     this.createdAt,
   });
 
@@ -79,8 +83,26 @@ class TutorialNote {
   final String modelId;
   final String text;
 
+  /// Which cars it is about, as typed: "2016" or "2013-2016". Empty when
+  /// it is about all of them, as with notes from before this field.
+  final String year;
+
+  /// e.g. "2.0 TDI"; empty like [year].
+  final String engine;
+
   /// Null while the write is still on its way to the server.
   final DateTime? createdAt;
+
+  /// What a card shows: "2016 · 2.0 TDI", or less when one is empty.
+  String get details => [year, engine].where((s) => s.isNotEmpty).join(' · ');
+
+  /// True when every word of [query] is somewhere in [car] ("Škoda
+  /// Octavia"), the year, the engine or the text, so the words may come
+  /// in any order. Goes by [foldLetters]: "skoda" finds "Škoda".
+  bool matches(String query, String car) {
+    final searched = foldLetters('$car $year $engine $text');
+    return foldLetters(query).split(RegExp(r'\s+')).every(searched.contains);
+  }
 
   /// [notes] newest first, one still saving at the top.
   static List<TutorialNote> newestFirst(Iterable<TutorialNote> notes) =>
@@ -94,6 +116,8 @@ class TutorialNote {
       ownerId: data['ownerId'] as String? ?? '',
       modelId: data['modelId'] as String? ?? '',
       text: data['text'] as String? ?? '',
+      year: data['year'] as String? ?? '',
+      engine: data['engine'] as String? ?? '',
       createdAt: (data['createdAt'] as Timestamp?)?.toDate(),
     );
   }
@@ -103,6 +127,8 @@ class TutorialNote {
     'ownerId': ownerId,
     'modelId': modelId,
     'text': text,
+    'year': year,
+    'engine': engine,
     'updatedAt': FieldValue.serverTimestamp(),
   };
 }

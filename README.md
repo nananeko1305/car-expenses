@@ -54,6 +54,10 @@ Users change their own name and password in Settings.
   add, correct or delete any of it; who added it stays on record. A make
   with models cannot be deleted; deleting a model takes its links and
   notes with it.
+- **Notes** (menu) are those same notes in one list, newest first, with a
+  search over make, model, year, engine and text. A note may say which year
+  and engine it is about. A new note takes its make and model by name, with
+  suggestions; one that does not exist yet joins the tutorials with the note.
 - **Monthly report** (menu, or the card on Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other
@@ -77,7 +81,7 @@ Users change their own name and password in Settings.
 | `tutorialBrands/{id}` | `ownerId` (who added it), `name`                                  |
 | `tutorialModels/{id}` | `ownerId`, `brandId`, `name`                                      |
 | `tutorialLinks/{id}`  | `ownerId`, `modelId`, `title` (may be empty), `url` (http/https)  |
-| `tutorialNotes/{id}`  | `ownerId`, `modelId`, `text`                                      |
+| `tutorialNotes/{id}`  | `ownerId`, `modelId`, `text`, `year` and `engine` (free text, optional) |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
 
 `warrantyEndsAt` mirrors the date computed from `purchaseDate` and the

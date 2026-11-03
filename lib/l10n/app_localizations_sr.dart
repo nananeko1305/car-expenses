@@ -796,6 +796,24 @@ class AppLocalizationsSr extends AppLocalizations {
   String get deleteNoteQ => 'Obrisati ovu belešku?';
 
   @override
+  String get noteYear => 'Godište';
+
+  @override
+  String get noteYearHint => 'npr. 2016 ili 2013-2016';
+
+  @override
+  String get noteEngine => 'Motor';
+
+  @override
+  String get noteEngineHint => 'npr. 2.0 TDI';
+
+  @override
+  String get notesSearchHint => 'Marka, model, godište, motor…';
+
+  @override
+  String get noNotesFound => 'Nema beleški za ovu pretragu.';
+
+  @override
   String notesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
