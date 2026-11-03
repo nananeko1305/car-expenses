@@ -97,6 +97,45 @@ class TutorialRepository {
 
   Future<void> deleteNote(String id) => _notes.doc(id).delete();
 
+  /// A new note on a make and model typed by name. Whichever of them does
+  /// not exist yet ([brand] or [model] is null) is created with the note,
+  /// in one write, so a failed save leaves no empty make behind.
+  Future<void> createNoteFor(
+    TutorialNote note, {
+    required String brandName,
+    required String modelName,
+    TutorialBrand? brand,
+    TutorialModel? model,
+  }) {
+    final batch = _db.batch();
+    final created = {'createdAt': FieldValue.serverTimestamp()};
+    final brandRef = brand == null ? _brands.doc() : _brands.doc(brand.id);
+    if (brand == null) {
+      final newBrand = TutorialBrand(
+        id: brandRef.id,
+        ownerId: note.ownerId,
+        name: brandName,
+      );
+      batch.set(brandRef, {...newBrand.toMap(), ...created});
+    }
+    final modelRef = model == null ? _models.doc() : _models.doc(model.id);
+    if (model == null) {
+      final newModel = TutorialModel(
+        id: modelRef.id,
+        ownerId: note.ownerId,
+        brandId: brandRef.id,
+        name: modelName,
+      );
+      batch.set(modelRef, {...newModel.toMap(), ...created});
+    }
+    batch.set(_notes.doc(), {
+      ...note.toMap(),
+      'modelId': modelRef.id,
+      ...created,
+    });
+    return batch.commit();
+  }
+
   Future<void> _save(
     CollectionReference<Map<String, dynamic>> collection,
     String id,

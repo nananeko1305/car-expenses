@@ -212,7 +212,10 @@ service cloud.firestore {
       function validNote() {
         let d = request.resource.data;
         return d.modelId is string
-          && d.text is string && d.text.size() > 0 && d.text.size() <= 2000;
+          && d.text is string && d.text.size() > 0 && d.text.size() <= 2000
+          // Notes from before the year and engine have neither.
+          && d.get('year', '') is string && d.get('year', '').size() <= 20
+          && d.get('engine', '') is string && d.get('engine', '').size() <= 50;
       }
     }
 

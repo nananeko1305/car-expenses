@@ -94,4 +94,54 @@ void main() {
     expect(nameTaken(' volkswagen ', ['Opel', 'Volkswagen']), isTrue);
     expect(nameTaken('Passat B8', ['Passat']), isFalse);
   });
+
+  test('finding a name ignores case, spaces and our letters', () {
+    const names = ['Škoda', 'Citroën', 'Opel'];
+    expect(findByName(names, ' skoda ', (s) => s), 'Škoda');
+    expect(findByName(names, 'CITROEN', (s) => s), 'Citroën');
+    expect(findByName(names, 'Opel Astra', (s) => s), isNull);
+  });
+
+  group('a note\'s year and engine', () {
+    const note = TutorialNote(
+      id: 'n1',
+      ownerId: 'u1',
+      modelId: 'm1',
+      text: 'Filter goriva je iza branika',
+      year: '2016',
+      engine: '2.0 TDI',
+    );
+
+    test('details show what was entered', () {
+      expect(note.details, '2016 · 2.0 TDI');
+      expect(_note('old').details, '');
+      const onlyEngine = TutorialNote(
+        id: 'n2',
+        ownerId: 'u1',
+        modelId: 'm1',
+        text: 'x',
+        engine: '1.9 TDI',
+      );
+      expect(onlyEngine.details, '1.9 TDI');
+    });
+
+    test('search finds every word, in any order', () {
+      const car = 'Volkswagen Golf';
+      expect(note.matches('golf', car), isTrue);
+      expect(note.matches('tdi 2016 golf', car), isTrue);
+      expect(note.matches('  branika  ', car), isTrue);
+      expect(note.matches('golf 2019', car), isFalse);
+      expect(note.matches('passat', car), isFalse);
+    });
+
+    test('search ignores our letters both ways', () {
+      expect(note.matches('skoda', 'Škoda Octavia'), isTrue);
+      expect(note.matches('ŠKODA', 'Skoda Octavia'), isTrue);
+    });
+
+    test('an empty search finds everything', () {
+      expect(note.matches('', 'Volkswagen Golf'), isTrue);
+      expect(note.matches('   ', ''), isTrue);
+    });
+  });
 }

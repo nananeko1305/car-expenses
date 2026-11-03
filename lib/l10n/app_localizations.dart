@@ -1544,6 +1544,42 @@ abstract class AppLocalizations {
   /// **'Delete this note?'**
   String get deleteNoteQ;
 
+  /// No description provided for @noteYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get noteYear;
+
+  /// No description provided for @noteYearHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 2016 or 2013-2016'**
+  String get noteYearHint;
+
+  /// No description provided for @noteEngine.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine'**
+  String get noteEngine;
+
+  /// No description provided for @noteEngineHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 2.0 TDI'**
+  String get noteEngineHint;
+
+  /// No description provided for @notesSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Make, model, year, engine…'**
+  String get notesSearchHint;
+
+  /// No description provided for @noNotesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes match this search.'**
+  String get noNotesFound;
+
   /// No description provided for @notesCount.
   ///
   /// In en, this message translates to:

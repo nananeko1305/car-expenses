@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/tutorial_entry.dart';
 import '../services/background_save.dart';
 import '../services/tutorial_repository.dart';
 import 'confirm_delete.dart';
+import 'note_fields.dart';
 
 /// Adds a note to the model [modelId], or edits or deletes [note]. Any
 /// user may do either; [authorName] says who wrote an existing one.
@@ -45,27 +45,23 @@ class _NoteDialog extends StatefulWidget {
 }
 
 class _NoteDialogState extends State<_NoteDialog> {
-  /// The rules allow 2000 characters.
-  static const _maxLength = 2000;
-
   final _formKey = GlobalKey<FormState>();
-  late final _text = TextEditingController(text: widget.note?.text ?? '');
+  late final _draft = NoteDraft(widget.note);
 
   @override
   void dispose() {
-    _text.dispose();
+    _draft.dispose();
     super.dispose();
   }
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
     final old = widget.note;
-    final note = TutorialNote(
+    final note = _draft.toNote(
       id: old?.id ?? '',
       // Whoever edits, the one who wrote it stays on record.
       ownerId: old?.ownerId ?? widget.uid,
       modelId: widget.modelId,
-      text: _text.text.trim(),
     );
     saveInBackground(context, () => TutorialRepository.instance.saveNote(note));
     Navigator.of(context).pop();
@@ -101,21 +97,7 @@ class _NoteDialogState extends State<_NoteDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(
-                controller: _text,
-                autofocus: !editing,
-                minLines: 3,
-                maxLines: 8,
-                textCapitalization: TextCapitalization.sentences,
-                inputFormatters: [LengthLimitingTextInputFormatter(_maxLength)],
-                decoration: InputDecoration(
-                  labelText: t.note,
-                  hintText: t.noteHint,
-                  alignLabelWithHint: true,
-                ),
-                validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? t.required : null,
-              ),
+              NoteFields(draft: _draft, autofocus: !editing),
               if (editing) ...[
                 const SizedBox(height: 12),
                 Text(t.enteredBy(widget.authorName)),
