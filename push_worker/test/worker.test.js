@@ -360,6 +360,45 @@ test('a token that is no longer registered is deleted, others are kept', async (
   assert.ok(store['pushTokens/phone-zika']);
 });
 
+test('a push Google refuses says why in the log, without the token or text', async () => {
+  const errors = [];
+  const realError = console.error;
+  console.error = (message) => errors.push(message);
+  globalThis.fetch = async (input, init) => {
+    if (input === FCM) {
+      return json({ error: { message: 'Permission denied' } }, 403);
+    }
+    return fakeFetch(input, init);
+  };
+  try {
+    const response = await post(await idToken('mika'));
+    assert.equal(response.status, 204);
+    assert.equal(errors[0], 'FCM refused a push with 403: Permission denied');
+    assert.equal(errors.at(-1), '2 of 2 pushes failed');
+    assert.equal(/phone-|Opel Astra/.test(errors.join()), false);
+  } finally {
+    console.error = realError;
+  }
+});
+
+test('a push that cannot go out logs only the kind of error', async () => {
+  const errors = [];
+  const realError = console.error;
+  console.error = (message) => errors.push(message);
+  globalThis.fetch = async (input, init) => {
+    if (input === FCM) throw new TypeError('could not reach phone-mika');
+    return fakeFetch(input, init);
+  };
+  try {
+    const response = await post(await idToken('mika'));
+    assert.equal(response.status, 204);
+    assert.equal(errors[0], 'Sending a push failed: TypeError');
+    assert.equal(errors.join().includes('phone-'), false);
+  } finally {
+    console.error = realError;
+  }
+});
+
 test('a failure inside Google answers 500 and names no secret', async () => {
   const errors = [];
   const realError = console.error;
