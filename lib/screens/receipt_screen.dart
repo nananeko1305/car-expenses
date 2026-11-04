@@ -71,9 +71,14 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: InteractiveViewer(
-          maxScale: 5,
+      // The zoom area is the whole screen. InteractiveViewer clips to its own
+      // size, so wrapped around the picture it would keep a narrow receipt
+      // narrow however far it is zoomed.
+      body: InteractiveViewer(
+        // A long receipt starts out small, so it needs more zoom than a normal
+        // photo to fill the screen and still be readable.
+        maxScale: 10,
+        child: Center(
           child: Image.network(
             widget.url,
             fit: BoxFit.contain,
