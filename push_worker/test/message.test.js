@@ -3,6 +3,7 @@ import { test } from 'node:test';
 
 import {
   bookingMessage,
+  cancelledMessage,
   dateLabel,
   dayInBelgrade,
   hourInBelgrade,
@@ -63,6 +64,17 @@ test('a new booking names its day and carries its text', () => {
         channel_id: 'appointments',
       },
     },
+  });
+});
+
+test('a cancelled booking names its day and carries its text', () => {
+  const { data, android } = cancelledMessage('2026-11-14', 'Opel Astra, Mika, 10h');
+  assert.deepEqual(data, { type: 'cancelled', day: '2026-11-14' });
+  assert.deepEqual(android.notification, {
+    title_loc_key: 'appointment_cancelled_title',
+    title_loc_args: ['14.11.2026.'],
+    body: 'Opel Astra, Mika, 10h',
+    channel_id: 'appointments',
   });
 });
 

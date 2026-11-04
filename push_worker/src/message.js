@@ -85,6 +85,10 @@ export function bookingMessage(day, text) {
   return message('appointment', 'appointment_notification_title', day, text);
 }
 
+export function cancelledMessage(day, text) {
+  return message('cancelled', 'appointment_cancelled_title', day, text);
+}
+
 export function reminderMessage(day, texts) {
   return message(
     'reminder',

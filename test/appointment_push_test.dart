@@ -34,7 +34,7 @@ void main() {
         'type': 'appointment',
         'day': '2026-11-14',
       }, 'Opel Astra, Mika, 10h')!;
-      expect(push.isReminder, isFalse);
+      expect(push.kind, AppointmentPushKind.booking);
       expect(push.day, DateTime(2026, 11, 14));
       expect(push.body, 'Opel Astra, Mika, 10h');
     });
@@ -44,7 +44,17 @@ void main() {
         'type': 'reminder',
         'day': '2026-11-14',
       }, 'a\nb')!;
-      expect(push.isReminder, isTrue);
+      expect(push.kind, AppointmentPushKind.reminder);
+    });
+
+    test('a cancelled booking', () {
+      final push = AppointmentPush.fromMessage({
+        'type': 'cancelled',
+        'day': '2026-11-14',
+      }, 'Opel Astra, Mika, 10h')!;
+      expect(push.kind, AppointmentPushKind.cancelled);
+      expect(push.day, DateTime(2026, 11, 14));
+      expect(push.body, 'Opel Astra, Mika, 10h');
     });
 
     test('the date as the title shows it, without leading zeros', () {
@@ -74,7 +84,7 @@ void main() {
 
   group('the snack bar', () {
     final booking = AppointmentPush(
-      isReminder: false,
+      kind: AppointmentPushKind.booking,
       day: DateTime(2026, 11, 14),
       body: 'Opel Astra, Mika, 10h',
     );
@@ -92,12 +102,29 @@ void main() {
 
     testWidgets('names a reminder', (tester) async {
       final reminder = AppointmentPush(
-        isReminder: true,
+        kind: AppointmentPushKind.reminder,
         day: DateTime(2026, 11, 14),
         body: 'a\nb',
       );
       await _show(tester, reminder, 'sr');
       expect(find.text('Sutra je zakazano, 14.11.2026.'), findsOneWidget);
+    });
+
+    final cancelled = AppointmentPush(
+      kind: AppointmentPushKind.cancelled,
+      day: DateTime(2026, 11, 14),
+      body: 'Opel Astra, Mika, 10h',
+    );
+
+    testWidgets('names a cancelled booking in Serbian', (tester) async {
+      await _show(tester, cancelled, 'sr');
+      expect(find.text('Oslobođen termin za 14.11.2026.'), findsOneWidget);
+      expect(find.text('Opel Astra, Mika, 10h'), findsOneWidget);
+    });
+
+    testWidgets('names a cancelled booking in English', (tester) async {
+      await _show(tester, cancelled, 'en');
+      expect(find.text('Booking cancelled for 14.11.2026.'), findsOneWidget);
     });
 
     testWidgets('a long reminder does not overflow a narrow phone', (
@@ -107,7 +134,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
       final long = AppointmentPush(
-        isReminder: true,
+        kind: AppointmentPushKind.reminder,
         day: DateTime(2026, 11, 14),
         body: List.filled(20, 'Opel Astra, Mika, 10h').join('\n'),
       );

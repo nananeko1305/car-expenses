@@ -6,4 +6,4 @@
   empty.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@string/update_notification_title,@string/update_notification_body,@string/appointment_notification_title,@string/appointment_reminder_title" />
+    tools:keep="@string/update_notification_title,@string/update_notification_body,@string/appointment_notification_title,@string/appointment_reminder_title,@string/appointment_cancelled_title" />

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:car_expenses/models/appointment.dart';
 import 'package:car_expenses/services/appointment_announcer.dart';
 import 'package:flutter/foundation.dart';
@@ -141,5 +144,54 @@ void main() {
     announcer.dispose();
     calendar.show([_booking('a1')]);
     expect(asked, isEmpty);
+  });
+
+  group('cancelling a booking', () {
+    late List<String> deleted;
+
+    Future<void> delete(String id) async => deleted.add(id);
+
+    setUp(() => deleted = []);
+
+    test('leaves the delete to the worker when it says yes', () async {
+      await cancelAppointment('a1', ask: (_) async => 204, delete: delete);
+      expect(deleted, isEmpty);
+    });
+
+    for (final status in [401, 403, 404, 409, 500]) {
+      test('deletes directly when the worker answers $status', () async {
+        await cancelAppointment('a1', ask: (_) async => status, delete: delete);
+        expect(deleted, ['a1']);
+      });
+    }
+
+    test('deletes directly when offline', () async {
+      await cancelAppointment(
+        'a1',
+        ask: (_) => throw const SocketException('offline'),
+        delete: delete,
+      );
+      expect(deleted, ['a1']);
+    });
+
+    test('deletes directly when the worker takes too long', () async {
+      await cancelAppointment(
+        'a1',
+        ask: (_) => throw TimeoutException('too long'),
+        delete: delete,
+      );
+      expect(deleted, ['a1']);
+    });
+
+    test('a refused delete reaches the caller', () async {
+      await expectLater(
+        cancelAppointment(
+          'a1',
+          ask: (_) async => 403,
+          delete: (_) => throw StateError('permission denied'),
+        ),
+        throwsStateError,
+      );
+    });
   });
 }

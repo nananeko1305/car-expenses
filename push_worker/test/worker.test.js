@@ -122,13 +122,17 @@ function fakeFetch(input, init = {}) {
   if (base.endsWith(':commit')) {
     beforeWrite?.();
     const [write] = JSON.parse(init.body).writes;
-    const target = write.update.name.split('/documents/')[1];
+    const target = (write.update?.name ?? write.delete).split('/documents/')[1];
     const { updateTime, exists } = write.currentDocument;
     if (exists === false && store[target]) {
       return json({ error: { status: 'ALREADY_EXISTS' } }, 409);
     }
     if (updateTime && store[target]?.updateTime !== updateTime) {
       return json({ error: { status: 'FAILED_PRECONDITION' } }, 400);
+    }
+    if (write.delete) {
+      delete store[target];
+      return json({ writeResults: [{}], commitTime: 'now' });
     }
     assert.deepEqual(
       write.updateMask.fieldPaths,
@@ -180,10 +184,10 @@ afterEach(() => {
   globalThis.fetch = realFetch;
 });
 
-async function post(token, body = { appointmentId: 'a1' }) {
+async function post(token, body = { appointmentId: 'a1' }, path = '/announce') {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   return worker.fetch(
-    new Request('https://push.test/announce', {
+    new Request(`https://push.test${path}`, {
       method: 'POST',
       headers,
       body: JSON.stringify(body),
@@ -344,6 +348,8 @@ test('an id that could not be a booking is refused before any read', async () =>
 test('other paths and methods are not served', async () => {
   const get = await worker.fetch(new Request('https://push.test/announce'), env);
   assert.equal(get.status, 405);
+  const getCancel = await worker.fetch(new Request('https://push.test/cancel'), env);
+  assert.equal(getCancel.status, 405);
   const other = await worker.fetch(
     new Request('https://push.test/users', { method: 'POST' }),
     env,
@@ -412,7 +418,7 @@ test('a failure inside Google answers 500 and names no secret', async () => {
   try {
     const response = await post(await idToken('mika'));
     assert.equal(response.status, 500);
-    assert.deepEqual(errors, ['Announcing failed: Google sign-in failed with 400']);
+    assert.deepEqual(errors, ['/announce failed: Google sign-in failed with 400']);
   } finally {
     console.error = realError;
   }
@@ -433,6 +439,157 @@ test('a malformed secret is not quoted in the log', async () => {
     );
     assert.equal(response.status, 500);
     assert.equal(errors.join().includes('secret-text'), false);
+  } finally {
+    console.error = realError;
+  }
+});
+
+// Cancelling a booking.
+
+const cancel = async (uid) => post(await idToken(uid), undefined, '/cancel');
+const phones = () => sent.map((message) => message.token).sort();
+
+function announcedBooking(date = '2099-03-10T23:00:00Z') {
+  Object.assign(store['appointments/a1'], { date, announced: true });
+}
+
+test('cancelling deletes the booking and tells every active account', async () => {
+  announcedBooking();
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.equal(store['appointments/a1'], undefined);
+  assert.deepEqual(phones(), ['phone-mika', 'phone-pera']);
+  assert.deepEqual(sent[0].data, { type: 'cancelled', day: '2099-03-11' });
+  assert.equal(sent[0].android.notification.title_loc_key, 'appointment_cancelled_title');
+  assert.equal(sent[0].android.notification.body, 'Opel Astra, Mika, 10h');
+});
+
+test('the booking is deleted before anything is sent', async () => {
+  announcedBooking();
+  await cancel('mika');
+  const write = log.findIndex((line) => line.endsWith(':commit'));
+  const firstSend = log.findIndex((line) => line.includes('messages:send'));
+  assert.ok(write < firstSend);
+});
+
+test('the admin may cancel someone else\'s booking', async () => {
+  announcedBooking();
+  store['users/ana'] = { disabled: false, role: 'admin', updateTime: 't0' };
+  const response = await cancel('ana');
+  assert.equal(response.status, 204);
+  assert.equal(store['appointments/a1'], undefined);
+  assert.equal(sent.length, 2);
+});
+
+test('nobody else may cancel a booking', async () => {
+  announcedBooking();
+  store['users/zika'].role = 'admin'; // disabled, so this role counts for nothing
+  for (const uid of ['pera', 'zika', 'no-profile']) {
+    const response = await cancel(uid);
+    assert.equal(response.status, 403, uid);
+  }
+  assert.ok(store['appointments/a1']);
+  assert.deepEqual(writes(), []);
+  assert.deepEqual(sent, []);
+});
+
+test('cancelling needs a valid token and a booking id', async () => {
+  announcedBooking();
+  const noToken = await post(null, undefined, '/cancel');
+  assert.equal(noToken.status, 401);
+  const noId = await post(await idToken('mika'), { appointmentId: '../users' }, '/cancel');
+  assert.equal(noId.status, 400);
+  assert.ok(store['appointments/a1']);
+});
+
+test('a booking whose day has passed goes quietly', async () => {
+  announcedBooking('2020-01-10T23:00:00Z');
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.equal(store['appointments/a1'], undefined);
+  assert.deepEqual(sent, []);
+});
+
+test('a booking for today still tells everyone', async () => {
+  announcedBooking(new Date().toISOString());
+  await cancel('mika');
+  assert.equal(sent.length, 2);
+});
+
+test('a booking nobody was told of goes quietly', async () => {
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.equal(store['appointments/a1'], undefined);
+  assert.deepEqual(sent, []);
+});
+
+test('a booking from before pushes tells everyone', async () => {
+  announcedBooking();
+  delete store['appointments/a1'].announced;
+  await cancel('mika');
+  assert.equal(sent.length, 2);
+});
+
+test('an edit between the read and the delete sends the edited text', async () => {
+  announcedBooking();
+  beforeWrite = () => {
+    beforeWrite = null;
+    Object.assign(store['appointments/a1'], { text: 'Golf, Pera, 12h', updateTime: 't2' });
+  };
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.equal(store['appointments/a1'], undefined);
+  assert.equal(sent[0].android.notification.body, 'Golf, Pera, 12h');
+});
+
+test('it gives up on deleting after a second lost write', async () => {
+  announcedBooking();
+  let edits = 0;
+  beforeWrite = () => {
+    edits += 1;
+    store['appointments/a1'].updateTime = `edit-${edits}`;
+  };
+  const response = await cancel('mika');
+  assert.equal(response.status, 409);
+  assert.ok(store['appointments/a1']);
+  assert.deepEqual(sent, []);
+});
+
+test('a booking deleted meanwhile sends nothing', async () => {
+  announcedBooking();
+  beforeWrite = () => {
+    beforeWrite = null;
+    delete store['appointments/a1'];
+  };
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.deepEqual(sent, []);
+});
+
+test('a booking already gone answers 204 and sends nothing', async () => {
+  delete store['appointments/a1'];
+  const response = await cancel('mika');
+  assert.equal(response.status, 204);
+  assert.deepEqual(writes(), []);
+  assert.deepEqual(sent, []);
+});
+
+test('a failure inside Google while cancelling names the route', async () => {
+  announcedBooking();
+  const errors = [];
+  const realError = console.error;
+  console.error = (message) => errors.push(message);
+  globalThis.fetch = async (input, init) => {
+    if (new URL(input).origin === 'https://oauth2.googleapis.com') {
+      return json({ error: 'invalid_grant' }, 400);
+    }
+    return fakeFetch(input, init);
+  };
+  try {
+    const response = await cancel('mika');
+    assert.equal(response.status, 500);
+    assert.deepEqual(errors, ['/cancel failed: Google sign-in failed with 400']);
+    assert.ok(store['appointments/a1']);
   } finally {
     console.error = realError;
   }
@@ -459,6 +616,30 @@ test('even with stale phones and an edit, a run stays under 50 calls', async () 
   console.error = () => {};
   try {
     const response = await post(await idToken('mika'));
+    assert.equal(response.status, 204);
+  } finally {
+    console.error = realError;
+  }
+  assert.ok(log.length <= 50, `${log.length} calls`);
+  assert.equal(sent.length, 20);
+});
+
+test('cancelling with stale phones and an edit stays under 50 calls', async () => {
+  announcedBooking();
+  addPhones(40);
+  unregistered = new Set(
+    Object.keys(store)
+      .filter((path) => path.startsWith('pushTokens/'))
+      .map((path) => path.split('/')[1]),
+  );
+  beforeWrite = () => {
+    beforeWrite = null;
+    store['appointments/a1'].updateTime = 't2';
+  };
+  const realError = console.error;
+  console.error = () => {};
+  try {
+    const response = await cancel('mika');
     assert.equal(response.status, 204);
   } finally {
     console.error = realError;

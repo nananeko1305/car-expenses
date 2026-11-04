@@ -146,32 +146,43 @@ class Google {
   }
 
   /**
-   * Writes [fields] only if the document still matches [precondition],
-   * either {updateTime} or {exists: false}. False means someone else got
-   * there first; any other failure throws.
+   * Applies one [write], which carries its precondition. False means someone
+   * else got there first; any other failure throws.
    *
    * Through :commit, not a PATCH with currentDocument in its URL: on the
    * Firestore emulator that reads the update time as 0, and always loses.
    */
-  async writeIf(path, fields, precondition) {
+  async #commit(write) {
     const response = await fetch(`${this.documents}:commit`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({
-        writes: [
-          {
-            update: { name: `${this.root}/${path}`, fields: encode(fields) },
-            updateMask: { fieldPaths: Object.keys(fields) },
-            currentDocument: precondition,
-          },
-        ],
-      }),
+      body: JSON.stringify({ writes: [write] }),
     });
     if (response.ok) return true;
     if (LOST_RACE_CODES.has(response.status)) return false;
     const body = await response.json().catch(() => ({}));
     if (LOST_RACE_STATUSES.has(body.error?.status)) return false;
     throw new Error(`Firestore write failed with ${response.status}`);
+  }
+
+  /**
+   * Writes [fields] only if the document still matches [precondition],
+   * either {updateTime} or {exists: false}.
+   */
+  writeIf(path, fields, precondition) {
+    return this.#commit({
+      update: { name: `${this.root}/${path}`, fields: encode(fields) },
+      updateMask: { fieldPaths: Object.keys(fields) },
+      currentDocument: precondition,
+    });
+  }
+
+  /** Deletes the document only if it still matches [precondition]. */
+  deleteIf(path, precondition) {
+    return this.#commit({
+      delete: `${this.root}/${path}`,
+      currentDocument: precondition,
+    });
   }
 
   /** Never throws: one phone's failure must not stop the others. */

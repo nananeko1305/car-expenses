@@ -817,6 +817,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String appointmentCancelledTitle(String date) {
+    return 'Booking cancelled for $date';
+  }
+
+  @override
   String notesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

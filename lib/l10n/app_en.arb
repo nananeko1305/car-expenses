@@ -362,6 +362,14 @@
       }
     }
   },
+  "appointmentCancelledTitle": "Booking cancelled for {date}",
+  "@appointmentCancelledTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "notesCount": "{count, plural, =1{1 note} other{{count} notes}}",
   "@notesCount": {
     "placeholders": {

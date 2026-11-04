@@ -6,9 +6,13 @@ import '../models/appointment_push.dart';
 /// What a calendar push says while the app is open, when Android shows
 /// nothing by itself.
 SnackBar appointmentPushSnackBar(AppLocalizations t, AppointmentPush push) {
-  final title = push.isReminder
-      ? t.appointmentReminderTitle(push.dateLabel)
-      : t.appointmentPushTitle(push.dateLabel);
+  final title = switch (push.kind) {
+    AppointmentPushKind.booking => t.appointmentPushTitle(push.dateLabel),
+    AppointmentPushKind.reminder => t.appointmentReminderTitle(push.dateLabel),
+    AppointmentPushKind.cancelled => t.appointmentCancelledTitle(
+      push.dateLabel,
+    ),
+  };
   return SnackBar(
     content: Column(
       mainAxisSize: MainAxisSize.min,

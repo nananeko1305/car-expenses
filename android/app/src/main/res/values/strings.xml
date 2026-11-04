@@ -7,6 +7,7 @@
     <!-- Calendar pushes; the push worker sends these keys, the phone picks the language. -->
     <string name="appointment_notification_title">New booking for %1$s</string>
     <string name="appointment_reminder_title">Booked for tomorrow, %1$s</string>
+    <string name="appointment_cancelled_title">Booking cancelled for %1$s</string>
     <string name="notification_channel_appointments">Calendar</string>
     <color name="notification_accent">#4A78D6</color>
 </resources>
