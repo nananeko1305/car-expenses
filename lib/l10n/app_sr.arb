@@ -317,6 +317,14 @@
       }
     }
   },
+  "appointmentCancelledTitle": "Oslobođen termin za {date}",
+  "@appointmentCancelledTitle": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "notesCount": "{count, plural, one{{count} beleška} few{{count} beleške} other{{count} beleški}}",
   "@notesCount": {
     "placeholders": {

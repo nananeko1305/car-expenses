@@ -818,6 +818,11 @@ class AppLocalizationsSr extends AppLocalizations {
   }
 
   @override
+  String appointmentCancelledTitle(String date) {
+    return 'Oslobođen termin za $date';
+  }
+
+  @override
   String notesCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

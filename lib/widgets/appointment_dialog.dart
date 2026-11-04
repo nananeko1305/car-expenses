@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../models/appointment.dart';
+import '../services/appointment_announcer.dart';
 import '../services/appointment_repository.dart';
 import '../services/background_save.dart';
 import 'confirm_delete.dart';
@@ -84,7 +85,7 @@ class _AppointmentDialogState extends State<_AppointmentDialog> {
     final t = AppLocalizations.of(context);
     if (!await confirmDelete(context, t.deleteAppointmentQ) || !mounted) return;
     final id = _old!.id;
-    saveInBackground(context, () => AppointmentRepository.instance.delete(id));
+    saveInBackground(context, () => cancelAppointment(id));
     Navigator.of(context).pop();
   }
 

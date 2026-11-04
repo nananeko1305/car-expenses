@@ -1580,6 +1580,12 @@ abstract class AppLocalizations {
   /// **'Booked for tomorrow, {date}'**
   String appointmentReminderTitle(String date);
 
+  /// No description provided for @appointmentCancelledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking cancelled for {date}'**
+  String appointmentCancelledTitle(String date);
+
   /// No description provided for @notesCount.
   ///
   /// In en, this message translates to:

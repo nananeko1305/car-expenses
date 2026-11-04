@@ -146,7 +146,7 @@ jobs:
         run: |
           AAPT2=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/aapt2
           DUMP=$("$AAPT2" dump resources build/app/outputs/flutter-apk/app-release.apk)
-          for key in update_notification_title update_notification_body appointment_notification_title appointment_reminder_title; do
+          for key in update_notification_title update_notification_body appointment_notification_title appointment_reminder_title appointment_cancelled_title; do
             echo "$DUMP" | grep -q "string/$key" || { echo "::error::string/$key missing from APK"; exit 1; }
           done
 

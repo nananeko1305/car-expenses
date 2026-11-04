@@ -1,32 +1,63 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/appointment.dart';
+import 'appointment_repository.dart';
 
 /// The push worker (see push_worker/). Its address is no secret: without
 /// the ID token of an active account, it does nothing.
-const pushWorkerUrl =
-    'https://car-expenses-push.car-expenses.workers.dev/announce';
+const pushWorkerUrl = 'https://car-expenses-push.car-expenses.workers.dev';
 
-/// Asks the push worker to tell everyone about one booking. Which answer
-/// comes back makes no difference here: the booking stays unannounced
-/// until the worker marks it, so it is asked again on the next start.
-Future<void> announceToWorker(String id) async {
+/// Sends one booking to [path] on the push worker, as the signed-in account,
+/// and returns the status it answered with.
+Future<int> _askWorker(String path, String id, Duration limit) async {
   final token = await FirebaseAuth.instance.currentUser?.getIdToken();
-  if (token == null) return;
-  await http
+  if (token == null) return HttpStatus.unauthorized;
+  final response = await http
       .post(
-        Uri.parse(pushWorkerUrl),
+        Uri.parse('$pushWorkerUrl/$path'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
         body: jsonEncode({'appointmentId': id}),
       )
-      .timeout(const Duration(seconds: 20));
+      .timeout(limit);
+  return response.statusCode;
+}
+
+/// Asks the push worker to tell everyone about one booking. Which answer
+/// comes back makes no difference here: the booking stays unannounced
+/// until the worker marks it, so it is asked again on the next start.
+Future<void> announceToWorker(String id) =>
+    _askWorker('announce', id, const Duration(seconds: 20));
+
+Future<int> _askToCancel(String id) =>
+    _askWorker('cancel', id, const Duration(seconds: 10));
+
+Future<void> _deleteDirectly(String id) =>
+    AppointmentRepository.instance.delete(id);
+
+/// Deletes a booking through the push worker, which then tells everyone.
+/// Anything but a yes from it means deleting directly and telling nobody: a
+/// booking must stay deletable offline and with the worker down. A refusal
+/// from that delete reaches the caller, as it always has.
+Future<void> cancelAppointment(
+  String id, {
+  Future<int> Function(String id) ask = _askToCancel,
+  Future<void> Function(String id) delete = _deleteDirectly,
+}) async {
+  try {
+    final status = await ask(id);
+    if (status >= 200 && status < 300) return;
+  } catch (_) {
+    // Offline, or the worker is down: deleted below.
+  }
+  await delete(id);
 }
 
 /// Watches the calendar for bookings this account wrote that the server

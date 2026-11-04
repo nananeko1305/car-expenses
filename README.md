@@ -112,6 +112,12 @@ the sending and holds the key:
    that push is lost; duplicates seemed worse.
 4. Two cron triggers (19:00 and 20:00 UTC, because Cloudflare cron runs in UTC)
    send the reminder; the handler goes on only when it is 21:00 in Belgrade.
+5. Deleting a booking goes through `POST /cancel`: the worker checks the author
+   or the admin, deletes the booking only if it has not changed, and then sends
+   with its text, which is gone afterwards. A booking whose day has passed, or
+   that nobody was told of, is deleted without a push. For any other answer, or
+   offline, the app deletes directly and nobody is told, so a booking can always
+   be deleted.
 
 A topic would not do for booking text: anyone with the public Firebase config
 could subscribe, and disabled accounts would keep receiving. Limits of the free
@@ -120,7 +126,9 @@ plan: 10 ms of CPU and 50 outside calls per run, which caps a push at 20 phones.
 The worker is deployed by hand, not by CI, and it and the rules must be
 deployed before a merge into `main` that depends on them. The service account
 `push-worker` has only `roles/datastore.user` and
-`roles/firebasecloudmessaging.admin`, and its key lives only in Cloudflare:
+`roles/firebasecloudmessaging.admin` (Firebase Cloud Messaging **API** Admin; the
+similarly named Firebase Cloud Messaging Admin cannot send), and its key lives
+only in Cloudflare:
 
 ```sh
 cd push_worker
