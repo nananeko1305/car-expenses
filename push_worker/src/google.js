@@ -200,8 +200,14 @@ class Google {
       const unregistered = body.error?.details?.some(
         (detail) => detail.errorCode === 'UNREGISTERED',
       );
-      return unregistered ? 'unregistered' : 'failed';
-    } catch {
+      if (unregistered) return 'unregistered';
+      // Only Google's reason: never the token or the booking's text.
+      console.error(
+        `FCM refused a push with ${response.status}: ${body.error?.message}`,
+      );
+      return 'failed';
+    } catch (error) {
+      console.error(`Sending a push failed: ${error.name}`);
       return 'failed';
     }
   }
