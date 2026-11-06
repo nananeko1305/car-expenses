@@ -30,7 +30,7 @@ they go stale. The repository is **public**, so nothing secret goes here.
  (Cloudflare, cron)  └─ FCM v1             per-phone calendar pushes
 
  GitHub Actions ─────┬─ GitHub Release     the APK
- (push to main)      ├─ GitHub Pages       version.json
+ (push to main)      ├─ GitHub Pages       version.json, download page
                      └─ FCM topic          `releases`, every install
 ```
 
@@ -125,9 +125,11 @@ also goes in `MainActivity.kt`.
 | Push worker | Hand: `npx wrangler deploy` from `push_worker/` | **Before** the merge that needs it |
 
 - Work goes on `dev`; a PR from `dev` to `main` ships. The owner merges the PRs.
-- **Every merge into `main` reaches every phone.** The workflow has no path
-  filter, so even a docs-only merge builds an APK and notifies everyone. Docs can
-  wait on `dev` for the next real release.
+- **Every merge into `main` reaches every phone.** Even a docs-only merge builds
+  an APK and notifies everyone. Docs can wait on `dev` for the next real release.
+  The one exception is a merge that touches only the download page
+  (`.github/pages/`, `pages.yml`): `pages.yml` redeploys the page for the current
+  APK and keeps the live `version.json`, with no release and no push.
 - **The commit type sets the version:** `feat` bumps the minor, anything else the
   patch, a breaking change the major. Use Conventional Commits with a scope, as in
   `feat(calendar): …`.

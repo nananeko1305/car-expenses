@@ -147,10 +147,13 @@ The deployed address goes in `pushWorkerUrl` in
 
 Every push to `main` runs [release-apk.yml](.github/workflows/release-apk.yml):
 analyze → test → signed release APK (Flutter, pub and Gradle cached) →
-GitHub Release → `version.json` on GitHub Pages. There is no download
-page: the apps already installed find new versions through that file, so
-it has to keep being published.
-Day-to-day work goes to `dev`; merge into `main` to ship.
+GitHub Release → download page and `version.json` on GitHub Pages
+(<https://nananeko1305.github.io/car-expenses/>). The page has the download
+button, a Share button and a QR code; the apps already installed find new
+versions through `version.json`, so it has to keep being published.
+Day-to-day work goes to `dev`; merge into `main` to ship. A merge that only
+changes the page (`.github/pages/`) does not release: `pages.yml` redeploys
+the page for the current APK.
 
 Versions are `major.minor.patch`, worked out in CI from the commit messages
 since the last tag: a `feat` bumps the minor, anything else the patch, and a
