@@ -11,8 +11,10 @@ on:
   workflow_dispatch:
 
 # Needed to publish a Release (contents) and the download page + update
-# manifest (pages).
+# manifest (pages), and to see the page's artifact before deploying it
+# (actions).
 permissions:
+  actions: read
   contents: write
   pages: write
   id-token: write
@@ -202,6 +204,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      PAGES_ARTIFACT: github-pages-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
 
@@ -223,13 +227,33 @@ jobs:
         with:
           enablement: true
 
+      # Named per attempt: a re-run would otherwise also find the copy an
+      # earlier attempt left on this run, and deploy-pages refuses two.
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: ${{ env.PAGES_ARTIFACT }}
           path: _site
+
+      # The run's artifact list can lag the upload by a moment, and
+      # deploy-pages reads it only once: an empty answer fails the release
+      # after the APK is already out, so no phone hears of it.
+      - name: Wait until the artifact is listed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for _ in $(seq 30); do
+            COUNT=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=$PAGES_ARTIFACT" --jq .total_count || true)
+            [ "$COUNT" = 1 ] && exit 0
+            sleep 2
+          done
+          echo "::error::$PAGES_ARTIFACT never showed up in the run's artifact list"
+          exit 1
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT }}
 
   notify:
     name: Push release notification

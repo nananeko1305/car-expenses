@@ -13,6 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -23,6 +24,7 @@ concurrency:
 
 env:
   APK_NAME: car-expenses.apk
+  PAGES_ARTIFACT: github-pages-${{ github.run_attempt }}
 
 jobs:
   deploy:
@@ -50,10 +52,28 @@ jobs:
             bash .github/pages/build.sh
           curl -fsS "${{ steps.pages.outputs.base_url }}/version.json" -o _site/version.json
 
+      # Named per attempt and waited for, as in release-apk.yml: the run's
+      # artifact list can lag the upload, and deploy-pages reads it once and
+      # accepts neither none nor two.
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: ${{ env.PAGES_ARTIFACT }}
           path: _site
+
+      - name: Wait until the artifact is listed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for _ in $(seq 30); do
+            COUNT=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?name=$PAGES_ARTIFACT" --jq .total_count || true)
+            [ "$COUNT" = 1 ] && exit 0
+            sleep 2
+          done
+          echo "::error::$PAGES_ARTIFACT never showed up in the run's artifact list"
+          exit 1
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT }}
