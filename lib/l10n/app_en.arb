@@ -401,5 +401,19 @@
   "vin": "VIN (chassis number)",
   "vinHelper": "Recommended. On the registration certificate, field E.",
   "invalidVin": "A VIN has 17 letters and digits, never I, O or Q",
-  "vinShort": "VIN"
+  "vinShort": "VIN",
+  "plannedPurchases": "To buy",
+  "addPlannedPurchase": "Add item",
+  "newPlannedPurchase": "New item",
+  "editPlannedPurchase": "Edit item",
+  "plannedPurchaseName": "What to buy",
+  "plannedPurchaseNameHint": "e.g. 3-ton jack",
+  "plannedPurchaseNote": "Note",
+  "plannedPurchaseNoteHint": "e.g. where to get it, which model",
+  "noPlannedPurchases": "Nothing to buy yet.\nTap the button below to add the first item.",
+  "deletePlannedPurchaseQ": "Remove this from the list?",
+  "priority": "Priority",
+  "priorityHigh": "Urgent",
+  "priorityMedium": "Medium",
+  "priorityLow": "Not urgent"
 }

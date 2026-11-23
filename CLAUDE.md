@@ -1,7 +1,8 @@
 # Car Expenses: architecture map
 
 Android-only Flutter app for a car workshop: services, a shared wallet, tools, a
-calendar and tutorials. Accounts exist only if the admin creates them.
+calendar, tutorials and a to-buy list. Accounts exist only if the admin creates
+them.
 
 The README below is imported and holds the product rules, the data model, the
 calendar push design and the release process. This file adds what the README
@@ -89,7 +90,7 @@ disabled, or the one-time admin claim) → `HomeScreen`. `AuthGate` keys
 |---|---|---|---|
 | vehicles, repairs, appointments, walletEntries | any active user | author or admin | author or admin |
 | tools | any active user | any active user | nobody; they are archived |
-| tutorials (all four collections) | any active user | any active user | any active user |
+| tutorials (all four collections), plannedPurchases | any active user | any active user | any active user |
 | users | admin, plus the one-time admin claim | self (name); admin (others' name, `disabled`) | nobody |
 
 Nobody may rewrite the author field. These limits are **in the app only**, since

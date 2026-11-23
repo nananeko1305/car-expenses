@@ -858,4 +858,47 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get vinShort => 'Šasija';
+
+  @override
+  String get plannedPurchases => 'Za kupovinu';
+
+  @override
+  String get addPlannedPurchase => 'Dodaj stavku';
+
+  @override
+  String get newPlannedPurchase => 'Nova stavka';
+
+  @override
+  String get editPlannedPurchase => 'Izmena stavke';
+
+  @override
+  String get plannedPurchaseName => 'Šta treba kupiti';
+
+  @override
+  String get plannedPurchaseNameHint => 'npr. dizalica od 3 tone';
+
+  @override
+  String get plannedPurchaseNote => 'Napomena';
+
+  @override
+  String get plannedPurchaseNoteHint => 'npr. gde se kupuje, koji model';
+
+  @override
+  String get noPlannedPurchases =>
+      'Još nema ničeg za kupovinu.\nDodirni dugme ispod da dodaš prvu stavku.';
+
+  @override
+  String get deletePlannedPurchaseQ => 'Obrisati ovo sa spiska?';
+
+  @override
+  String get priority => 'Prioritet';
+
+  @override
+  String get priorityHigh => 'Hitno';
+
+  @override
+  String get priorityMedium => 'Srednje';
+
+  @override
+  String get priorityLow => 'Nije hitno';
 }

@@ -16,6 +16,7 @@ import '../widgets/appointment_push_snack_bar.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/update_dialog.dart';
 import 'calendar_screen.dart';
+import 'planned_purchases_screen.dart';
 import 'report_screen.dart';
 import 'services_tab.dart';
 import 'settings_screen.dart';
@@ -114,6 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _open(VehiclesScreen(data: _data, profile: widget.profile));
       case DrawerDestination.tools:
         _open(ToolsScreen(data: _data, profile: widget.profile));
+      case DrawerDestination.plannedPurchases:
+        _open(PlannedPurchasesScreen(data: _data, profile: widget.profile));
       case DrawerDestination.tutorials:
         _open(TutorialsScreen(data: _data, profile: widget.profile));
       case DrawerDestination.users:

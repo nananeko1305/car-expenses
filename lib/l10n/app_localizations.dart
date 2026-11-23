@@ -1633,6 +1633,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VIN'**
   String get vinShort;
+
+  /// No description provided for @plannedPurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'To buy'**
+  String get plannedPurchases;
+
+  /// No description provided for @addPlannedPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get addPlannedPurchase;
+
+  /// No description provided for @newPlannedPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get newPlannedPurchase;
+
+  /// No description provided for @editPlannedPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get editPlannedPurchase;
+
+  /// No description provided for @plannedPurchaseName.
+  ///
+  /// In en, this message translates to:
+  /// **'What to buy'**
+  String get plannedPurchaseName;
+
+  /// No description provided for @plannedPurchaseNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 3-ton jack'**
+  String get plannedPurchaseNameHint;
+
+  /// No description provided for @plannedPurchaseNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get plannedPurchaseNote;
+
+  /// No description provided for @plannedPurchaseNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. where to get it, which model'**
+  String get plannedPurchaseNoteHint;
+
+  /// No description provided for @noPlannedPurchases.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to buy yet.\nTap the button below to add the first item.'**
+  String get noPlannedPurchases;
+
+  /// No description provided for @deletePlannedPurchaseQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this from the list?'**
+  String get deletePlannedPurchaseQ;
+
+  /// No description provided for @priority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get priority;
+
+  /// No description provided for @priorityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get priorityHigh;
+
+  /// No description provided for @priorityMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get priorityMedium;
+
+  /// No description provided for @priorityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not urgent'**
+  String get priorityLow;
 }
 
 class _AppLocalizationsDelegate

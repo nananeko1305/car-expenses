@@ -54,6 +54,13 @@ Users change their own name and password in Settings.
   and engine it is about. Like tools, anyone may add, correct or delete any
   of it; who added it stays on record. A make with models cannot be deleted;
   deleting a model takes its links and notes with it.
+- **To buy** (menu) is the workshop's list of what still has to be bought:
+  what it is, an optional note, and how urgent it is (urgent, medium or not
+  urgent). Every item carries its priority as a colored label: red, yellow
+  or green. The list shows the urgent on top, and within a priority whatever
+  has waited longest. Like tutorials, anyone may add, correct or delete an
+  item, since whoever buys a thing takes it off the list; who added it stays
+  on record.
 - **Monthly report** (menu, or the card on Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other
@@ -78,6 +85,7 @@ Users change their own name and password in Settings.
 | `tutorialModels/{id}` | `ownerId`, `brandId`, `name`                                      |
 | `tutorialLinks/{id}`  | `ownerId`, `modelId`, `title` (may be empty), `url` (http/https)  |
 | `tutorialNotes/{id}`  | `ownerId`, `modelId`, `text`, `year` and `engine` (free text, optional) |
+| `plannedPurchases/{id}` | `ownerId` (who added it), `name`, `priority` (`low`/`medium`/`high`), `note` (may be empty) |
 | `pushTokens/{token}` | `uid` of the account the phone belongs to; read only by the push worker |
 | `meta/admin`         | `uid` of the admin (one-time claim marker)                          |
 | `meta/reminder`      | `day` of the last evening reminder; only the push worker touches it |

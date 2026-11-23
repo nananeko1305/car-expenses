@@ -14,6 +14,7 @@ enum DrawerDestination {
   search,
   vehicles,
   tools,
+  plannedPurchases,
   tutorials,
   users,
   settings,
@@ -103,6 +104,11 @@ class AppDrawer extends StatelessWidget {
                     DrawerDestination.tools,
                     Icons.handyman_rounded,
                     t.tools,
+                  ),
+                  item(
+                    DrawerDestination.plannedPurchases,
+                    Icons.shopping_cart_rounded,
+                    t.plannedPurchases,
                   ),
                   item(
                     DrawerDestination.tutorials,

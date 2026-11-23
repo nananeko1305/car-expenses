@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../models/app_user.dart';
 import '../models/appointment.dart';
+import '../models/planned_purchase.dart';
 import '../models/repair.dart';
 import '../models/tool.dart';
 import '../models/tutorial.dart';
@@ -11,6 +12,7 @@ import '../models/tutorial_entry.dart';
 import '../models/vehicle.dart';
 import '../models/wallet_entry.dart';
 import 'appointment_repository.dart';
+import 'planned_purchase_repository.dart';
 import 'repair_repository.dart';
 import 'tool_repository.dart';
 import 'tutorial_repository.dart';
@@ -33,6 +35,10 @@ class LiveData extends ChangeNotifier {
     _watch(WalletRepository.instance.watchAll, (v) => entries = v);
     _watch(ToolRepository.instance.watchAll, (v) => tools = v);
     _watch(AppointmentRepository.instance.watchAll, (v) => appointments = v);
+    _watch(
+      PlannedPurchaseRepository.instance.watchAll,
+      (v) => plannedPurchases = v,
+    );
     final tutorials = TutorialRepository.instance;
     _watch(tutorials.watchBrands, (v) => tutorialBrands = v);
     _watch(tutorials.watchModels, (v) => tutorialModels = v);
@@ -59,6 +65,9 @@ class LiveData extends ChangeNotifier {
   /// Also left out of [ready], for the same reason: only the calendar
   /// needs it, and it handles its own loading.
   List<Appointment>? appointments;
+
+  /// The to-buy list, outside [ready] like the two above.
+  List<PlannedPurchase>? plannedPurchases;
 
   /// The tutorials, also outside [ready]; their screens wait for
   /// [tutorialsReady] themselves.

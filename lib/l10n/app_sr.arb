@@ -356,5 +356,19 @@
   "vin": "Broj šasije (VIN)",
   "vinHelper": "Preporučeno. Sa saobraćajne dozvole, polje E.",
   "invalidVin": "Broj šasije ima 17 slova i brojeva, bez I, O i Q",
-  "vinShort": "Šasija"
+  "vinShort": "Šasija",
+  "plannedPurchases": "Za kupovinu",
+  "addPlannedPurchase": "Dodaj stavku",
+  "newPlannedPurchase": "Nova stavka",
+  "editPlannedPurchase": "Izmena stavke",
+  "plannedPurchaseName": "Šta treba kupiti",
+  "plannedPurchaseNameHint": "npr. dizalica od 3 tone",
+  "plannedPurchaseNote": "Napomena",
+  "plannedPurchaseNoteHint": "npr. gde se kupuje, koji model",
+  "noPlannedPurchases": "Još nema ničeg za kupovinu.\nDodirni dugme ispod da dodaš prvu stavku.",
+  "deletePlannedPurchaseQ": "Obrisati ovo sa spiska?",
+  "priority": "Prioritet",
+  "priorityHigh": "Hitno",
+  "priorityMedium": "Srednje",
+  "priorityLow": "Nije hitno"
 }
