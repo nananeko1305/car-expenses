@@ -857,4 +857,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vinShort => 'VIN';
+
+  @override
+  String get plannedPurchases => 'To buy';
+
+  @override
+  String get addPlannedPurchase => 'Add item';
+
+  @override
+  String get newPlannedPurchase => 'New item';
+
+  @override
+  String get editPlannedPurchase => 'Edit item';
+
+  @override
+  String get plannedPurchaseName => 'What to buy';
+
+  @override
+  String get plannedPurchaseNameHint => 'e.g. 3-ton jack';
+
+  @override
+  String get plannedPurchaseNote => 'Note';
+
+  @override
+  String get plannedPurchaseNoteHint => 'e.g. where to get it, which model';
+
+  @override
+  String get noPlannedPurchases =>
+      'Nothing to buy yet.\nTap the button below to add the first item.';
+
+  @override
+  String get deletePlannedPurchaseQ => 'Remove this from the list?';
+
+  @override
+  String get priority => 'Priority';
+
+  @override
+  String get priorityHigh => 'Urgent';
+
+  @override
+  String get priorityMedium => 'Medium';
+
+  @override
+  String get priorityLow => 'Not urgent';
 }

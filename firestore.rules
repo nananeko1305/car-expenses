@@ -219,6 +219,24 @@ service cloud.firestore {
       }
     }
 
+    // What the workshop still has to buy, and how urgent each thing is.
+    // Shared like the tutorials: whoever buys a thing takes it off the
+    // list, so anyone active may add, correct or delete one, but not
+    // rewrite who added it.
+    match /plannedPurchases/{id} {
+      allow read: if isActive();
+      allow create: if authorCreates('ownerId') && validPlannedPurchase();
+      allow update: if isActive() && keepsAuthor('ownerId') && validPlannedPurchase();
+      allow delete: if isActive();
+
+      function validPlannedPurchase() {
+        let d = request.resource.data;
+        return d.name is string && d.name.size() > 0 && d.name.size() <= 100
+          && d.priority in ['low', 'medium', 'high']
+          && d.note is string && d.note.size() <= 500;
+      }
+    }
+
     // Which account each phone belongs to, for the push worker, which alone
     // reads these. The token is the id, so whoever signs in last takes the
     // phone over. A disabled account may still take its own phone off.
