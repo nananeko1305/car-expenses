@@ -23,6 +23,25 @@ Future<void> main() async {
   runApp(const CarExpensesApp());
 }
 
+/// Serbian as the app writes it: in Latin script. Plain `sr` would have
+/// the dates and the system's own texts (the date picker, tooltips) come
+/// out in Cyrillic next to the app's Latin.
+const _serbianLatin = Locale.fromSubtags(
+  languageCode: 'sr',
+  scriptCode: 'Latn',
+);
+const _supported = AppLocalizations.supportedLocales;
+
+/// [locale] as the app runs it: any Serbian becomes [_serbianLatin], a
+/// supported language stays, and anything else (or none) is null.
+Locale? _latin(Locale? locale) => switch (locale?.languageCode) {
+  'sr' => _serbianLatin,
+  final code? when _supported.any((l) => l.languageCode == code) => Locale(
+    code,
+  ),
+  _ => null,
+};
+
 class CarExpensesApp extends StatelessWidget {
   const CarExpensesApp({super.key});
 
@@ -38,9 +57,11 @@ class CarExpensesApp extends StatelessWidget {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: themeController.mode,
-          locale: localeController.locale,
+          locale: _latin(localeController.locale),
+          localeResolutionCallback: (phone, _) =>
+              _latin(phone) ?? const Locale('en'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
+          supportedLocales: const [..._supported, _serbianLatin],
           // Screens without an AppBar (login, admin claim, notices) get the
           // right status-bar icon color from here. The theme in effect says
           // whether it is dark, since the mode may leave that to the phone.
