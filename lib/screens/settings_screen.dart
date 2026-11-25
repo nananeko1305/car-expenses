@@ -10,10 +10,12 @@ import '../theme/app_palette.dart';
 import '../theme/theme_controller.dart';
 import '../widgets/change_password_dialog.dart';
 import '../widgets/name_fields.dart';
+import '../widgets/theme_mode_picker.dart';
 import '../widgets/update_tiles.dart';
 
-/// Profile (name, password) plus language, color and dark mode. The
-/// look-and-feel settings are stored on the device only.
+/// Profile (name, password) plus language, color and light or dark
+/// (or whichever the phone is in). The look-and-feel settings are stored
+/// on the device only.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.profile});
 
@@ -64,10 +66,10 @@ class SettingsScreen extends StatelessWidget {
                 children: [for (final p in kPalettes) _swatch(t, p)],
               ),
               const SizedBox(height: 16),
-              SwitchListTile(
-                title: Text(t.darkMode),
-                value: themeController.isDark,
-                onChanged: themeController.setDark,
+              _header(t.themeMode),
+              ThemeModePicker(
+                value: themeController.mode,
+                onChanged: themeController.setMode,
               ),
               const SizedBox(height: 16),
               const UpdateTiles(),

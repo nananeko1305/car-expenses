@@ -19,7 +19,9 @@ There is no public registration and no emails are sent to new users.
    email, initial password) and can disable / re-enable them. A disabled
    user loses all data access.
 
-Users change their own name and password in Settings.
+Users change their own name and password in Settings. The language, the
+color and the theme are kept on each phone; the theme is light, dark, or
+auto, which follows the phone and is where a new install starts.
 
 ## How data is shared
 
@@ -168,15 +170,15 @@ GitHub Release → download page and `version.json` on GitHub Pages
 (<https://nananeko1305.github.io/car-expenses/>). The page has the download
 button, a Share button and a QR code; the apps already installed find new
 versions through `version.json`, so it has to keep being published.
+The APK is named after its version, such as `car-expenses_1.12.3.apk`, and
+the page and `version.json` link to that file. A copy under the old fixed
+name, `car-expenses.apk`, stays on every release, so links and QR codes
+handed out before keep downloading the newest one.
 Day-to-day work goes to `dev`; merge into `main` to ship. A merge that only
 changes the page (`.github/pages/`) does not release: `pages.yml` redeploys
 the page for the current APK.
 
 Versions are `major.minor.patch`, worked out in CI from the commit messages
-The APK is named after its version, such as `car-expenses_1.12.3.apk`, and
-the page and `version.json` link to that file. A copy under the old fixed
-name, `car-expenses.apk`, stays on every release, so links and QR codes
-handed out before keep downloading the newest one.
 since the last tag: a `feat` bumps the minor, anything else the patch, and a
 breaking change the major. The version in `pubspec.yaml` is a floor — raise
 it by hand to force a bigger number, such as a deliberate 2.0.0. Android's

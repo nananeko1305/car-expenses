@@ -578,11 +578,35 @@ abstract class AppLocalizations {
   /// **'Color'**
   String get theme;
 
-  /// No description provided for @darkMode.
+  /// No description provided for @themeMode.
   ///
   /// In en, this message translates to:
-  /// **'Dark mode'**
-  String get darkMode;
+  /// **'Theme'**
+  String get themeMode;
+
+  /// No description provided for @themeAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get themeAuto;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @themeAutoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto follows the phone\'s theme.'**
+  String get themeAutoHint;
 
   /// No description provided for @colorBlue.
   ///
@@ -650,6 +674,18 @@ abstract class AppLocalizations {
   /// **'The service amount goes into the shared wallet.'**
   String get addToWalletHint;
 
+  /// No description provided for @noCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'No charge'**
+  String get noCharge;
+
+  /// No description provided for @noChargeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'My own car, or done for free.'**
+  String get noChargeHint;
+
   /// No description provided for @person.
   ///
   /// In en, this message translates to:
@@ -673,18 +709,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only {name} or the admin can change this.'**
   String readOnlyNotice(String name);
-
-  /// No description provided for @noCharge.
-  ///
-  /// In en, this message translates to:
-  /// **'No charge'**
-  String get noCharge;
-
-  /// No description provided for @noChargeHint.
-  ///
-  /// In en, this message translates to:
-  /// **'My own car, or done for free.'**
-  String get noChargeHint;
 
   /// No description provided for @wallet.
   ///

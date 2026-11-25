@@ -264,7 +264,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theme => 'Color';
 
   @override
-  String get darkMode => 'Dark mode';
+  String get themeMode => 'Theme';
+
+  @override
+  String get themeAuto => 'Auto';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeAutoHint => 'Auto follows the phone\'s theme.';
 
   @override
   String get colorBlue => 'Blue';
@@ -302,6 +314,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'The service amount goes into the shared wallet.';
 
   @override
+  String get noCharge => 'No charge';
+
+  @override
+  String get noChargeHint => 'My own car, or done for free.';
+
+  @override
   String get person => 'Person';
 
   @override
@@ -313,12 +331,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  @override
-  String get noCharge => 'No charge';
-
-  @override
-  String get noChargeHint => 'My own car, or done for free.';
-
   String readOnlyNotice(String name) {
     return 'Only $name or the admin can change this.';
   }

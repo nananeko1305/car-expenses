@@ -265,7 +265,19 @@ class AppLocalizationsSr extends AppLocalizations {
   String get theme => 'Boja';
 
   @override
-  String get darkMode => 'Tamni režim';
+  String get themeMode => 'Tema';
+
+  @override
+  String get themeAuto => 'Auto';
+
+  @override
+  String get themeLight => 'Svetla';
+
+  @override
+  String get themeDark => 'Tamna';
+
+  @override
+  String get themeAutoHint => 'Auto prati temu telefona.';
 
   @override
   String get colorBlue => 'Plava';
@@ -302,6 +314,12 @@ class AppLocalizationsSr extends AppLocalizations {
   String get addToWalletHint => 'Iznos servisa ulazi u zajedničku kasu.';
 
   @override
+  String get noCharge => 'Bez naplate';
+
+  @override
+  String get noChargeHint => 'Radim sebi ili besplatno.';
+
+  @override
   String get person => 'Osoba';
 
   @override
@@ -313,12 +331,6 @@ class AppLocalizationsSr extends AppLocalizations {
   }
 
   @override
-  @override
-  String get noCharge => 'Bez naplate';
-
-  @override
-  String get noChargeHint => 'Radim sebi ili besplatno.';
-
   String readOnlyNotice(String name) {
     return 'Ovo mogu da menjaju samo $name ili admin.';
   }
