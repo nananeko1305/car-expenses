@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/report.dart';
 import '../models/wallet_entry.dart';
+import '../theme/app_colors.dart';
 import 'month_switcher.dart';
 import 'movement_tile.dart';
 import 'wallet_month_summary.dart';
@@ -46,33 +47,40 @@ class _WalletHistoryState extends State<WalletHistory> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        MonthSwitcher(
-          month: _month,
-          first: span.first,
-          last: span.last,
-          onChanged: (m) => setState(() => _month = m),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: MonthSwitcher(
+            month: _month,
+            first: span.first,
+            last: span.last,
+            onChanged: (m) => setState(() => _month = m),
+          ),
         ),
-        const SizedBox(height: 4),
         if (shown.isEmpty)
           _note(t.noMovementsInMonth)
         else ...[
-          WalletMonthSummary(movements: shown, showEuros: widget.showEuros),
-          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: WalletMonthSummary(
+              movements: shown,
+              showEuros: widget.showEuros,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Divider(height: 1, color: context.colors.line),
         ],
-        for (final m in shown) ...[
+        for (final m in shown)
           MovementTile(
             movement: m,
             personName: widget.nameOf(m.userId),
             onTap: () => widget.onTap(m),
           ),
-          const SizedBox(height: 8),
-        ],
       ],
     );
   }
 
   Widget _note(String text) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 48),
+    padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
     child: Text(text, textAlign: TextAlign.center),
   );
 }

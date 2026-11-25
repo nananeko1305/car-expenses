@@ -3,6 +3,7 @@ import 'package:car_expenses/models/repair.dart';
 import 'package:car_expenses/theme/app_palette.dart';
 import 'package:car_expenses/theme/app_theme.dart';
 import 'package:car_expenses/widgets/balance_card.dart';
+import 'package:car_expenses/widgets/skewed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,7 +44,7 @@ void main() {
     await _pump(tester, balances: _both, showEuros: false);
     expect(find.text('9,700.00 RSD'), findsOneWidget);
     expect(find.textContaining('€'), findsNothing);
-    expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+    expect(tester.widget<SkewSwitch>(find.byType(SkewSwitch)).value, isFalse);
   });
 
   testWidgets('shows euros under the dinars once it is on', (tester) async {
@@ -74,7 +75,7 @@ void main() {
       showEuros: false,
       onShowEuros: asked.add,
     );
-    await tester.tap(find.byType(Switch));
+    await tester.tap(find.byType(SkewSwitch));
     await tester.tap(find.text('Euros'));
     expect(asked, [true, true]);
 

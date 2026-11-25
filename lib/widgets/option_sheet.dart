@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import 'skewed.dart';
 
 /// One choice in an option sheet.
 class SheetOption {
@@ -39,7 +40,7 @@ Future<({String? id})?> showOptionSheet(
     showDragHandle: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     builder: (_) => _OptionSheet(
       icon: icon,
@@ -79,9 +80,10 @@ class _OptionSheet extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
               child: Text(
-                title,
+                title.toUpperCase(),
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
+                  fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w800,
                 ),
               ),
@@ -116,13 +118,10 @@ class _OptionSheet extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        tileColor: selected ? c.soft : null,
-        leading: CircleAvatar(
-          backgroundColor: selected ? c.primary : c.soft,
-          foregroundColor: selected ? Colors.white : c.primary,
-          child: Icon(leading, size: 20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        tileColor: selected ? c.panel : null,
+        // The chosen one gets the dark block.
+        leading: SkewIcon(leading, color: selected ? null : c.muted),
         title: Text(
           label,
           style: TextStyle(
@@ -131,7 +130,7 @@ class _OptionSheet extends StatelessWidget {
         ),
         subtitle: subtitle == null ? null : Text(subtitle),
         trailing: selected
-            ? Icon(Icons.check_circle_rounded, color: c.primary)
+            ? Icon(Icons.check_circle_rounded, color: c.accentText)
             : null,
         onTap: () => Navigator.pop(context, (id: id)),
       ),

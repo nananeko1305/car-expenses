@@ -54,6 +54,16 @@ void main() {
     });
   });
 
+  test('a description fits on one line of a list', () {
+    expect(oneLine('Mali servis'), 'Mali servis');
+    expect(
+      oneLine('Mali servis\n- ulje 5W30\n-filteri\n\n• svećice  '),
+      'Mali servis, ulje 5W30, filteri, svećice',
+    );
+    expect(oneLine('Anti-roll bar links'), 'Anti-roll bar links');
+    expect(oneLine(''), '');
+  });
+
   test('a service with no charge never reaches the wallet', () {
     final free = _repair(0);
     expect(free.free, isTrue);

@@ -10,6 +10,7 @@ import '../services/live_data.dart';
 import '../services/tutorial_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/name_dialog.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/tutorial_cards.dart';
 import '../widgets/tutorial_link_dialog.dart';
 import '../widgets/tutorial_note_dialog.dart';
@@ -101,7 +102,7 @@ class TutorialModelScreen extends StatelessWidget {
         final model = data.modelById(modelId);
         if (model == null) {
           return Scaffold(
-            appBar: AppBar(),
+            appBar: const SlantAppBar(title: ''),
             body: data.tutorialsReady
                 ? Center(child: Text(t.deleted))
                 : TutorialsLoading(error: data.error),
@@ -109,8 +110,8 @@ class TutorialModelScreen extends StatelessWidget {
         }
         final brand = data.brandById(model.brandId);
         return Scaffold(
-          appBar: AppBar(
-            title: Text('${brand?.name ?? ''} ${model.name}'.trim()),
+          appBar: SlantAppBar(
+            title: '${brand?.name ?? ''} ${model.name}'.trim(),
             actions: [
               IconButton(
                 tooltip: t.edit,
@@ -134,7 +135,7 @@ class TutorialModelScreen extends StatelessWidget {
     final links = data.linksOf(model.id);
     final notes = data.notesOf(model.id);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+      padding: const EdgeInsets.only(bottom: 32),
       children: [
         SectionTitle(t.links),
         if (links.isEmpty) _empty(context, t.noLinks),
@@ -150,7 +151,6 @@ class TutorialModelScreen extends StatelessWidget {
               authorName: data.nameOf(link.ownerId),
             ),
           ),
-          const SizedBox(height: 8),
         ],
         _addButton(
           t.addLink,
@@ -174,7 +174,6 @@ class TutorialModelScreen extends StatelessWidget {
               authorName: data.nameOf(note.ownerId),
             ),
           ),
-          const SizedBox(height: 8),
         ],
         _addButton(
           t.addNote,
@@ -189,16 +188,19 @@ class TutorialModelScreen extends StatelessWidget {
   }
 
   Widget _empty(BuildContext context, String text) => Padding(
-    padding: const EdgeInsets.fromLTRB(4, 4, 4, 8),
+    padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
     child: Text(text),
   );
 
   Widget _addButton(String label, VoidCallback onPressed) => Align(
     alignment: Alignment.centerLeft,
-    child: TextButton.icon(
-      onPressed: onPressed,
-      icon: const Icon(Icons.add_rounded),
-      label: Text(label),
+    child: Padding(
+      padding: const EdgeInsets.only(left: 4, top: 2),
+      child: TextButton.icon(
+        onPressed: onPressed,
+        icon: const Icon(Icons.add_rounded),
+        label: Text(label),
+      ),
     ),
   );
 }

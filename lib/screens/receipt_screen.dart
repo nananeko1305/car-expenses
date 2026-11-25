@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
+import '../theme/app_theme.dart';
 
 /// The receipt, full screen and zoomable, with the share sheet — which
 /// is also how the photo gets saved to the phone or sent to the shop.
@@ -53,6 +54,11 @@ class _ReceiptScreenState extends State<ReceiptScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
+        // The theme colors titles and status-bar icons for the accent
+        // block; this bar is black whatever the accent.
+        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle
+            ?.copyWith(color: Colors.white),
+        systemOverlayStyle: AppTheme.overlayOn(Colors.white),
         title: Text(t.receipt),
         actions: [
           IconButton(

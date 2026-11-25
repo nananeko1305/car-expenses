@@ -6,6 +6,8 @@ import '../models/planned_purchase.dart';
 import '../services/live_data.dart';
 import '../widgets/planned_purchase_card.dart';
 import '../widgets/planned_purchase_dialog.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/tutorial_cards.dart';
 
@@ -34,11 +36,11 @@ class PlannedPurchasesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(t.plannedPurchases)),
-      floatingActionButton: FloatingActionButton.extended(
+      appBar: SlantAppBar(title: t.plannedPurchases),
+      floatingActionButton: SkewFab(
         onPressed: () => _open(context),
-        icon: const Icon(Icons.add_rounded),
-        label: Text(t.addPlannedPurchase),
+        icon: Icons.add_rounded,
+        label: t.addPlannedPurchase,
       ),
       body: Column(
         children: [

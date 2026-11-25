@@ -5,9 +5,13 @@ import '../models/repair.dart';
 import '../models/report.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
+import 'skewed.dart';
 
 /// What the shown services earned this month. All time is left to the
 /// report, which tapping it opens.
+///
+/// Drawn for the accent block at the top of the services tab: its text
+/// takes that block's text color.
 class EarningsCard extends StatelessWidget {
   const EarningsCard({
     super.key,
@@ -21,60 +25,85 @@ class EarningsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final c = context.colors;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final month = Report.of(month: DateTime.now(), repairs: repairs);
-    final soft = Colors.white.withValues(alpha: 0.85);
+    final small = TextStyle(
+      color: c.onPrimary,
+      fontSize: 13,
+      fontWeight: FontWeight.w600,
+    );
 
-    return Material(
-      color: context.colors.primary,
-      borderRadius: BorderRadius.circular(24),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onOpenReport,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
+    return InkWell(
+      onTap: onOpenReport,
+      borderRadius: BorderRadius.circular(8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(t.earnedThisMonth, style: small),
+                const SizedBox(height: 4),
+                for (final line in formatSums(month.earned, locale))
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
                     child: Text(
-                      t.earnedThisMonth,
+                      line,
+                      maxLines: 1,
                       style: TextStyle(
-                        color: soft,
-                        fontWeight: FontWeight.w600,
+                        color: c.onPrimary,
+                        fontSize: 30,
+                        height: 1.05,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
+                        fontFeatures: const [FontFeature.tabularFigures()],
                       ),
                     ),
                   ),
-                  Text(
-                    t.openReport,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const Icon(Icons.chevron_right_rounded, color: Colors.white),
-                ],
-              ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(t.repairsCount(month.services), style: small),
               const SizedBox(height: 6),
-              for (final line in formatSums(month.earned, locale))
-                Text(
-                  line,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.w800,
+              Skewed(
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10, 4, 4, 4),
+                  decoration: BoxDecoration(
+                    color: c.onPrimary,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        t.openReport.toUpperCase(),
+                        style: TextStyle(
+                          color: c.primary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        size: 16,
+                        color: c.primary,
+                      ),
+                    ],
                   ),
                 ),
-              const SizedBox(height: 4),
-              Text(
-                t.repairsCount(month.services),
-                style: TextStyle(color: soft),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

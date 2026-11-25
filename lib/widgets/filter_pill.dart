@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import 'option_sheet.dart';
+import 'skewed.dart';
 
-/// Rounded filter button. Shows the current choice, turns accent-colored
-/// while a filter is active (with an x to clear it), and opens an option
-/// sheet to pick a value. A null [value] means "all".
+/// Leaning filter button. Shows the current choice, turns dark while a
+/// filter is active (with an x to clear it), and opens an option sheet
+/// to pick a value. A null [value] means "all".
 class FilterPill extends StatelessWidget {
   const FilterPill({
     super.key,
@@ -50,41 +51,45 @@ class FilterPill extends StatelessWidget {
     final c = context.colors;
     final selected = _selected;
     final active = selected != null;
-    final fg = active ? Colors.white : c.ink;
+    final fg = active ? c.background : c.ink;
 
-    return Material(
-      color: active ? c.primary : c.surface,
-      shape: StadiumBorder(
-        side: active
-            ? BorderSide.none
-            : BorderSide(color: c.ink.withValues(alpha: 0.12)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () => _open(context),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
-          child: Row(
-            children: [
-              Icon(icon, size: 20, color: active ? fg : c.primary),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  selected?.shortLabel ?? selected?.label ?? allLabel,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: fg, fontWeight: FontWeight.w700),
-                ),
+    return Skewed(
+      child: Material(
+        color: active ? c.ink : c.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+          side: BorderSide(color: c.ink, width: 2),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => _open(context),
+          child: SizedBox(
+            height: 44,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 6, 0),
+              child: Row(
+                children: [
+                  Icon(icon, size: 18, color: fg),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      selected?.shortLabel ?? selected?.label ?? allLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: fg, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  if (active)
+                    InkResponse(
+                      radius: 18,
+                      onTap: () => onChanged(null),
+                      child: Icon(Icons.close_rounded, size: 20, color: fg),
+                    )
+                  else
+                    Icon(Icons.expand_more_rounded, color: fg),
+                ],
               ),
-              if (active)
-                InkResponse(
-                  radius: 18,
-                  onTap: () => onChanged(null),
-                  child: Icon(Icons.close_rounded, size: 20, color: fg),
-                )
-              else
-                Icon(Icons.expand_more_rounded, color: fg),
-            ],
+            ),
           ),
         ),
       ),

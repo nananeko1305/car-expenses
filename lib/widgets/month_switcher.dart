@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../l10n/app_localizations.dart';
 
-/// "‹ October 2026 ›": steps one month back or forth, never past
+/// "‹ OCTOBER 2026 ›": steps one month back or forth, never past
 /// [first] or [last] (both the first day of their month).
 class MonthSwitcher extends StatelessWidget {
   const MonthSwitcher({
@@ -23,29 +23,29 @@ class MonthSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).toLanguageTag();
-    final label = toBeginningOfSentenceCase(
-      DateFormat.yMMMM(locale).format(month),
-      locale,
-    );
     return Row(
       children: [
         IconButton(
           tooltip: t.previousMonth,
-          icon: const Icon(Icons.chevron_left_rounded),
+          icon: const Icon(Icons.chevron_left_rounded, size: 28),
           onPressed: month.isAfter(first)
               ? () => onChanged(DateTime(month.year, month.month - 1))
               : null,
         ),
         Expanded(
           child: Text(
-            label,
+            DateFormat.yMMMM(locale).format(month).toUpperCase(),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+            style: const TextStyle(
+              fontSize: 18,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
         IconButton(
           tooltip: t.nextMonth,
-          icon: const Icon(Icons.chevron_right_rounded),
+          icon: const Icon(Icons.chevron_right_rounded, size: 28),
           onPressed: month.isBefore(last)
               ? () => onChanged(DateTime(month.year, month.month + 1))
               : null,

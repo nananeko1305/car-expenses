@@ -4,6 +4,9 @@ import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../services/live_data.dart';
 import '../theme/app_colors.dart';
+import '../widgets/plate_chip.dart';
+import '../widgets/race_row.dart';
+import '../widgets/skewed.dart';
 import 'vehicle_history_screen.dart';
 
 /// Search cars by license plate (or name); tapping one opens its
@@ -64,39 +67,43 @@ class _VehicleSearchScreenState extends State<VehicleSearchScreen> {
           }
           final repairs = widget.data.repairs ?? const [];
           return ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(bottom: 16),
             itemCount: results.length,
-            separatorBuilder: (_, _) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox.shrink(),
             itemBuilder: (context, i) {
               final v = results[i];
               final count = repairs.where((r) => r.vehicleId == v.id).length;
-              return Card(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 6,
-                  ),
-                  leading: CircleAvatar(
-                    backgroundColor: context.colors.soft,
-                    foregroundColor: context.colors.primary,
-                    child: const Icon(Icons.directions_car_rounded),
-                  ),
-                  title: Text(
-                    v.plate.isEmpty ? v.name : v.plate,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  subtitle: Text('${v.name} · ${t.repairsCount(count)}'),
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => VehicleHistoryScreen(
-                        data: widget.data,
-                        profile: widget.profile,
-                        vehicleId: v.id,
+              return RaceRow(
+                leading: const SkewIcon(Icons.directions_car_rounded),
+                title: v.name,
+                below: Row(
+                  children: [
+                    if (v.plate.isNotEmpty) ...[
+                      PlateChip(v.plate, fontSize: 13),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(
+                      t.repairsCount(count),
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: context.colors.muted,
                       ),
+                    ),
+                  ],
+                ),
+                trailing: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    color: context.colors.muted,
+                  ),
+                ),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => VehicleHistoryScreen(
+                      data: widget.data,
+                      profile: widget.profile,
+                      vehicleId: v.id,
                     ),
                   ),
                 ),

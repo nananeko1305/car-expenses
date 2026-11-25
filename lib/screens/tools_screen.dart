@@ -5,6 +5,8 @@ import '../l10n/error_text.dart';
 import '../models/app_user.dart';
 import '../models/tool.dart';
 import '../services/live_data.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/tool_card.dart';
 import 'tool_form_screen.dart';
@@ -43,17 +45,17 @@ class _ToolsScreenState extends State<ToolsScreen> {
     // One instant for the whole list, so every bar agrees.
     final now = DateUtils.dateOnly(DateTime.now());
     return Scaffold(
-      appBar: AppBar(title: Text(t.tools)),
-      floatingActionButton: FloatingActionButton.extended(
+      appBar: SlantAppBar(title: t.tools),
+      floatingActionButton: SkewFab(
         onPressed: _openForm,
-        icon: const Icon(Icons.add_rounded),
-        label: Text(t.addTool),
+        icon: Icons.add_rounded,
+        label: t.addTool,
       ),
       body: Column(
         children: [
           const SyncBanner(),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
             child: SegmentedButton<bool>(
               segments: [
                 ButtonSegment(value: false, label: Text(t.activeTools)),
@@ -107,9 +109,9 @@ class _ToolsScreenState extends State<ToolsScreen> {
       );
     }
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+      padding: const EdgeInsets.only(bottom: 96),
       itemCount: tools.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      separatorBuilder: (_, _) => const SizedBox.shrink(),
       itemBuilder: (context, i) {
         final tool = tools[i];
         // The wallet is the live source for the price; the copy on the

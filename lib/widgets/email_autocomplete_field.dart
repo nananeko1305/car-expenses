@@ -51,7 +51,7 @@ class EmailAutocompleteField extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Material(
             elevation: 6,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             clipBehavior: Clip.antiAlias,
             child: ConstrainedBox(
               constraints: BoxConstraints(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/repair.dart';
 import 'money_fields.dart';
+import 'skewed.dart';
 
 /// What a service cost: a "no charge" switch and, while it is off, the
 /// amount with its currency. No charge is for work nobody pays for, such
@@ -31,16 +32,14 @@ class RepairPriceFields extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          secondary: const Icon(Icons.money_off_rounded),
-          title: Text(t.noCharge),
-          subtitle: Text(t.noChargeHint),
+        SkewSwitchTile(
+          title: t.noCharge,
+          subtitle: t.noChargeHint,
           value: free,
           onChanged: enabled ? onFree : null,
         ),
         if (!free) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: 12),
           MoneyFields(
             amount: amount,
             currency: currency,

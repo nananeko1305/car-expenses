@@ -10,6 +10,7 @@ class DateField extends StatelessWidget {
     required this.onChanged,
     this.enabled = true,
     this.lastDate,
+    this.compact = false,
   });
 
   final String label;
@@ -19,6 +20,9 @@ class DateField extends StatelessWidget {
 
   /// The latest date the picker offers; a year from today when null.
   final DateTime? lastDate;
+
+  /// Digits only ("25.11.2026."), for where the field is half as wide.
+  final bool compact;
 
   Future<void> _pick(BuildContext context) async {
     final picked = await showDatePicker(
@@ -34,7 +38,7 @@ class DateField extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).toLanguageTag();
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       onTap: enabled ? () => _pick(context) : null,
       child: InputDecorator(
         decoration: InputDecoration(
@@ -42,7 +46,13 @@ class DateField extends StatelessWidget {
           enabled: enabled,
           prefixIcon: const Icon(Icons.event_rounded),
         ),
-        child: Text(DateFormat.yMMMMd(locale).format(value)),
+        child: Text(
+          (compact ? DateFormat.yMd(locale) : DateFormat.yMMMMd(locale)).format(
+            value,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

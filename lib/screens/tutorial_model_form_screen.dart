@@ -7,6 +7,8 @@ import '../models/tutorial_entry.dart';
 import '../services/background_save.dart';
 import '../services/tutorial_repository.dart';
 import '../widgets/link_fields.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/tutorial_cards.dart';
 
 /// A new model of [brand], with its first links: one row to start with,
@@ -82,7 +84,7 @@ class _TutorialModelFormScreenState extends State<TutorialModelFormScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.brand.name} · ${t.newModel}')),
+      appBar: SlantAppBar(title: '${widget.brand.name} · ${t.newModel}'),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -103,7 +105,7 @@ class _TutorialModelFormScreenState extends State<TutorialModelFormScreen> {
                 return nameTaken(v, widget.taken) ? t.modelExists : null;
               },
             ),
-            SectionTitle(t.links),
+            SectionTitle(t.links, inset: 0),
             for (final row in _links) ...[
               Card(
                 key: ObjectKey(row),
@@ -139,7 +141,7 @@ class _TutorialModelFormScreenState extends State<TutorialModelFormScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            FilledButton(onPressed: _save, child: Text(t.save)),
+            SkewSubmit(label: t.save, onPressed: _save),
           ],
         ),
       ),

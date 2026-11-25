@@ -87,19 +87,19 @@ Future<void> _back(WidgetTester tester) async {
   await tester.pump();
 }
 
-/// The amounts the month's summary shows next to [label].
+/// The amounts the month's summary shows in the tile called [label].
 Iterable<String?> _sums(WidgetTester tester, String label) {
-  final row = find.ancestor(
-    of: find.descendant(
-      of: find.byType(WalletMonthSummary),
-      matching: find.text(label),
-    ),
-    matching: find.byType(Row),
-  );
-  return tester
-      .widgetList<Text>(
-        find.descendant(of: row.first, matching: find.byType(Text)),
+  final tile = find
+      .ancestor(
+        of: find.descendant(
+          of: find.byType(WalletMonthSummary),
+          matching: find.text(label),
+        ),
+        matching: find.byType(Column),
       )
+      .first;
+  return tester
+      .widgetList<Text>(find.descendant(of: tile, matching: find.byType(Text)))
       .map((text) => text.data)
       .where((text) => text != label);
 }
@@ -178,24 +178,24 @@ void main() {
       tester,
     ) async {
       await _pump(tester, busy);
-      expect(_sums(tester, 'Came in'), ['11,000.00 RSD']);
-      expect(_sums(tester, 'Spent'), ['− 1,500.00 RSD']);
-      expect(_sums(tester, 'Earned'), ['9,500.00 RSD']);
+      expect(_sums(tester, 'Came in'), ['11,000.00']);
+      expect(_sums(tester, 'Spent'), ['−1,500.00']);
+      expect(_sums(tester, 'Earned'), ['9,500.00']);
     });
 
     testWidgets('follow the month that is shown', (tester) async {
       await _pump(tester, busy);
       await _back(tester);
-      expect(_sums(tester, 'Came in'), ['0.00 RSD']);
-      expect(_sums(tester, 'Spent'), ['− 700.00 RSD']);
-      expect(_sums(tester, 'Earned'), ['-700.00 RSD']);
+      expect(_sums(tester, 'Came in'), ['0.00']);
+      expect(_sums(tester, 'Spent'), ['−700.00']);
+      expect(_sums(tester, 'Earned'), ['−700.00']);
     });
 
     testWidgets('list euros only when asked to', (tester) async {
       await _pump(tester, busy, showEuros: true);
-      expect(_sums(tester, 'Came in'), ['11,000.00 RSD', '0.00 €']);
-      expect(_sums(tester, 'Spent'), ['− 1,500.00 RSD', '− 50.00 €']);
-      expect(_sums(tester, 'Earned'), ['9,500.00 RSD', '-50.00 €']);
+      expect(_sums(tester, 'Came in'), ['11,000.00', '0.00 €']);
+      expect(_sums(tester, 'Spent'), ['−1,500.00', '−50.00 €']);
+      expect(_sums(tester, 'Earned'), ['9,500.00', '−50.00 €']);
 
       // The euro movement itself stays on the list either way.
       await _pump(tester, busy);
@@ -206,7 +206,7 @@ void main() {
     testWidgets('put no minus before a zero', (tester) async {
       await _pump(tester, busy, showEuros: true);
       await _back(tester);
-      expect(_sums(tester, 'Spent'), ['− 700.00 RSD', '0.00 €']);
+      expect(_sums(tester, 'Spent'), ['−700.00', '0.00 €']);
     });
 
     testWidgets('are left out of a month nothing happened in', (tester) async {

@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../models/repair.dart';
 import '../models/report.dart';
 import '../services/live_data.dart';
+import '../theme/app_colors.dart';
+import '../widgets/earnings_card.dart';
 import '../widgets/filter_pill.dart';
 import '../widgets/option_sheet.dart';
-import '../widgets/earnings_card.dart';
 import '../widgets/repair_card.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/vehicle_dialog.dart';
 import 'repair_form_screen.dart';
 import 'report_screen.dart';
 
-/// Every service from every user, filterable by car and by person.
+/// This month's services from every user, filterable by car and by
+/// person. The header block carries what they earned and leads to the
+/// report, where the earlier months are.
 class ServicesTab extends StatefulWidget {
-  const ServicesTab({super.key, required this.data, required this.profile});
+  const ServicesTab({
+    super.key,
+    required this.data,
+    required this.profile,
+    required this.onSearch,
+  });
 
   final LiveData data;
   final AppUser profile;
+
+  /// Opens the search by plate, from the header.
+  final VoidCallback onSearch;
 
   @override
   State<ServicesTab> createState() => _ServicesTabState();
@@ -64,84 +78,105 @@ class _ServicesTabState extends State<ServicesTab> {
         .where((r) => _userId == null || r.ownerId == _userId)
         .toList();
 
+    final locale = Localizations.localeOf(context).toLanguageTag();
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'services-fab',
+      floatingActionButton: SkewButton(
+        label: vehicles.isEmpty ? t.addVehicle : t.newRepair,
+        icon: Icons.add_rounded,
+        height: 50,
+        fontSize: 16,
+        elevation: 4,
         onPressed: vehicles.isEmpty
             ? () => showVehicleDialog(context, ownerId: widget.profile.uid)
             : _openForm,
-        icon: const Icon(Icons.add_rounded),
-        label: Text(vehicles.isEmpty ? t.addVehicle : t.newRepair),
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+      body: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: FilterPill(
-                  icon: Icons.directions_car_rounded,
-                  title: t.vehicle,
-                  allLabel: t.allVehicles,
-                  value: _vehicleId,
-                  options: [
-                    for (final v in vehicles)
-                      SheetOption(
-                        id: v.id,
-                        label: v.label,
-                        shortLabel: v.plate.isEmpty ? v.name : v.plate,
-                        subtitle: t.repairsCount(perVehicle[v.id] ?? 0),
-                      ),
-                  ],
-                  onChanged: (id) => setState(() => _vehicleId = id),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: FilterPill(
-                  icon: Icons.person_rounded,
-                  title: t.person,
-                  allLabel: t.allPeople,
-                  value: _userId,
-                  options: [
-                    for (final u in _data.users!)
-                      SheetOption(
-                        id: u.uid,
-                        label: u.displayName,
-                        subtitle: t.repairsCount(perUser[u.uid] ?? 0),
-                      ),
-                  ],
-                  onChanged: (id) => setState(() => _userId = id),
-                ),
+          SlantHeader(
+            title: t.repairs,
+            subtitle: DateFormat.yMMMM(locale).format(now),
+            actions: [
+              IconButton(
+                tooltip: t.searchPlate,
+                icon: const Icon(Icons.search_rounded),
+                onPressed: widget.onSearch,
               ),
             ],
-          ),
-          const SizedBox(height: 12),
-          EarningsCard(
-            repairs: repairs,
-            onOpenReport: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) =>
-                    ReportScreen(data: _data, profile: widget.profile),
+            child: EarningsCard(
+              repairs: repairs,
+              onOpenReport: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      ReportScreen(data: _data, profile: widget.profile),
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          if (vehicles.isEmpty)
-            _centered(t.noVehiclesYet)
-          else if (_data.repairs!.isEmpty)
-            _centered(t.noRepairs)
-          else if (repairs.isEmpty)
-            _centered(t.noRepairsThisMonth),
-          for (final r in repairs) ...[
-            RepairCard(
-              repair: r,
-              vehicle: _data.vehicleById(r.vehicleId),
-              authorName: _data.nameOf(r.ownerId),
-              onTap: () => _openForm(r),
+          Padding(
+            // The filters lean, so they need room at both ends.
+            padding: const EdgeInsets.fromLTRB(20, 0, 22, 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: FilterPill(
+                    icon: Icons.directions_car_rounded,
+                    title: t.vehicle,
+                    allLabel: t.allVehicles,
+                    value: _vehicleId,
+                    options: [
+                      for (final v in vehicles)
+                        SheetOption(
+                          id: v.id,
+                          label: v.label,
+                          shortLabel: v.plate.isEmpty ? v.name : v.plate,
+                          subtitle: t.repairsCount(perVehicle[v.id] ?? 0),
+                        ),
+                    ],
+                    onChanged: (id) => setState(() => _vehicleId = id),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilterPill(
+                    icon: Icons.person_rounded,
+                    title: t.person,
+                    allLabel: t.allPeople,
+                    value: _userId,
+                    options: [
+                      for (final u in _data.users!)
+                        SheetOption(
+                          id: u.uid,
+                          label: u.displayName,
+                          subtitle: t.repairsCount(perUser[u.uid] ?? 0),
+                        ),
+                    ],
+                    onChanged: (id) => setState(() => _userId = id),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-          ],
+          ),
+          Divider(height: 1, color: context.colors.line),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.only(bottom: 96),
+              children: [
+                if (vehicles.isEmpty)
+                  _centered(t.noVehiclesYet)
+                else if (_data.repairs!.isEmpty)
+                  _centered(t.noRepairs)
+                else if (repairs.isEmpty)
+                  _centered(t.noRepairsThisMonth),
+                for (final r in repairs)
+                  RepairCard(
+                    repair: r,
+                    vehicle: _data.vehicleById(r.vehicleId),
+                    authorName: _data.nameOf(r.ownerId),
+                    onTap: () => _openForm(r),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );

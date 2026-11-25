@@ -40,11 +40,11 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(_app(false));
-    final light = _colorOf(tester, 'Petar Petrović');
+    final light = _colorOf(tester, 'Petar');
 
     await tester.pumpWidget(_app(true));
     await tester.pumpAndSettle();
-    final dark = _colorOf(tester, 'Petar Petrović');
+    final dark = _colorOf(tester, 'Petar');
 
     expect(dark, isNot(light));
     // Light text on a dark background.

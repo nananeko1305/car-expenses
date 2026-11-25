@@ -27,7 +27,8 @@ class WarrantyBar extends StatelessWidget {
     final status = tool.status(now);
     final days = tool.daysLeft(now);
     final color = switch (status) {
-      WarrantyStatus.active => context.colors.primary,
+      // Not the accent: with a red accent it would read as expired.
+      WarrantyStatus.active => context.colors.moneyIn,
       WarrantyStatus.expiringSoon => _amber,
       WarrantyStatus.expired => _red,
     };
@@ -50,7 +51,7 @@ class WarrantyBar extends StatelessWidget {
           child: LinearProgressIndicator(
             value: tool.progress(now),
             minHeight: 6,
-            backgroundColor: context.colors.soft,
+            backgroundColor: context.colors.panel,
             color: color,
             semanticsLabel: t.warranty,
           ),

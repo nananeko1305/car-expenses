@@ -8,6 +8,8 @@ import '../services/live_data.dart';
 import '../services/tutorial_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/name_dialog.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/tutorial_cards.dart';
 import 'tutorial_model_form_screen.dart';
 import 'tutorial_model_screen.dart';
@@ -84,7 +86,7 @@ class TutorialBrandScreen extends StatelessWidget {
         final brand = data.brandById(brandId);
         if (brand == null) {
           return Scaffold(
-            appBar: AppBar(),
+            appBar: const SlantAppBar(title: ''),
             body: data.tutorialsReady
                 ? Center(child: Text(t.deleted))
                 : TutorialsLoading(error: data.error),
@@ -92,8 +94,8 @@ class TutorialBrandScreen extends StatelessWidget {
         }
         final models = data.modelsOf(brand.id);
         return Scaffold(
-          appBar: AppBar(
-            title: Text(brand.name),
+          appBar: SlantAppBar(
+            title: brand.name,
             actions: [
               IconButton(
                 tooltip: t.edit,
@@ -107,8 +109,7 @@ class TutorialBrandScreen extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            heroTag: 'tutorial-brand-fab',
+          floatingActionButton: SkewFab(
             onPressed: () => _push(
               context,
               TutorialModelFormScreen(
@@ -117,8 +118,8 @@ class TutorialBrandScreen extends StatelessWidget {
                 taken: [for (final m in models) m.name],
               ),
             ),
-            icon: const Icon(Icons.add_rounded),
-            label: Text(t.addModel),
+            icon: Icons.add_rounded,
+            label: t.addModel,
           ),
           body: models.isEmpty
               ? Padding(
@@ -129,9 +130,9 @@ class TutorialBrandScreen extends StatelessWidget {
                   child: Text(t.noModels, textAlign: TextAlign.center),
                 )
               : ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                  padding: const EdgeInsets.only(bottom: 96),
                   itemCount: models.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox.shrink(),
                   itemBuilder: (context, i) {
                     final model = models[i];
                     return TutorialTile(

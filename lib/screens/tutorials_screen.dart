@@ -7,6 +7,8 @@ import '../services/background_save.dart';
 import '../services/live_data.dart';
 import '../services/tutorial_repository.dart';
 import '../widgets/name_dialog.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/sync_banner.dart';
 import '../widgets/tutorial_cards.dart';
 import 'tutorial_brand_screen.dart';
@@ -42,12 +44,11 @@ class TutorialsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(t.tutorials)),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: 'tutorials-fab',
+      appBar: SlantAppBar(title: t.tutorials),
+      floatingActionButton: SkewFab(
         onPressed: () => _addBrand(context),
-        icon: const Icon(Icons.add_rounded),
-        label: Text(t.addBrand),
+        icon: Icons.add_rounded,
+        label: t.addBrand,
       ),
       body: Column(
         children: [
@@ -73,9 +74,9 @@ class TutorialsScreen extends StatelessWidget {
       );
     }
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+      padding: const EdgeInsets.only(bottom: 96),
       itemCount: brands.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      separatorBuilder: (_, _) => const SizedBox.shrink(),
       itemBuilder: (context, i) {
         final brand = brands[i];
         return TutorialTile(

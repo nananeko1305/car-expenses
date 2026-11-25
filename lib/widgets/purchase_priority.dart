@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/planned_purchase.dart';
 import '../theme/app_colors.dart';
+import 'skewed.dart';
 
 /// What a priority is called: "Urgent", "Medium" or "Not urgent".
 String priorityLabel(AppLocalizations t, PurchasePriority priority) =>
@@ -45,18 +46,20 @@ class PriorityPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final look = _look(priority);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-      decoration: BoxDecoration(
-        color: look.background,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        priorityLabel(AppLocalizations.of(context), priority),
-        style: TextStyle(
-          color: look.foreground,
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
+    return Skewed(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 2),
+        decoration: BoxDecoration(
+          color: look.background,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          priorityLabel(AppLocalizations.of(context), priority),
+          style: TextStyle(
+            color: look.foreground,
+            fontSize: 12,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ),
     );
@@ -121,7 +124,7 @@ class PriorityPicker extends StatelessWidget {
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(8),
             ),
             selected: priority == value,
             textColor: c.ink,

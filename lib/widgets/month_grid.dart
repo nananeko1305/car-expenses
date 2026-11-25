@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 /// One month as a calendar grid, weeks starting on the locale's first
-/// day. A day shows how many bookings it has; today is ringed and the
-/// selected day filled.
+/// day. A day shows how many bookings it has, in a small dark block;
+/// today is outlined and the selected day filled with the accent.
 class MonthGrid extends StatelessWidget {
   const MonthGrid({
     super.key,
@@ -48,7 +48,7 @@ class MonthGrid extends StatelessWidget {
             for (var i = 0; i < 7; i++)
               Expanded(
                 child: Text(
-                  ml.narrowWeekdays[(firstDay + i) % 7],
+                  ml.narrowWeekdays[(firstDay + i) % 7].toUpperCase(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 12,
@@ -117,7 +117,7 @@ class _Day extends StatelessWidget {
               height: 34,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                borderRadius: BorderRadius.circular(8),
                 color: selected ? c.primary : null,
                 border: today && !selected
                     ? Border.all(color: c.primary, width: 2)
@@ -129,7 +129,7 @@ class _Day extends StatelessWidget {
                   fontWeight: selected || today
                       ? FontWeight.w800
                       : FontWeight.w500,
-                  color: selected ? Colors.white : c.ink,
+                  color: selected ? c.onPrimary : c.ink,
                 ),
               ),
             ),
@@ -142,8 +142,8 @@ class _Day extends StatelessWidget {
                   : Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
-                        color: c.primary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(7),
+                        color: c.ink,
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         '$count',
@@ -151,7 +151,7 @@ class _Day extends StatelessWidget {
                           fontSize: 10,
                           height: 1.4,
                           fontWeight: FontWeight.w800,
-                          color: c.primary,
+                          color: c.background,
                         ),
                       ),
                     ),
