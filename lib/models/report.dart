@@ -13,6 +13,21 @@ DateTime monthOf(DateTime d) => DateTime(d.year, d.month);
 bool inMonth(DateTime d, DateTime month) =>
     d.year == month.year && d.month == month.month;
 
+/// The first and the last month any of [dates] falls in, with [now]
+/// counted among them, so the current month is always within reach.
+({DateTime first, DateTime last}) monthSpan(
+  Iterable<DateTime> dates,
+  DateTime now,
+) {
+  var first = now;
+  var last = now;
+  for (final d in dates) {
+    if (d.isBefore(first)) first = d;
+    if (d.isAfter(last)) last = d;
+  }
+  return (first: monthOf(first), last: monthOf(last));
+}
+
 /// What the workshop did, took in and spent over one calendar month, or
 /// over all time. Worked out from the live data, never stored.
 class Report {
@@ -118,19 +133,11 @@ class Report {
     required List<Repair> repairs,
     required List<WalletEntry> entries,
     required List<Tool> tools,
-  }) {
-    var first = now;
-    var last = now;
-    for (final d in [
-      for (final r in repairs) r.date,
-      for (final e in entries) e.date,
-      for (final t in tools) t.purchaseDate,
-    ]) {
-      if (d.isBefore(first)) first = d;
-      if (d.isAfter(last)) last = d;
-    }
-    return (first: monthOf(first), last: monthOf(last));
-  }
+  }) => monthSpan([
+    for (final r in repairs) r.date,
+    for (final e in entries) e.date,
+    for (final t in tools) t.purchaseDate,
+  ], now);
 
   static void _add(Map<Currency, int> sums, Currency c, int minor) {
     sums[c] = (sums[c] ?? 0) + minor;

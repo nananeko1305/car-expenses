@@ -366,6 +366,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMovements => 'No wallet movements yet.';
 
   @override
+  String get noMovementsInMonth => 'No wallet movements in this month.';
+
+  @override
+  String get walletIn => 'Came in';
+
+  @override
+  String get walletSpent => 'Spent';
+
+  @override
+  String get walletEarned => 'Earned';
+
+  @override
+  String get showEuros => 'Euros';
+
+  @override
   String get deleteEntryQ => 'Delete this entry?';
 
   @override

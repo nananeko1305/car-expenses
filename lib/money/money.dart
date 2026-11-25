@@ -21,6 +21,16 @@ List<String> formatSums(Map<Currency, int> sums, String locale) {
   ];
 }
 
+/// [sums] as the wallet shows them: dinars always, euros only when
+/// [showEuros] asks for them, and a zero where there is nothing.
+Map<Currency, int> walletLines(
+  Map<Currency, int> sums, {
+  required bool showEuros,
+}) => {
+  Currency.rsd: sums[Currency.rsd] ?? 0,
+  if (showEuros) Currency.eur: sums[Currency.eur] ?? 0,
+};
+
 /// Parses user input such as "12.345,50", "12345.5" or "12 345" into
 /// minor units. Returns null when the input is not a positive amount.
 int? parseMoney(String input) {

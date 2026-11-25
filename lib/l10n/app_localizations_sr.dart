@@ -366,6 +366,21 @@ class AppLocalizationsSr extends AppLocalizations {
   String get noMovements => 'Još nema promena u kasi.';
 
   @override
+  String get noMovementsInMonth => 'U ovom mesecu nije bilo promena u kasi.';
+
+  @override
+  String get walletIn => 'Ušlo';
+
+  @override
+  String get walletSpent => 'Potrošeno';
+
+  @override
+  String get walletEarned => 'Zarada';
+
+  @override
+  String get showEuros => 'Evri';
+
+  @override
   String get deleteEntryQ => 'Obrisati ovu stavku?';
 
   @override

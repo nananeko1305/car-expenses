@@ -770,6 +770,36 @@ abstract class AppLocalizations {
   /// **'No wallet movements yet.'**
   String get noMovements;
 
+  /// No description provided for @noMovementsInMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No wallet movements in this month.'**
+  String get noMovementsInMonth;
+
+  /// No description provided for @walletIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Came in'**
+  String get walletIn;
+
+  /// No description provided for @walletSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent'**
+  String get walletSpent;
+
+  /// No description provided for @walletEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned'**
+  String get walletEarned;
+
+  /// No description provided for @showEuros.
+  ///
+  /// In en, this message translates to:
+  /// **'Euros'**
+  String get showEuros;
+
   /// No description provided for @deleteEntryQ.
   ///
   /// In en, this message translates to:

@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/locale_controller.dart';
 import 'screens/auth_gate.dart';
+import 'services/euro_visibility.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_controller.dart';
 
@@ -18,6 +19,7 @@ Future<void> main() async {
   );
   await themeController.load();
   await localeController.load();
+  await euroVisibility.load();
   runApp(const CarExpensesApp());
 }
 
