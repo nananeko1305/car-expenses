@@ -124,6 +124,20 @@ class WalletMovement {
     return sums;
   }
 
+  /// What [movements] brought in and what they took out, per currency,
+  /// both as positive amounts. Their difference is [balances].
+  static ({Map<Currency, int> moneyIn, Map<Currency, int> moneyOut}) flows(
+    Iterable<WalletMovement> movements,
+  ) {
+    final moneyIn = <Currency, int>{};
+    final moneyOut = <Currency, int>{};
+    for (final m in movements) {
+      final into = m.signedMinor >= 0 ? moneyIn : moneyOut;
+      into[m.currency] = (into[m.currency] ?? 0) + m.signedMinor.abs();
+    }
+    return (moneyIn: moneyIn, moneyOut: moneyOut);
+  }
+
   /// What can be spent in [currency]: its balance, plus what [old] took
   /// out already when that spending is the one being edited.
   static int available(

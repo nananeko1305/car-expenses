@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
-import '../models/repair.dart';
 import '../models/report.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
+import 'money_row.dart';
 
 /// One report laid out: what the services earned, how many cars and
 /// services there were, then the money in and out down to the net.
@@ -75,16 +75,16 @@ class ReportView extends StatelessWidget {
             padding: const EdgeInsets.all(18),
             child: Column(
               children: [
-                _MoneyRow(label: t.earnedFromServices, sums: report.earned),
-                _MoneyRow(label: t.otherIncome, sums: report.otherIncome),
-                _MoneyRow(label: t.costs, sums: report.costs, sign: '− '),
-                _MoneyRow(
+                MoneyRow(label: t.earnedFromServices, sums: report.earned),
+                MoneyRow(label: t.otherIncome, sums: report.otherIncome),
+                MoneyRow(label: t.costs, sums: report.costs, sign: '− '),
+                MoneyRow(
                   label: t.ofWhichTools,
                   sums: report.tools,
                   minor: true,
                 ),
                 const Divider(height: 24),
-                _MoneyRow(label: t.net, sums: report.net, strong: true),
+                MoneyRow(label: t.net, sums: report.net, strong: true),
               ],
             ),
           ),
@@ -143,77 +143,6 @@ class _StatTile extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// A label with its amounts on the right, one line per currency.
-/// [minor] is a detail of the row above; [strong] is the bottom line,
-/// shown in red where it went negative.
-class _MoneyRow extends StatelessWidget {
-  const _MoneyRow({
-    required this.label,
-    required this.sums,
-    this.sign = '',
-    this.minor = false,
-    this.strong = false,
-  });
-
-  static const _red = Color(0xFFD94E4E);
-
-  final String label;
-  final Amounts sums;
-  final String sign;
-  final bool minor;
-  final bool strong;
-
-  @override
-  Widget build(BuildContext context) {
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final ink = context.colors.ink;
-    final size = minor ? 13.0 : (strong ? 17.0 : 15.0);
-    final weight = strong ? FontWeight.w800 : FontWeight.w600;
-    final muted = ink.withValues(alpha: 0.6);
-    final shown = sums.isEmpty ? {Currency.rsd: 0} : sums;
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(minor ? 16 : 0, 4, 0, 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: size,
-                fontWeight: weight,
-                color: minor ? muted : ink,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              for (final c in Currency.values)
-                if (shown.containsKey(c))
-                  Text(
-                    '$sign${formatMoney(shown[c]!, c, locale)}',
-                    style: TextStyle(
-                      fontSize: size,
-                      fontWeight: weight,
-                      color: switch (shown[c]!) {
-                        _ when minor => muted,
-                        < 0 when strong => _red,
-                        _ when strong => context.colors.primary,
-                        _ => ink,
-                      },
-                    ),
-                  ),
-            ],
-          ),
-        ],
       ),
     );
   }

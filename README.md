@@ -31,7 +31,13 @@ Users change their own name and password in Settings.
   never take a currency's balance below zero: the form shows what is
   available and refuses more. The app checks this, not the rules (they
   cannot add up the wallet), so two people spending at the same moment
-  could still both get through.
+  could still both get through. The balance covers everything; the list
+  under it shows one month at a time, the current one first, with arrows
+  back to the month of the oldest movement. Each month opens with its sums:
+  what came into the wallet, what was spent, and what is left of the two.
+  Payment in euros is rare, so the balance and the sums list euros only
+  while the Euros switch on the balance card is on; each phone keeps its
+  own choice, and it starts off.
 - **Tools** are a shared record anyone may edit: a warranty or a
   receipt can be corrected by whoever notices it is wrong, not only by the
   person who entered it. Everything that is not consumable, with its

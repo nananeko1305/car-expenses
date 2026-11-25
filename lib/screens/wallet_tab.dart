@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart';
 import '../models/app_user.dart';
 import '../models/wallet_entry.dart';
+import '../services/euro_visibility.dart';
 import '../services/live_data.dart';
 import '../widgets/balance_card.dart';
-import '../widgets/movement_tile.dart';
+import '../widgets/wallet_history.dart';
 import 'repair_form_screen.dart';
 import 'wallet_entry_screen.dart';
 
-/// Shared wallet: balance, add/spend actions and the full history.
+/// Shared wallet: balance, add/spend actions and the history, one month
+/// at a time. The balance always covers every month. Euros show only
+/// while [euroVisibility] is on.
 /// Services marked "add to wallet" count as income automatically.
 class WalletTab extends StatelessWidget {
   const WalletTab({super.key, required this.data, required this.profile});
@@ -45,32 +47,29 @@ class WalletTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
     final movements = WalletMovement.merge(data.repairs!, data.entries!);
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
-      children: [
-        BalanceCard(
-          balances: WalletMovement.balances(movements),
-          onAdd: () => _openEntry(context, WalletEntryType.deposit),
-          onSpend: () => _openEntry(context, WalletEntryType.withdrawal),
-        ),
-        const SizedBox(height: 16),
-        if (movements.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 48),
-            child: Text(t.noMovements, textAlign: TextAlign.center),
-          ),
-        for (final m in movements) ...[
-          MovementTile(
-            movement: m,
-            personName: data.nameOf(m.userId),
-            onTap: () => _openMovement(context, m),
+    return ListenableBuilder(
+      listenable: euroVisibility,
+      builder: (context, _) => ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+        children: [
+          BalanceCard(
+            balances: WalletMovement.balances(movements),
+            showEuros: euroVisibility.shown,
+            onShowEuros: euroVisibility.set,
+            onAdd: () => _openEntry(context, WalletEntryType.deposit),
+            onSpend: () => _openEntry(context, WalletEntryType.withdrawal),
           ),
           const SizedBox(height: 8),
+          WalletHistory(
+            movements: movements,
+            showEuros: euroVisibility.shown,
+            nameOf: data.nameOf,
+            onTap: (m) => _openMovement(context, m),
+          ),
         ],
-      ],
+      ),
     );
   }
 }

@@ -54,6 +54,21 @@ void main() {
     });
   });
 
+  test('what came in and what went out are summed apart, per currency', () {
+    final m = WalletMovement.merge(
+      [_repair(10000), _repair(2000, c: Currency.eur)],
+      [
+        _entry(WalletEntryType.deposit, 3000),
+        _entry(WalletEntryType.withdrawal, 4500),
+        _entry(WalletEntryType.withdrawal, 500),
+      ],
+    );
+    final flows = WalletMovement.flows(m);
+    expect(flows.moneyIn, {Currency.rsd: 13000, Currency.eur: 2000});
+    expect(flows.moneyOut, {Currency.rsd: 5000});
+    expect(WalletMovement.flows(const []).moneyIn, isEmpty);
+  });
+
   group('spending cannot take the wallet below zero', () {
     final balances = {Currency.rsd: 10000, Currency.eur: 500};
 

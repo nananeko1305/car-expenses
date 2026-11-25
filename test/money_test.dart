@@ -38,4 +38,17 @@ void main() {
     expect(formatMoney(1234550, Currency.rsd, 'sr'), '12.345,50 RSD');
     expect(formatMoney(1234550, Currency.eur, 'en'), '12,345.50 €');
   });
+
+  test('the wallet always lists dinars, and euros only when asked to', () {
+    const sums = {Currency.eur: 500};
+    expect(walletLines(sums, showEuros: false), {Currency.rsd: 0});
+    expect(walletLines(sums, showEuros: true), {
+      Currency.rsd: 0,
+      Currency.eur: 500,
+    });
+    expect(walletLines(const {Currency.rsd: 7}, showEuros: true), {
+      Currency.rsd: 7,
+      Currency.eur: 0,
+    });
+  });
 }
