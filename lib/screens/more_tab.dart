@@ -122,11 +122,6 @@ class MoreTab extends StatelessWidget {
     final c = context.colors;
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset('assets/icon/logo.png', width: 44, height: 44),
-        ),
-        const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

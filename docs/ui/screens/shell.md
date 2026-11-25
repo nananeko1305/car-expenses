@@ -38,7 +38,7 @@ The app opens on Services.
 ## The Više tab
 
 1. **Header:** the title "Više" (shown in capitals), and inside the block the
-   app logo, the user's full name, the email, and a leaning tag with the
+   user's full name, the email, and a leaning tag with the
    role: "Admin" or "Korisnik" (shown in capitals).
 2. **Rows**, in this order, each with an icon on the left and a chevron on
    the right:
@@ -105,8 +105,8 @@ wallet is back on the current month and the calendar on today.
   bar across its top, in `primary` on the open tab and invisible on the
   others; an icon of 22; 2; the label in 11.5 italic w700. The open tab's
   icon and label are in `accentText`, the others in `muted`.
-- Više header: the title bar, then a row with the logo 44×44 (radius 8); 12;
-  the name in 18 w800 over the email in 13, each on one line; 8; the role tag
+- Više header: the title bar, then a row with the name in 18 w800 over the
+  email in 13, each on one line; 8; the role tag
   with its outline and text in `onPrimary`.
 - Više rows: 54 high, 16 at the sides, a hairline under each. Icon 22; 14;
   the label in 15 w600 on one line; a chevron in `muted`. "Odjavi se" has its

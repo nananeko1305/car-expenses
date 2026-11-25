@@ -134,8 +134,7 @@ How the pictures differ from a phone:
 
 - **Shadows show as dark outlines.** The floating buttons have a thick dark
   line around them; on a phone it is a soft shadow.
-- **The logo is missing.** Its place is empty on the Više tab and on the
-  login screen.
+- **The logo is missing.** Its place is empty on the login screen.
 - Both are how Flutter draws in tests, not how the app looks.
 - The dates are those of the month the scripts were run in. The month after
   "Servisi" in the Services pictures is written into the script.
