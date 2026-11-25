@@ -4,6 +4,7 @@ import '../l10n/app_localizations.dart';
 import '../models/tool_draft.dart';
 import '../models/warranty.dart';
 import 'receipt_field.dart';
+import 'skewed.dart';
 import 'warranty_duration_field.dart';
 
 /// What a tool needs beyond its price and purchase date: what it is, how
@@ -64,11 +65,10 @@ class ToolFields extends StatelessWidget {
             onChanged();
           },
         ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          secondary: const Icon(Icons.notifications_active_rounded),
-          title: Text(t.notifyOnExpiry),
-          subtitle: Text(t.notifyOnExpiryHint),
+        const SizedBox(height: 12),
+        SkewSwitchTile(
+          title: t.notifyOnExpiry,
+          subtitle: t.notifyOnExpiryHint,
           value: draft.notify,
           onChanged: enabled
               ? (v) {

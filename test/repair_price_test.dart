@@ -4,6 +4,7 @@ import 'package:car_expenses/theme/app_palette.dart';
 import 'package:car_expenses/theme/app_theme.dart';
 import 'package:car_expenses/widgets/repair_card.dart';
 import 'package:car_expenses/widgets/repair_price_fields.dart';
+import 'package:car_expenses/widgets/skewed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -81,9 +82,9 @@ void main() {
       final form = GlobalKey<FormState>();
       await _pump(tester, _Form(formKey: form));
       expect(find.text('Amount'), findsOneWidget);
-      expect(find.text('EUR €'), findsOneWidget);
+      expect(find.text('EUR'), findsOneWidget);
       expect(
-        tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+        tester.widget<SkewSwitchTile>(find.byType(SkewSwitchTile)).value,
         isFalse,
       );
 
@@ -101,7 +102,7 @@ void main() {
       await tester.pump();
 
       expect(find.text('Amount'), findsNothing);
-      expect(find.text('EUR €'), findsNothing);
+      expect(find.text('EUR'), findsNothing);
       expect(form.currentState!.validate(), isTrue);
 
       // And back: a price can be asked for after all.
@@ -116,7 +117,7 @@ void main() {
     ) async {
       await _pump(tester, _Form(formKey: GlobalKey<FormState>(), free: true));
       expect(
-        tester.widget<SwitchListTile>(find.byType(SwitchListTile)).value,
+        tester.widget<SkewSwitchTile>(find.byType(SkewSwitchTile)).value,
         isTrue,
       );
       expect(find.text('Amount'), findsNothing);
@@ -152,7 +153,7 @@ void main() {
 
     testWidgets('says no charge instead of a zero amount', (tester) async {
       await _pump(tester, card(_repair(0)), lang: 'sr');
-      expect(find.text('Bez naplate'), findsOneWidget);
+      expect(find.text('BEZ NAPLATE'), findsOneWidget);
       expect(find.textContaining('RSD'), findsNothing);
       expect(tester.takeException(), isNull);
     });
@@ -160,7 +161,7 @@ void main() {
     testWidgets('still shows the amount of a paid service', (tester) async {
       await _pump(tester, card(_repair(1500000)), lang: 'sr');
       expect(find.text('15.000,00 RSD'), findsOneWidget);
-      expect(find.text('Bez naplate'), findsNothing);
+      expect(find.text('BEZ NAPLATE'), findsNothing);
     });
   });
 }

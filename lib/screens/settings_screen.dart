@@ -10,6 +10,8 @@ import '../theme/app_palette.dart';
 import '../theme/theme_controller.dart';
 import '../widgets/change_password_dialog.dart';
 import '../widgets/name_fields.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/theme_mode_picker.dart';
 import '../widgets/update_tiles.dart';
 
@@ -29,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
       builder: (context, _) {
         final code = localeController.locale?.languageCode;
         return Scaffold(
-          appBar: AppBar(title: Text(t.settings)),
+          appBar: SlantAppBar(title: t.settings),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -126,8 +128,12 @@ class SettingsScreen extends StatelessWidget {
   Widget _header(String text) => Padding(
     padding: const EdgeInsets.only(left: 4, bottom: 8),
     child: Text(
-      text,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+      text.toUpperCase(),
+      style: const TextStyle(
+        fontSize: 16,
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.w800,
+      ),
     ),
   );
 
@@ -135,15 +141,21 @@ class SettingsScreen extends StatelessWidget {
     final selected = themeController.current.id == p.id;
     return Tooltip(
       message: _paletteName(t, p),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: () => themeController.select(p),
-        child: CircleAvatar(
-          radius: 24,
-          backgroundColor: p.primary,
-          child: selected
-              ? const Icon(Icons.check_rounded, color: Colors.white)
-              : null,
+      child: Skewed(
+        child: Material(
+          color: p.primary,
+          borderRadius: BorderRadius.circular(8),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () => themeController.select(p),
+            child: SizedBox(
+              width: 48,
+              height: 48,
+              child: selected
+                  ? Icon(Icons.check_rounded, color: p.onPrimary)
+                  : null,
+            ),
+          ),
         ),
       ),
     );

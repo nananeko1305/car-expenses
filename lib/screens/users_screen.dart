@@ -7,6 +7,9 @@ import '../services/background_save.dart';
 import '../services/user_repository.dart';
 import '../theme/app_colors.dart';
 import '../widgets/add_user_dialog.dart';
+import '../widgets/race_row.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/sync_banner.dart';
 
 /// Admin only: list users, add new ones, disable or re-enable them.
@@ -26,11 +29,11 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(t.users)),
-      floatingActionButton: FloatingActionButton.extended(
+      appBar: SlantAppBar(title: t.users),
+      floatingActionButton: SkewFab(
         onPressed: () => showAddUserDialog(context),
-        icon: const Icon(Icons.person_add_alt_1_rounded),
-        label: Text(t.addUser),
+        icon: Icons.person_add_alt_1_rounded,
+        label: t.addUser,
       ),
       body: Column(
         children: [
@@ -47,9 +50,9 @@ class _UsersScreenState extends State<UsersScreen> {
                 }
                 final users = snap.data!;
                 return ListView.separated(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+                  padding: const EdgeInsets.only(bottom: 96),
                   itemCount: users.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 10),
+                  separatorBuilder: (_, _) => const SizedBox.shrink(),
                   itemBuilder: (context, i) => _tile(t, users[i]),
                 );
               },
@@ -68,37 +71,24 @@ class _UsersScreenState extends State<UsersScreen> {
       if (isMe) t.you,
       if (u.disabled) t.disabled,
     ].join(' · ');
-    return Card(
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        leading: CircleAvatar(
-          backgroundColor: u.disabled
-              ? Colors.grey.shade300
-              : context.colors.soft,
-          foregroundColor: u.disabled ? Colors.grey : context.colors.primary,
-          child: Icon(
-            u.isAdmin
-                ? Icons.admin_panel_settings_rounded
-                : Icons.person_rounded,
-          ),
-        ),
-        title: Text(
-          u.displayName,
-          style: const TextStyle(fontWeight: FontWeight.w700),
-        ),
-        subtitle: Text('${u.email}\n$status'),
-        isThreeLine: true,
-        // The admin cannot disable themselves (rules forbid it too).
-        trailing: isMe
-            ? null
-            : TextButton(
-                onPressed: () => saveInBackground(
-                  context,
-                  () => UserRepository.instance.setDisabled(u.uid, !u.disabled),
-                ),
-                child: Text(u.disabled ? t.enableUser : t.disableUser),
-              ),
+    return RaceRow(
+      leading: SkewIcon(
+        u.isAdmin ? Icons.admin_panel_settings_rounded : Icons.person_rounded,
+        color: u.disabled ? context.colors.muted : null,
       ),
+      title: u.displayName,
+      subtitle: '${u.email}\n$status',
+      subtitleMaxLines: 2,
+      // The admin cannot disable themselves (rules forbid it too).
+      trailing: isMe
+          ? null
+          : TextButton(
+              onPressed: () => saveInBackground(
+                context,
+                () => UserRepository.instance.setDisabled(u.uid, !u.disabled),
+              ),
+              child: Text(u.disabled ? t.enableUser : t.disableUser),
+            ),
     );
   }
 }

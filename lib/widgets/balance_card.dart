@@ -4,10 +4,15 @@ import '../l10n/app_localizations.dart';
 import '../models/repair.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
+import 'repair_card.dart';
+import 'skewed.dart';
 
 /// Wallet balance per currency, with "add funds" and "spend" actions.
 /// Euros are rare, so their line shows only while the switch in the
 /// corner is on.
+///
+/// Drawn for the accent block at the top of the wallet tab: its text and
+/// buttons take that block's text color.
 class BalanceCard extends StatelessWidget {
   const BalanceCard({
     super.key,
@@ -27,130 +32,91 @@ class BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final c = context.colors;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final shown = walletLines(balances, showEuros: showEuros);
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: context.colors.primary,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  t.balance,
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.85),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              _EuroSwitch(value: showEuros, onChanged: onShowEuros),
-            ],
-          ),
-          const SizedBox(height: 2),
-          for (final c in Currency.values)
-            if (shown.containsKey(c))
-              Text(
-                formatMoney(shown[c]!, c, locale),
-                style: TextStyle(
-                  // A negative balance stands out in amber.
-                  color: shown[c]! < 0 ? const Color(0xFFFFD166) : Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _button(context, Icons.add_rounded, t.addFunds, onAdd),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _button(
-                  context,
-                  Icons.remove_rounded,
-                  t.spendFunds,
-                  onSpend,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+    final label = TextStyle(
+      color: c.onPrimary,
+      fontSize: 13,
+      fontWeight: FontWeight.w600,
     );
-  }
 
-  Widget _button(
-    BuildContext context,
-    IconData icon,
-    String label,
-    VoidCallback onPressed,
-  ) {
-    return FilledButton.icon(
-      style: FilledButton.styleFrom(
-        backgroundColor: Colors.white,
-        foregroundColor: context.colors.primary,
-        minimumSize: const Size.fromHeight(46),
-      ),
-      onPressed: onPressed,
-      icon: Icon(icon),
-      label: Text(label),
-    );
-  }
-}
-
-/// "Euros" with its switch, in the card's white-on-accent look. The label
-/// flips it too, since the switch alone is a small target.
-class _EuroSwitch extends StatelessWidget {
-  const _EuroSwitch({required this.value, required this.onChanged});
-
-  final bool value;
-  final ValueChanged<bool> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => onChanged(!value),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 4, 0, 4),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Expanded(child: Text(t.balance, style: label)),
+            MergeSemantics(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () => onShowEuros(!showEuros),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(t.showEuros, style: label),
+                    ),
+                    SkewSwitch(
+                      value: showEuros,
+                      onChanged: onShowEuros,
+                      onAccent: true,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        for (final currency in Currency.values)
+          if (shown.containsKey(currency))
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: MoneyText(
+                formatMoney(shown[currency]!, currency, locale),
+                size: 36,
+                // Below zero it stands out: amber on a dark accent, and
+                // the "money out" red on a light one.
+                color: shown[currency]! >= 0
+                    ? c.onPrimary
+                    : ThemeData.estimateBrightnessForColor(c.onPrimary) ==
+                          Brightness.light
+                    ? const Color(0xFFFFD166)
+                    : c.moneyOut,
+              ),
+            ),
+        const SizedBox(height: 12),
+        Padding(
+          // The buttons lean, so they need room at both ends.
+          padding: const EdgeInsets.symmetric(horizontal: 6),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                AppLocalizations.of(context).showEuros,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.85),
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: SkewButton(
+                  label: t.addFunds,
+                  icon: Icons.add_rounded,
+                  background: c.onPrimary,
+                  foreground: c.primary,
+                  onPressed: onAdd,
                 ),
               ),
-              const SizedBox(width: 8),
-              Switch(
-                value: value,
-                onChanged: onChanged,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                thumbColor: const WidgetStatePropertyAll(Colors.white),
-                trackColor: WidgetStateProperty.resolveWith(
-                  (states) => Colors.white.withValues(
-                    alpha: states.contains(WidgetState.selected) ? 0.45 : 0.12,
-                  ),
-                ),
-                trackOutlineColor: WidgetStatePropertyAll(
-                  Colors.white.withValues(alpha: 0.7),
+              const SizedBox(width: 12),
+              Expanded(
+                child: SkewButton(
+                  label: t.spendFunds,
+                  icon: Icons.remove_rounded,
+                  outlined: true,
+                  foreground: c.onPrimary,
+                  onPressed: onSpend,
                 ),
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../services/auth_service.dart';
 import '../theme/app_colors.dart';
+import '../widgets/skewed.dart';
 
 /// Full-screen notice (no access, disabled, admin claim) with an optional
 /// primary action and a sign-out button.
@@ -29,7 +30,7 @@ class StatusScreen extends StatelessWidget {
     final t = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
-        decoration: context.colors.softGradient,
+        color: context.colors.background,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -54,9 +55,10 @@ class StatusScreen extends StatelessWidget {
                     Text(body, textAlign: TextAlign.center),
                   const SizedBox(height: 28),
                   if (actionLabel != null) ...[
-                    FilledButton(
+                    SkewSubmit(
+                      label: actionLabel!,
+                      icon: null,
                       onPressed: onAction,
-                      child: Text(actionLabel!),
                     ),
                     const SizedBox(height: 8),
                   ],

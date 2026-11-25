@@ -6,10 +6,13 @@ import '../models/app_user.dart';
 import '../models/repair.dart';
 import '../models/report.dart';
 import '../services/live_data.dart';
+import '../theme/app_colors.dart';
 import '../widgets/month_switcher.dart';
 import '../widgets/repair_card.dart';
 import '../widgets/report_view.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/sync_banner.dart';
+import '../widgets/tutorial_cards.dart';
 import 'repair_form_screen.dart';
 
 /// The workshop's report, one month at a time or over all time: what it
@@ -46,12 +49,12 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(t.monthlyReport)),
+      appBar: SlantAppBar(title: t.monthlyReport),
       body: Column(
         children: [
           const SyncBanner(),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: SegmentedButton<bool>(
               segments: [
                 ButtonSegment(value: false, label: Text(t.reportByMonth)),
@@ -103,39 +106,37 @@ class _ReportScreenState extends State<ReportScreen> {
       tools: tools,
     );
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
+      padding: const EdgeInsets.only(bottom: 32),
       children: [
         if (!_allTime)
-          MonthSwitcher(
-            month: _month,
-            first: span.first,
-            last: span.last,
-            onChanged: (m) => setState(() => _month = m),
-          ),
-        const SizedBox(height: 8),
-        ReportView(report: report),
-        if (!_allTime) ...[
           Padding(
-            padding: const EdgeInsets.fromLTRB(4, 24, 4, 10),
-            child: Text(
-              t.repairs,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: MonthSwitcher(
+              month: _month,
+              first: span.first,
+              last: span.last,
+              onChanged: (m) => setState(() => _month = m),
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+          child: ReportView(report: report),
+        ),
+        if (!_allTime) ...[
+          SectionTitle(t.repairs),
+          Divider(height: 1, color: context.colors.line),
           if (report.services == 0)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
               child: Text(t.noRepairsInMonth, textAlign: TextAlign.center),
             ),
-          for (final r in repairs.where((r) => inMonth(r.date, _month))) ...[
+          for (final r in repairs.where((r) => inMonth(r.date, _month)))
             RepairCard(
               repair: r,
               vehicle: data.vehicleById(r.vehicleId),
               authorName: data.nameOf(r.ownerId),
               onTap: () => _openRepair(r),
             ),
-            const SizedBox(height: 10),
-          ],
         ],
       ],
     );

@@ -560,6 +560,12 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:

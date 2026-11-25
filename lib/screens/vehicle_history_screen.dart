@@ -7,7 +7,10 @@ import '../models/repair.dart';
 import '../models/vehicle.dart';
 import '../services/live_data.dart';
 import '../theme/app_colors.dart';
+import '../widgets/plate_chip.dart';
 import '../widgets/repair_card.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/totals_card.dart';
 import '../widgets/vehicle_dialog.dart';
 import 'repair_form_screen.dart';
@@ -49,7 +52,7 @@ class VehicleHistoryScreen extends StatelessWidget {
         if (vehicle == null) {
           // Deleted while open.
           return Scaffold(
-            appBar: AppBar(),
+            appBar: const SlantAppBar(title: ''),
             body: Center(child: Text(t.noVehicles)),
           );
         }
@@ -57,8 +60,8 @@ class VehicleHistoryScreen extends StatelessWidget {
             .where((r) => r.vehicleId == vehicleId)
             .toList();
         return Scaffold(
-          appBar: AppBar(
-            title: Text(t.serviceHistory),
+          appBar: SlantAppBar(
+            title: t.serviceHistory,
             actions: [
               if (profile.canEdit(vehicle.ownerId))
                 IconButton(
@@ -72,19 +75,20 @@ class VehicleHistoryScreen extends StatelessWidget {
                 ),
             ],
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            heroTag: 'history-fab',
+          floatingActionButton: SkewFab(
             onPressed: () => _openForm(context),
-            icon: const Icon(Icons.add_rounded),
-            label: Text(t.newRepair),
+            icon: Icons.add_rounded,
+            label: t.newRepair,
           ),
           body: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+            padding: const EdgeInsets.only(bottom: 96),
             children: [
               _header(context, t, vehicle, repairs),
-              const SizedBox(height: 12),
-              TotalsCard(repairs: repairs),
-              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
+                child: TotalsCard(repairs: repairs),
+              ),
+              Divider(height: 1, color: context.colors.line),
               if (repairs.isEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 40),
@@ -97,7 +101,6 @@ class VehicleHistoryScreen extends StatelessWidget {
                   authorName: data.nameOf(r.ownerId),
                   onTap: () => _openForm(context, r),
                 ),
-                const SizedBox(height: 10),
               ],
             ],
           ),
@@ -116,64 +119,46 @@ class VehicleHistoryScreen extends StatelessWidget {
     // Newest service that has a mileage recorded.
     final withKm = repairs.where((r) => r.mileage != null);
     final lastKm = withKm.isEmpty ? null : withKm.first.mileage;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(18),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 28,
-              backgroundColor: context.colors.soft,
-              foregroundColor: context.colors.primary,
-              child: const Icon(Icons.directions_car_rounded, size: 30),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (vehicle.plate.isNotEmpty)
-                    Text(
-                      vehicle.plate,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  Text(
-                    vehicle.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+    final c = context.colors;
+    final quiet = TextStyle(fontSize: 13, color: c.muted);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (vehicle.plate.isNotEmpty) ...[
+                PlateChip(vehicle.plate, fontSize: 18),
+                const SizedBox(width: 10),
+              ],
+              Expanded(
+                child: Text(
+                  vehicle.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
                   ),
-                  if (vehicle.vin.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    // Selectable, so it can be copied when ordering parts.
-                    SelectableText(
-                      '${t.vinShort}: ${vehicle.vin}',
-                      style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: context.colors.ink.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                  if (lastKm != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      '${t.lastMileage}: '
-                      '${NumberFormat.decimalPattern(locale).format(lastKm)} km',
-                      style: TextStyle(
-                        color: context.colors.ink.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ],
+                ),
               ),
+            ],
+          ),
+          if (vehicle.vin.isNotEmpty) ...[
+            const SizedBox(height: 6),
+            // Selectable, so it can be copied when ordering parts.
+            SelectableText('${t.vinShort}: ${vehicle.vin}', style: quiet),
+          ],
+          if (lastKm != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              '${t.lastMileage}: '
+              '${NumberFormat.decimalPattern(locale).format(lastKm)} km',
+              style: quiet,
             ),
           ],
-        ),
+        ],
       ),
     );
   }

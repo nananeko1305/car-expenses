@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/tool.dart';
 import '../models/tool_draft.dart';
+import 'skewed.dart';
 import 'tool_card.dart';
 import 'tool_fields.dart';
 
@@ -58,14 +59,14 @@ class SpendingToolSection extends StatelessWidget {
     }
     return Column(
       children: [
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          secondary: const Icon(Icons.handyman_rounded),
-          title: Text(t.addToTools),
-          subtitle: Text(t.addToToolsHint),
+        const SizedBox(height: 12),
+        SkewSwitchTile(
+          title: t.addToTools,
+          subtitle: t.addToToolsHint,
           value: adding,
           onChanged: enabled ? onAddTool : null,
         ),
+        if (adding) const SizedBox(height: 12),
         if (adding)
           ToolFields(
             draft: draft,

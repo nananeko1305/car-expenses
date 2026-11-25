@@ -256,6 +256,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get settings => 'Podešavanja';
 
   @override
+  String get more => 'Više';
+
+  @override
   String get language => 'Jezik';
 
   @override

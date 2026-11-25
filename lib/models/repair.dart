@@ -9,6 +9,15 @@ extension CurrencyCode on Currency {
   String get code => this == Currency.eur ? 'EUR' : 'RSD';
 }
 
+/// [text] on one line, for a row of a list: a description is often a
+/// list of parts, one per line, each behind a dash. The lines are joined
+/// with commas and lose their dashes and bullets.
+String oneLine(String text) => text
+    .split('\n')
+    .map((line) => line.trim().replaceFirst(RegExp(r'^[-–•*]+\s*'), ''))
+    .where((line) => line.isNotEmpty)
+    .join(', ');
+
 /// One car service, stored in `repairs/{id}`. Visible to every user;
 /// [ownerId] is who recorded it.
 ///

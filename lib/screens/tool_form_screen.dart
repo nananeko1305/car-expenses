@@ -13,6 +13,8 @@ import '../services/tool_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/date_field.dart';
 import '../widgets/money_fields.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/tool_fields.dart';
 import 'wallet_entry_screen.dart';
 
@@ -102,8 +104,8 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
     final t = AppLocalizations.of(context);
     final entry = _entry;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_old == null ? t.newTool : t.editTool),
+      appBar: SlantAppBar(
+        title: _old == null ? t.newTool : t.editTool,
         actions: [
           if (_old != null)
             IconButton(
@@ -157,7 +159,7 @@ class _ToolFormScreenState extends State<ToolFormScreen> {
             else
               _entryTile(t, entry),
             const SizedBox(height: 20),
-            FilledButton(onPressed: _save, child: Text(t.save)),
+            SkewSubmit(label: t.save, onPressed: _save),
           ],
         ),
       ),

@@ -33,9 +33,9 @@ class PlannedPurchaseList extends StatelessWidget {
       );
     }
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
+      padding: const EdgeInsets.only(bottom: 96),
       itemCount: sorted.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 10),
+      separatorBuilder: (_, _) => const SizedBox.shrink(),
       itemBuilder: (context, i) {
         final purchase = sorted[i];
         return PlannedPurchaseCard(
@@ -48,8 +48,8 @@ class PlannedPurchaseList extends StatelessWidget {
   }
 }
 
-/// One thing to buy: what it is, with its priority as a colored label
-/// beside it, the note if it has one, then who added it and when.
+/// One thing to buy as a row: what it is, with its priority as a
+/// colored label beside it, the note if it has one, then who added it and when.
 /// Tapping edits it.
 class PlannedPurchaseCard extends StatelessWidget {
   const PlannedPurchaseCard({
@@ -68,52 +68,49 @@ class PlannedPurchaseCard extends StatelessWidget {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final date = DateFormat.yMMMd(locale)
         .format(purchase.createdAt ?? DateTime.now());
-    final faded = context.colors.ink.withValues(alpha: 0.65);
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      purchase.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+    final c = context.colors;
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(16, 10, 18, 10),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    purchase.name,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  PriorityPill(purchase.priority),
-                ],
-              ),
-              if (purchase.note.isNotEmpty) ...[
-                const SizedBox(height: 4),
-                Text(
-                  purchase.note,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14),
                 ),
+                const SizedBox(width: 10),
+                PriorityPill(purchase.priority),
               ],
-              const SizedBox(height: 6),
+            ),
+            if (purchase.note.isNotEmpty) ...[
+              const SizedBox(height: 3),
               Text(
-                '$authorName · $date',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: faded,
-                ),
+                purchase.note,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 14),
               ),
             ],
-          ),
+            const SizedBox(height: 4),
+            Text(
+              '$authorName · $date',
+              style: TextStyle(fontSize: 13, color: c.muted),
+            ),
+          ],
         ),
       ),
     );

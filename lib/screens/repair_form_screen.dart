@@ -12,6 +12,8 @@ import '../widgets/date_field.dart';
 import '../widgets/option_sheet.dart';
 import '../widgets/picker_field.dart';
 import '../widgets/repair_price_fields.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 
 /// Create or edit a service. Anyone can view one; only its author or
 /// the admin can change or delete it. A service may be marked "no
@@ -109,8 +111,8 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
       serviceCount[r.vehicleId] = (serviceCount[r.vehicleId] ?? 0) + 1;
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_old == null ? t.newRepair : t.editRepair),
+      appBar: SlantAppBar(
+        title: _old == null ? t.newRepair : t.editRepair,
         actions: [
           if (_old != null && _canEdit)
             IconButton(
@@ -123,9 +125,9 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
           children: [
-            if (_old != null) ...[_authorNote(t), const SizedBox(height: 14)],
+            if (_old != null) ...[_authorNote(t), const SizedBox(height: 12)],
             PickerField(
               label: t.vehicle,
               icon: Icons.directions_car_rounded,
@@ -141,14 +143,44 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
               ],
               onChanged: (id) => setState(() => _vehicleId = id),
             ),
-            const SizedBox(height: 14),
-            DateField(
-              label: t.date,
-              value: _date,
-              enabled: _canEdit,
-              onChanged: (d) => setState(() => _date = d),
+            const SizedBox(height: 12),
+            // The day and the mileage are both short, so they share a line.
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: DateField(
+                    label: t.date,
+                    value: _date,
+                    enabled: _canEdit,
+                    compact: true,
+                    onChanged: (d) => setState(() => _date = d),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    controller: _mileage,
+                    enabled: _canEdit,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: t.mileage,
+                      helperText: t.mileageOptional,
+                      helperMaxLines: 2,
+                      prefixIcon: const Icon(Icons.speed_rounded),
+                      suffixText: 'km',
+                    ),
+                    validator: (v) {
+                      final s = v?.trim() ?? '';
+                      if (s.isEmpty) return null;
+                      final n = int.tryParse(s);
+                      return (n == null || n < 0) ? t.invalidNumber : null;
+                    },
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             RepairPriceFields(
               free: _free,
               onFree: (v) => setState(() => _free = v),
@@ -157,24 +189,7 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
               enabled: _canEdit,
               onCurrency: (c) => setState(() => _currency = c),
             ),
-            const SizedBox(height: 14),
-            TextFormField(
-              controller: _mileage,
-              enabled: _canEdit,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: t.mileage,
-                helperText: t.mileageOptional,
-                prefixIcon: const Icon(Icons.speed_rounded),
-              ),
-              validator: (v) {
-                final s = v?.trim() ?? '';
-                if (s.isEmpty) return null;
-                final n = int.tryParse(s);
-                return (n == null || n < 0) ? t.invalidNumber : null;
-              },
-            ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             TextFormField(
               controller: _description,
               enabled: _canEdit,
@@ -190,12 +205,10 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
                   (v == null || v.trim().isEmpty) ? t.required : null,
             ),
             if (!_free) ...[
-              const SizedBox(height: 8),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                secondary: const Icon(Icons.account_balance_wallet_rounded),
-                title: Text(t.addToWallet),
-                subtitle: Text(t.addToWalletHint),
+              const SizedBox(height: 12),
+              SkewSwitchTile(
+                title: t.addToWallet,
+                subtitle: t.addToWalletHint,
                 value: _toWallet,
                 onChanged: _canEdit
                     ? (v) => setState(() => _toWallet = v)
@@ -204,7 +217,17 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
             ],
             if (_canEdit) ...[
               const SizedBox(height: 16),
-              FilledButton(onPressed: _save, child: Text(t.save)),
+              Padding(
+                // The button leans, so it needs room at both ends.
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: SkewButton(
+                  label: t.save,
+                  icon: Icons.check_rounded,
+                  height: 52,
+                  fontSize: 18,
+                  onPressed: _save,
+                ),
+              ),
             ],
           ],
         ),

@@ -164,7 +164,7 @@ void main() {
       await _pump(tester, form());
       await tester.enterText(find.byType(TextFormField).at(0), 'Golf 7');
       await tester.enterText(find.byType(TextFormField).at(1), 'Kvačilo');
-      await tester.tap(find.text('Save'));
+      await tester.tap(find.text('SAVE'));
       await tester.pump();
       expect(find.text('Required'), findsOneWidget);
     });
@@ -172,7 +172,7 @@ void main() {
     testWidgets('refuses a model the make already has', (tester) async {
       await _pump(tester, form());
       await tester.enterText(find.byType(TextFormField).at(0), 'passat');
-      await tester.tap(find.text('Save'));
+      await tester.tap(find.text('SAVE'));
       await tester.pump();
       expect(find.text('This model already exists'), findsOneWidget);
     });

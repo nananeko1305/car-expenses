@@ -7,6 +7,7 @@ import '../services/auth_service.dart';
 import '../services/user_repository.dart';
 import '../theme/app_colors.dart';
 import '../widgets/name_fields.dart';
+import '../widgets/skewed.dart';
 
 /// One-time screen shown to the first account while no admin exists:
 /// enter a name and become the admin.
@@ -57,7 +58,7 @@ class _ClaimAdminScreenState extends State<ClaimAdminScreen> {
     final t = AppLocalizations.of(context);
     return Scaffold(
       body: Container(
-        decoration: context.colors.softGradient,
+        color: context.colors.background,
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -86,10 +87,12 @@ class _ClaimAdminScreenState extends State<ClaimAdminScreen> {
                     const SizedBox(height: 24),
                     NameFields(firstName: _firstName, lastName: _lastName),
                     const SizedBox(height: 24),
-                    FilledButton(
+                    SkewSubmit(
+                      label: _busy ? t.wait : t.claimAdmin,
+                      icon: null,
                       onPressed: _busy ? null : _claim,
-                      child: Text(_busy ? t.wait : t.claimAdmin),
                     ),
+                    const SizedBox(height: 4),
                     TextButton(
                       onPressed: AuthService.instance.signOut,
                       child: Text(t.signOut),

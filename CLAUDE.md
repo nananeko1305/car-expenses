@@ -52,12 +52,19 @@ disabled, or the one-time admin claim) → `HomeScreen`. `AuthGate` keys
 | `lib/models/` | Immutable classes with `fromDoc`/`toMap`, and the pure logic: `Report`, `WalletMovement` balances, warranty dates |
 | `lib/money/` | Parsing and formatting of amounts |
 | `lib/services/` | Singleton repositories (`XRepository.instance`), `LiveData`, push, auth, updates, receipts |
-| `lib/screens/` | Full screens; `HomeScreen` is the shell with two tabs and the drawer |
-| `lib/widgets/` | Reusable pieces, dialogs and form fields |
+| `lib/screens/` | Full screens; `HomeScreen` is the shell with four tabs (services, wallet, calendar, and "more" with the rest) |
+| `lib/widgets/` | Reusable pieces, dialogs and form fields; the leaning look lives in `skewed.dart`, `slant_header.dart` and `race_row.dart` |
 | `lib/l10n/` | `app_en.arb` (template) and `app_sr.arb`; the generated Dart is committed |
-| `lib/theme/` | Palettes and `context.colors`; use these, not hard-coded colors |
+| `lib/theme/` | Palettes and `context.colors`; use these, not hard-coded colors. The one typeface, Exo 2, is bundled in `assets/fonts/` |
 | `push_worker/src/` | `index.js` routes and rules, `google.js` Firestore and FCM calls, `message.js` pure text and dates |
 | `android/app/src/main/` | `MainActivity.kt` creates notification channels; `res/values*/strings.xml` holds push titles |
+
+## UI map
+
+`docs/ui/` describes every screen: what it shows, its actions, its dialogs and
+states, and how it is laid out, with the Serbian labels as they appear. When
+planning a change, read the screen's page there instead of its code; start at
+`docs/ui/README.md`. A change to a screen updates its page in the same commit.
 
 ## How the app works
 

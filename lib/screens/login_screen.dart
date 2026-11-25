@@ -4,8 +4,9 @@ import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
 import '../services/auth_service.dart';
 import '../services/saved_emails.dart';
-import '../theme/app_colors.dart';
 import '../widgets/email_autocomplete_field.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 
 /// Email + password sign-in. Accounts are created by the admin only.
 class LoginScreen extends StatefulWidget {
@@ -90,37 +91,39 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     return Scaffold(
-      body: Container(
-        decoration: context.colors.softGradient,
-        child: SafeArea(
-          child: Center(
+      body: Column(
+        children: [
+          SlantHeader(
+            title: t.appTitle,
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    'assets/icon/logo.png',
+                    width: 56,
+                    height: 56,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    t.appTagline,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(28),
+              padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Center(
-                      child: Image.asset(
-                        'assets/icon/logo.png',
-                        width: 112,
-                        height: 112,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      t.appTitle,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(t.appTagline, textAlign: TextAlign.center),
-                    const SizedBox(height: 36),
-                    Text(t.loginSubtitle, textAlign: TextAlign.center),
+                    Text(t.loginSubtitle),
                     const SizedBox(height: 16),
                     EmailAutocompleteField(
                       controller: _email,
@@ -152,10 +155,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           (v == null || v.length < 6) ? t.minChars6 : null,
                     ),
                     const SizedBox(height: 24),
-                    FilledButton(
+                    SkewSubmit(
+                      label: _busy ? t.wait : t.signIn,
+                      icon: null,
                       onPressed: _busy ? null : _submit,
-                      child: Text(_busy ? t.wait : t.signIn),
                     ),
+                    const SizedBox(height: 4),
                     TextButton(
                       onPressed: _busy ? null : _resetPassword,
                       child: Text(t.forgotPassword),
@@ -165,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

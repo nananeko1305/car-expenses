@@ -18,6 +18,8 @@ import '../widgets/money_fields.dart';
 import '../widgets/option_sheet.dart';
 import '../widgets/picker_field.dart';
 import '../widgets/shortfall_dialog.dart';
+import '../widgets/skewed.dart';
+import '../widgets/slant_header.dart';
 import '../widgets/spending_tool_section.dart';
 import 'tool_form_screen.dart';
 
@@ -178,8 +180,8 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
         : (_spending ? t.newWithdrawal : t.newDeposit);
     final locale = Localizations.localeOf(context).toLanguageTag();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+      appBar: SlantAppBar(
+        title: title,
         actions: [
           if (_old != null && _canEdit)
             IconButton(
@@ -270,7 +272,7 @@ class _WalletEntryScreenState extends State<WalletEntryScreen> {
             ),
             if (_canEdit) ...[
               const SizedBox(height: 24),
-              FilledButton(onPressed: _save, child: Text(t.save)),
+              SkewSubmit(label: t.save, onPressed: _save),
             ],
           ],
         ),

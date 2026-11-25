@@ -8,7 +8,8 @@ import '../theme/app_colors.dart';
 /// A label with its amounts on the right, one line per currency.
 /// [sign] goes before every amount but a zero. [minor] is a detail of
 /// the row above; [strong] is the bottom line, shown in red where it
-/// went negative.
+/// went negative; the accent is not used for it, since a red accent
+/// would make a good month look like a loss.
 class MoneyRow extends StatelessWidget {
   const MoneyRow({
     super.key,
@@ -18,8 +19,6 @@ class MoneyRow extends StatelessWidget {
     this.minor = false,
     this.strong = false,
   });
-
-  static const _red = Color(0xFFD94E4E);
 
   final String label;
   final Amounts sums;
@@ -65,8 +64,7 @@ class MoneyRow extends StatelessWidget {
                       fontWeight: weight,
                       color: switch (shown[c]!) {
                         _ when minor => muted,
-                        < 0 when strong => _red,
-                        _ when strong => context.colors.primary,
+                        < 0 when strong => context.colors.moneyOut,
                         _ => ink,
                       },
                     ),

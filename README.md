@@ -15,7 +15,7 @@ There is no public registration and no emails are sent to new users.
 2. Create the first account in the console (Authentication → Users → Add user).
 3. Sign in with it in the app, enter first/last name and tap **Become admin**.
    This works exactly once; the `meta/admin` document then locks the role.
-4. The admin adds more users from the app (menu → Users → Add user: name,
+4. The admin adds more users from the app (More → Users → Add user: name,
    email, initial password) and can disable / re-enable them. A disabled
    user loses all data access.
 
@@ -56,23 +56,23 @@ auto, which follows the phone and is where a new install starts.
   (`--dart-define=CLOUDINARY_CLOUD=…`, `--dart-define=CLOUDINARY_PRESET=…`,
   set as repository secrets); a build without them simply hides the receipt
   controls.
-- **Calendar** (menu): free text booked for a day, such as "Opel Astra,
+- **Calendar** (its own tab): free text booked for a day, such as "Opel Astra,
   Mika, 10h". Everyone sees every booking; like services, only its author
   or the admin may change or delete one.
-- **Tutorials** (menu) are the workshop's shared knowledge: makes, their
+- **Tutorials** (under More) are the workshop's shared knowledge: makes, their
   models, and for each model links for working on it (a title and an
   address) and notes with who wrote them and when. A note may say which year
   and engine it is about. Like tools, anyone may add, correct or delete any
   of it; who added it stays on record. A make with models cannot be deleted;
   deleting a model takes its links and notes with it.
-- **To buy** (menu) is the workshop's list of what still has to be bought:
+- **To buy** (under More) is the workshop's list of what still has to be bought:
   what it is, an optional note, and how urgent it is (urgent, medium or not
   urgent). Every item carries its priority as a colored label: red, yellow
   or green. The list shows the urgent on top, and within a priority whatever
   has waited longest. Like tutorials, anyone may add, correct or delete an
   item, since whoever buys a thing takes it off the list; who added it stays
   on record.
-- **Monthly report** (menu, or the card on Services) covers one month or
+- **Monthly report** (under More, or from the header of Services) covers one month or
   all time: what services earned (every service, whether or not its money
   went into the wallet), how many cars and services there were, other
   income (wallet deposits), costs (wallet spending plus tools paid outside

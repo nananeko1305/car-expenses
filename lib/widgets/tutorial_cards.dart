@@ -5,8 +5,11 @@ import '../l10n/app_localizations.dart';
 import '../l10n/error_text.dart';
 import '../models/tutorial_entry.dart';
 import '../theme/app_colors.dart';
+import 'race_row.dart';
+import 'skewed.dart';
 
-/// A make or a model in a list: its name, what it holds, and a chevron.
+/// A make or a model as a row of a list: its name, what it holds, and a
+/// chevron.
 class TutorialTile extends StatelessWidget {
   const TutorialTile({
     super.key,
@@ -22,25 +25,19 @@ class TutorialTile extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        leading: CircleAvatar(
-          backgroundColor: context.colors.soft,
-          foregroundColor: context.colors.primary,
-          child: Icon(icon),
-        ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right_rounded),
-        onTap: onTap,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => RaceRow(
+    leading: SkewIcon(icon),
+    title: title,
+    subtitle: subtitle,
+    trailing: Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Icon(Icons.chevron_right_rounded, color: context.colors.muted),
+    ),
+    onTap: onTap,
+  );
 }
 
-/// One link: tapping opens it, the pencil edits it.
+/// One link as a row: tapping opens it, the pencil edits it.
 class TutorialLinkCard extends StatelessWidget {
   const TutorialLinkCard({
     super.key,
@@ -56,38 +53,26 @@ class TutorialLinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        onTap: onOpen,
-        contentPadding: const EdgeInsets.fromLTRB(16, 4, 4, 4),
-        leading: CircleAvatar(
-          backgroundColor: context.colors.soft,
-          foregroundColor: context.colors.primary,
-          child: Icon(
-            link.isVideo ? Icons.play_arrow_rounded : Icons.link_rounded,
-          ),
-        ),
-        title: Text(
-          link.label,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.w700),
-        ),
-        subtitle: Text(link.host, maxLines: 1, overflow: TextOverflow.ellipsis),
-        trailing: IconButton(
-          tooltip: t.edit,
-          icon: const Icon(Icons.edit_rounded),
-          onPressed: onEdit,
-        ),
+    return RaceRow(
+      leading: SkewIcon(
+        link.isVideo ? Icons.play_arrow_rounded : Icons.link_rounded,
+        color: context.colors.accentText,
       ),
+      title: link.label,
+      titleMaxLines: 2,
+      subtitle: link.host,
+      trailing: IconButton(
+        tooltip: t.edit,
+        icon: const Icon(Icons.edit_rounded),
+        onPressed: onEdit,
+      ),
+      onTap: onOpen,
     );
   }
 }
 
-/// One note: which year and engine it is about, its text, then who wrote it
-/// and when.
-/// Tapping edits it.
+/// One note as a row: which year and engine it is about, its text, then
+/// who wrote it and when. Tapping edits it.
 class TutorialNoteCard extends StatelessWidget {
   const TutorialNoteCard({
     super.key,
@@ -102,59 +87,65 @@ class TutorialNoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = context.colors;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final date = DateFormat.yMMMd(locale)
         .format(note.createdAt ?? DateTime.now());
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (note.details.isNotEmpty) ...[
-                Text(
-                  note.details,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                    color: context.colors.primary,
-                  ),
-                ),
-                const SizedBox(height: 6),
-              ],
-              Text(note.text, style: const TextStyle(fontSize: 15)),
-              const SizedBox(height: 8),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: c.line)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (note.details.isNotEmpty) ...[
               Text(
-                '$authorName · $date',
+                note.details,
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: context.colors.ink.withValues(alpha: 0.65),
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  color: c.accentText,
                 ),
               ),
+              const SizedBox(height: 4),
             ],
-          ),
+            Text(note.text, style: const TextStyle(fontSize: 15)),
+            const SizedBox(height: 6),
+            Text(
+              '$authorName · $date',
+              style: TextStyle(fontSize: 13, color: c.muted),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// A list's heading, such as "Links" or "Notes".
+/// A list's heading, such as "Links" or "Notes", in leaning capitals.
 class SectionTitle extends StatelessWidget {
-  const SectionTitle(this.text, {super.key});
+  const SectionTitle(this.text, {super.key, this.inset = 16});
 
   final String text;
 
+  /// The space at its sides: none inside a form, which has its own.
+  final double inset;
+
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(4, 16, 4, 8),
+    padding: EdgeInsets.fromLTRB(inset, 18, inset, 6),
     child: Text(
-      text,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+      text.toUpperCase(),
+      style: const TextStyle(
+        fontSize: 16,
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.w800,
+      ),
     ),
   );
 }

@@ -109,7 +109,7 @@ void main() {
         ],
       ),
     );
-    expect(find.text('October 2026'), findsOneWidget);
+    expect(find.text('OCTOBER 2026'), findsOneWidget);
     expect(find.textContaining('-'), findsOneWidget); // negative net, RSD
 
     await tester.tap(find.byTooltip('Next month'));
