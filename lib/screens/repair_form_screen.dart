@@ -168,7 +168,6 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
                       helperText: t.mileageOptional,
                       helperMaxLines: 2,
                       prefixIcon: const Icon(Icons.speed_rounded),
-                      suffixText: 'km',
                     ),
                     validator: (v) {
                       final s = v?.trim() ?? '';

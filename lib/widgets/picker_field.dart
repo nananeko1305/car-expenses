@@ -42,7 +42,7 @@ class PickerField extends StatelessWidget {
       if (o.id == value) selected = o;
     }
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(8),
       onTap: enabled ? () => _open(context) : null,
       child: InputDecorator(
         isEmpty: selected == null,

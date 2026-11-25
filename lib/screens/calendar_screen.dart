@@ -13,7 +13,6 @@ import '../widgets/month_grid.dart';
 import '../widgets/month_switcher.dart';
 import '../widgets/skewed.dart';
 import '../widgets/slant_header.dart';
-import '../widgets/sync_banner.dart';
 
 /// The workshop's calendar: a month at a time, and what is booked for the
 /// chosen day. Everyone sees every booking. Stays live while open.
@@ -60,7 +59,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       body: Column(
         children: [
-          const SyncBanner(),
           Expanded(
             child: ListenableBuilder(
               listenable: widget.data,
