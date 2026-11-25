@@ -24,7 +24,10 @@ Users change their own name and password in Settings.
 ## How data is shared
 
 - **Services and cars are shared**: everyone sees everything. Only the
-  author of a record (or the admin) can edit or delete it.
+  author of a record (or the admin) can edit or delete it. A service can
+  be marked **no charge**, for work nobody pays for, such as the
+  mechanic's own car: it asks for no amount, counts as a service and a car
+  in the report, earns nothing and never reaches the wallet.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
   add funds or record spending (amount, what for, date, who). Spending can
@@ -83,7 +86,7 @@ Users change their own name and password in Settings.
 |----------------------|---------------------------------------------------------------------|
 | `users/{uid}`        | `email`, `firstName`, `lastName`, `role` (`admin`/`user`), `disabled` |
 | `vehicles/{id}`      | `ownerId` (author), `name`, `plate`, `vin` (chassis number, optional) |
-| `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
+| `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor` (0 = no charge), `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
 | `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`, `announced` (false until the push went out; absent on older bookings) |

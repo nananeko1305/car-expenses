@@ -54,6 +54,14 @@ void main() {
     });
   });
 
+  test('a service with no charge never reaches the wallet', () {
+    final free = _repair(0);
+    expect(free.free, isTrue);
+    expect(_repair(1).free, isFalse);
+    // Even if it was saved as going to the wallet: no money moved.
+    expect(WalletMovement.merge([free, _repair(700)], const []), hasLength(1));
+  });
+
   test('what came in and what went out are summed apart, per currency', () {
     final m = WalletMovement.merge(
       [_repair(10000), _repair(2000, c: Currency.eur)],

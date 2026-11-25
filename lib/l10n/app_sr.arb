@@ -103,6 +103,8 @@
   "allPeople": "Svi",
   "enteredBy": "Uneo/la: {name}",
   "readOnlyNotice": "Ovo mogu da menjaju samo {name} ili admin.",
+  "noCharge": "Bez naplate",
+  "noChargeHint": "Radim sebi ili besplatno.",
   "wallet": "Kasa",
   "balance": "Stanje",
   "addFunds": "Dodaj sredstva",

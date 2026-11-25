@@ -41,6 +41,10 @@ class Repair {
   /// Whether the amount went into the shared wallet.
   final bool toWallet;
 
+  /// Nobody was charged, as for work on the mechanic's own car: there is
+  /// no amount, so nothing is earned and nothing reaches the wallet.
+  bool get free => amountMinor == 0;
+
   factory Repair.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data() ?? const {};
     return Repair(

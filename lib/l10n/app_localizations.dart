@@ -674,6 +674,18 @@ abstract class AppLocalizations {
   /// **'Only {name} or the admin can change this.'**
   String readOnlyNotice(String name);
 
+  /// No description provided for @noCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'No charge'**
+  String get noCharge;
+
+  /// No description provided for @noChargeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'My own car, or done for free.'**
+  String get noChargeHint;
+
   /// No description provided for @wallet.
   ///
   /// In en, this message translates to:

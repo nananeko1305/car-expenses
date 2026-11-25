@@ -102,14 +102,15 @@ class WalletMovement {
   final Repair? repair;
   final WalletEntry? entry;
 
-  /// Merges service income and manual entries, newest first.
+  /// Merges service income and manual entries, newest first. A service
+  /// nobody was charged for moved no money, so it is left out.
   static List<WalletMovement> merge(
     List<Repair> repairs,
     List<WalletEntry> entries,
   ) {
     final list = [
       for (final r in repairs)
-        if (r.toWallet) WalletMovement.fromRepair(r),
+        if (r.toWallet && !r.free) WalletMovement.fromRepair(r),
       for (final e in entries) WalletMovement.fromEntry(e),
     ]..sort((a, b) => b.date.compareTo(a.date));
     return list;

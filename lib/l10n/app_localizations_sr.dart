@@ -313,6 +313,12 @@ class AppLocalizationsSr extends AppLocalizations {
   }
 
   @override
+  @override
+  String get noCharge => 'Bez naplate';
+
+  @override
+  String get noChargeHint => 'Radim sebi ili besplatno.';
+
   String readOnlyNotice(String name) {
     return 'Ovo mogu da menjaju samo $name ili admin.';
   }

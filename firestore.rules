@@ -105,7 +105,11 @@ service cloud.firestore {
         let d = request.resource.data;
         return d.vehicleId is string
           && exists(/databases/$(database)/documents/vehicles/$(d.vehicleId))
-          && validMoney(d)
+          // Unlike wallet entries, a service may cost nothing: work on
+          // one's own car is recorded with no charge.
+          && d.amountMinor is int && d.amountMinor >= 0
+          && d.currency in ['RSD', 'EUR']
+          && d.date is timestamp
           && d.description is string && d.description.size() > 0
           && d.description.size() <= 2000
           && (d.mileage == null || (d.mileage is int && d.mileage >= 0))

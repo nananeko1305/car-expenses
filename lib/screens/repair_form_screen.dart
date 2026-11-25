@@ -9,12 +9,13 @@ import '../services/live_data.dart';
 import '../services/repair_repository.dart';
 import '../widgets/confirm_delete.dart';
 import '../widgets/date_field.dart';
-import '../widgets/money_fields.dart';
 import '../widgets/option_sheet.dart';
 import '../widgets/picker_field.dart';
+import '../widgets/repair_price_fields.dart';
 
 /// Create or edit a service. Anyone can view one; only its author or
-/// the admin can change or delete it.
+/// the admin can change or delete it. A service may be marked "no
+/// charge", which asks for no amount and keeps it out of the wallet.
 class RepairFormScreen extends StatefulWidget {
   const RepairFormScreen({
     super.key,
@@ -41,9 +42,12 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
   late String _vehicleId = _initialVehicle();
   late DateTime _date = _old?.date ?? DateUtils.dateOnly(DateTime.now());
   late Currency _currency = _old?.currency ?? Currency.rsd;
-  late bool _toWallet = _old?.toWallet ?? true;
+  late bool _free = _old?.free ?? false;
+  // A free service has no amount and never went to the wallet, so if it
+  // gets a price after all, both start as on a new service.
+  late bool _toWallet = _old == null || _old.free || _old.toWallet;
   late final _amount = TextEditingController(
-    text: _old == null ? '' : moneyToInput(_old.amountMinor),
+    text: _old == null || _old.free ? '' : moneyToInput(_old.amountMinor),
   );
   late final _mileage = TextEditingController(
     text: _old?.mileage?.toString() ?? '',
@@ -77,11 +81,12 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
       ownerId: _old?.ownerId ?? widget.profile.uid,
       vehicleId: _vehicleId,
       date: _date,
-      amountMinor: parseMoney(_amount.text)!,
-      currency: _currency,
+      amountMinor: _free ? 0 : parseMoney(_amount.text)!,
+      // Nothing was paid, so there is no currency to speak of either.
+      currency: _free ? Currency.rsd : _currency,
       description: _description.text.trim(),
       mileage: mileage.isEmpty ? null : int.parse(mileage),
-      toWallet: _toWallet,
+      toWallet: !_free && _toWallet,
     );
     saveInBackground(context, () => RepairRepository.instance.save(repair));
     Navigator.of(context).pop();
@@ -144,7 +149,9 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
               onChanged: (d) => setState(() => _date = d),
             ),
             const SizedBox(height: 14),
-            MoneyFields(
+            RepairPriceFields(
+              free: _free,
+              onFree: (v) => setState(() => _free = v),
               amount: _amount,
               currency: _currency,
               enabled: _canEdit,
@@ -182,15 +189,19 @@ class _RepairFormScreenState extends State<RepairFormScreen> {
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? t.required : null,
             ),
-            const SizedBox(height: 8),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              secondary: const Icon(Icons.account_balance_wallet_rounded),
-              title: Text(t.addToWallet),
-              subtitle: Text(t.addToWalletHint),
-              value: _toWallet,
-              onChanged: _canEdit ? (v) => setState(() => _toWallet = v) : null,
-            ),
+            if (!_free) ...[
+              const SizedBox(height: 8),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                secondary: const Icon(Icons.account_balance_wallet_rounded),
+                title: Text(t.addToWallet),
+                subtitle: Text(t.addToWalletHint),
+                value: _toWallet,
+                onChanged: _canEdit
+                    ? (v) => setState(() => _toWallet = v)
+                    : null,
+              ),
+            ],
             if (_canEdit) ...[
               const SizedBox(height: 16),
               FilledButton(onPressed: _save, child: Text(t.save)),

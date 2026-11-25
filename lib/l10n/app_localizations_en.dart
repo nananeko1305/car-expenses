@@ -313,6 +313,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  @override
+  String get noCharge => 'No charge';
+
+  @override
+  String get noChargeHint => 'My own car, or done for free.';
+
   String readOnlyNotice(String name) {
     return 'Only $name or the admin can change this.';
   }

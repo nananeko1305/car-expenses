@@ -90,6 +90,28 @@ void main() {
     expect(r.earned, {Currency.rsd: 100, Currency.eur: 50});
   });
 
+  test('a service with no charge is work done that earns nothing', () {
+    final r = Report.of(
+      month: _oct,
+      repairs: [
+        _repair(5000, DateTime(2026, 10, 3)),
+        _repair(0, DateTime(2026, 10, 4), vehicleId: 'own'),
+        // However it was stored, it must not bring in a line of euros.
+        _repair(0, DateTime(2026, 10, 5), vehicleId: 'own', c: Currency.eur),
+      ],
+    );
+    expect(r.services, 3);
+    expect(r.cars, 2);
+    expect(r.earned, {Currency.rsd: 5000});
+
+    final onlyFree = Report.of(
+      month: _oct,
+      repairs: [_repair(0, DateTime(2026, 10, 4))],
+    );
+    expect(onlyFree.services, 1);
+    expect(onlyFree.earned, isEmpty);
+  });
+
   test('deposits are other income, spending is costs, net is the rest', () {
     final r = Report.of(
       month: _oct,
