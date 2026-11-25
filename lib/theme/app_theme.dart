@@ -10,11 +10,13 @@ import 'theme_controller.dart';
 /// ([AppColors]), never from static getters, so they repaint when the
 /// mode or palette changes.
 class AppTheme {
-  static bool get _dark => themeController.isDark;
   static AppPalette get _p => themeController.current;
 
-  /// Theme for the current palette + mode (used by MaterialApp).
-  static ThemeData get current => build(_p, _dark);
+  /// The current palette as a light and as a dark theme. MaterialApp
+  /// takes both and picks by [ThemeController.mode], which may leave the
+  /// choice to the phone.
+  static ThemeData get light => build(_p, false);
+  static ThemeData get dark => build(_p, true);
 
   static ThemeData build(AppPalette p, bool dark) {
     final scheme = ColorScheme.fromSeed(

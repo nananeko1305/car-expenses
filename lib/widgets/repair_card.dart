@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/repair.dart';
 import '../models/vehicle.dart';
 import '../money/money.dart';
 import '../theme/app_colors.dart';
 
-/// One service in the list: date, car, author, description and amount.
+/// One service in the list: date, car, author, description and amount,
+/// or "no charge" where nobody paid.
 class RepairCard extends StatelessWidget {
   const RepairCard({
     super.key,
@@ -93,11 +95,15 @@ class RepairCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                formatMoney(repair.amountMinor, repair.currency, locale),
+                repair.free
+                    ? AppLocalizations.of(context).noCharge
+                    : formatMoney(repair.amountMinor, repair.currency, locale),
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
-                  color: context.colors.primary,
+                  color: repair.free
+                      ? context.colors.ink.withValues(alpha: 0.6)
+                      : context.colors.primary,
                 ),
               ),
             ],

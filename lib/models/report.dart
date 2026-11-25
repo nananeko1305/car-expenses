@@ -60,7 +60,8 @@ class Report {
       if (!within(r.date)) continue;
       services++;
       cars.add(r.vehicleId);
-      _add(earned, r.currency, r.amountMinor);
+      // A service with no charge counts as work done, but earns nothing.
+      if (!r.free) _add(earned, r.currency, r.amountMinor);
     }
 
     final otherIncome = <Currency, int>{};

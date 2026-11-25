@@ -23,7 +23,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  APK_NAME: car-expenses.apk
   PAGES_ARTIFACT: github-pages-${{ github.run_attempt }}
 
 jobs:
@@ -45,10 +44,14 @@ jobs:
         run: |
           TAG=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName)
           PUBLISHED=$(gh release view --repo "$GITHUB_REPOSITORY" --json publishedAt -q .publishedAt)
+          # The release's versioned APK (car-expenses_1.12.3.apk); a release
+          # from before that naming has only car-expenses.apk.
+          APK_URL=$(gh release view --repo "$GITHUB_REPOSITORY" --json assets -q \
+            '([.assets[] | select(.name | test("_[0-9.]+\\.apk$"))] + [.assets[] | select(.name | endswith(".apk"))])[0].url')
           pip install --quiet qrcode
           VERSION="${TAG#v}" \
           DATE="$(date -u -d "$PUBLISHED" +%Y-%m-%d)" \
-          DOWNLOAD_URL="https://github.com/$GITHUB_REPOSITORY/releases/latest/download/$APK_NAME" \
+          DOWNLOAD_URL="$APK_URL" \
             bash .github/pages/build.sh
           curl -fsS "${{ steps.pages.outputs.base_url }}/version.json" -o _site/version.json
 

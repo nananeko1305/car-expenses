@@ -35,14 +35,19 @@ class CarExpensesApp extends StatelessWidget {
         return MaterialApp(
           onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.current,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: themeController.mode,
           locale: localeController.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           // Screens without an AppBar (login, admin claim, notices) get the
-          // right status-bar icon color from here.
+          // right status-bar icon color from here. The theme in effect says
+          // whether it is dark, since the mode may leave that to the phone.
           builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
-            value: AppTheme.overlayStyle(themeController.isDark),
+            value: AppTheme.overlayStyle(
+              Theme.of(context).brightness == Brightness.dark,
+            ),
             child: child!,
           ),
           home: const AuthGate(),

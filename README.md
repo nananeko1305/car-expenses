@@ -19,12 +19,17 @@ There is no public registration and no emails are sent to new users.
    email, initial password) and can disable / re-enable them. A disabled
    user loses all data access.
 
-Users change their own name and password in Settings.
+Users change their own name and password in Settings. The language, the
+color and the theme are kept on each phone; the theme is light, dark, or
+auto, which follows the phone and is where a new install starts.
 
 ## How data is shared
 
 - **Services and cars are shared**: everyone sees everything. Only the
-  author of a record (or the admin) can edit or delete it.
+  author of a record (or the admin) can edit or delete it. A service can
+  be marked **no charge**, for work nobody pays for, such as the
+  mechanic's own car: it asks for no amount, counts as a service and a car
+  in the report, earns nothing and never reaches the wallet.
 - **Wallet**: a shared cash box with a balance per currency (RSD, EUR).
   Every service with "Add amount to wallet" on counts as income. Anyone can
   add funds or record spending (amount, what for, date, who). Spending can
@@ -83,7 +88,7 @@ Users change their own name and password in Settings.
 |----------------------|---------------------------------------------------------------------|
 | `users/{uid}`        | `email`, `firstName`, `lastName`, `role` (`admin`/`user`), `disabled` |
 | `vehicles/{id}`      | `ownerId` (author), `name`, `plate`, `vin` (chassis number, optional) |
-| `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor`, `currency`, `mileage`, `description`, `toWallet` |
+| `repairs/{id}`       | `ownerId` (author), `vehicleId`, `date`, `amountMinor` (0 = no charge), `currency`, `mileage`, `description`, `toWallet` |
 | `walletEntries/{id}` | `type` (`deposit`/`withdrawal`), `amountMinor`, `currency`, `description`, `date`, `userId` (who), `createdBy` (author) |
 | `tools/{id}`         | `ownerId` (author), `name`, `purchaseDate`, `warrantyAmount`, `warrantyUnit` (`months`/`years`), `warrantyEndsAt`, `amountMinor`, `currency`, `entryId`, `receiptUrl`, `notify`, `archived` |
 | `appointments/{id}`  | `ownerId` (author), `date` (midnight of the day), `text`, `announced` (false until the push went out; absent on older bookings) |
@@ -165,6 +170,10 @@ GitHub Release → download page and `version.json` on GitHub Pages
 (<https://nananeko1305.github.io/car-expenses/>). The page has the download
 button, a Share button and a QR code; the apps already installed find new
 versions through `version.json`, so it has to keep being published.
+The APK is named after its version, such as `car-expenses_1.12.3.apk`, and
+the page and `version.json` link to that file. A copy under the old fixed
+name, `car-expenses.apk`, stays on every release, so links and QR codes
+handed out before keep downloading the newest one.
 Day-to-day work goes to `dev`; merge into `main` to ship. A merge that only
 changes the page (`.github/pages/`) does not release: `pages.yml` redeploys
 the page for the current APK.
