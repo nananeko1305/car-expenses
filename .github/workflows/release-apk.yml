@@ -25,7 +25,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  APK_NAME: car-expenses.apk
+  # The APK is named after its version: car-expenses_1.12.3.apk. A copy
+  # under the old fixed name, car-expenses.apk, stays on every release, so
+  # links and QR codes handed out before keep downloading the newest one
+  # (releases/latest/download/car-expenses.apk).
+  APK_BASE: car-expenses
   FLUTTER_VERSION: 3.47.3
 
 jobs:
@@ -34,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.ver.outputs.version }}
+      apk: ${{ steps.apk.outputs.name }}
       sha256: ${{ steps.sum.outputs.sha256 }}
     steps:
       # Full history: the release version is derived from the commits
@@ -136,6 +141,10 @@ jobs:
           print('version=' + '.'.join(str(n) for n in max(nxt, manual)))
           PY
 
+      - name: Name the APK
+        id: apk
+        run: echo "name=${APK_BASE}_${{ steps.ver.outputs.version }}.apk" >> "$GITHUB_OUTPUT"
+
       # The Cloudinary cloud and preset are build inputs, not source: the
       # repository is public and they are enough to upload into the
       # account. Without them the receipt controls stay hidden.
@@ -159,13 +168,15 @@ jobs:
           done
 
       - name: Rename APK
-        run: cp build/app/outputs/flutter-apk/app-release.apk "${{ env.APK_NAME }}"
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk "${{ steps.apk.outputs.name }}"
+          cp build/app/outputs/flutter-apk/app-release.apk "${APK_BASE}.apk"
 
       - name: Checksum
         id: sum
         run: |
-          HASH=$(sha256sum "${{ env.APK_NAME }}" | awk '{print $1}')
-          echo "$HASH  ${{ env.APK_NAME }}" > "${{ env.APK_NAME }}.sha256"
+          HASH=$(sha256sum "${{ steps.apk.outputs.name }}" | awk '{print $1}')
+          echo "$HASH  ${{ steps.apk.outputs.name }}" > "${{ steps.apk.outputs.name }}.sha256"
           echo "sha256=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Bundle debug symbols
@@ -177,8 +188,9 @@ jobs:
           tag_name: v${{ steps.ver.outputs.version }}
           name: Car Expenses ${{ steps.ver.outputs.version }}
           files: |
-            ${{ env.APK_NAME }}
-            ${{ env.APK_NAME }}.sha256
+            ${{ steps.apk.outputs.name }}
+            ${{ steps.apk.outputs.name }}.sha256
+            ${{ env.APK_BASE }}.apk
             debug-symbols.zip
           make_latest: true
           body: |
@@ -188,8 +200,9 @@ jobs:
             - Android version code: ${{ github.run_number }}
             - SHA-256: `${{ steps.sum.outputs.sha256 }}`
 
-            Download `${{ env.APK_NAME }}` below and install it on Android (allow
-            installation from unknown sources).
+            Download `${{ steps.apk.outputs.name }}` below and install it on
+            Android (allow installation from unknown sources).
+            `${{ env.APK_BASE }}.apk` is the same file, for links from before.
 
   # Every release redeploys GitHub Pages:
   # - the download page (button, Share, QR for the newest APK) from
@@ -215,7 +228,8 @@ jobs:
         env:
           VERSION: ${{ needs.build.outputs.version }}
         run: |
-          DL="https://github.com/${{ github.repository }}/releases/latest/download/${{ env.APK_NAME }}"
+          # This release's own file, so the download carries its version.
+          DL="https://github.com/${{ github.repository }}/releases/download/v$VERSION/${{ needs.build.outputs.apk }}"
           pip install --quiet qrcode
           DOWNLOAD_URL="$DL" DATE="$(date -u +%Y-%m-%d)" \
             bash .github/pages/build.sh

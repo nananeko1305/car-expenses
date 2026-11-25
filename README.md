@@ -170,6 +170,10 @@ changes the page (`.github/pages/`) does not release: `pages.yml` redeploys
 the page for the current APK.
 
 Versions are `major.minor.patch`, worked out in CI from the commit messages
+The APK is named after its version, such as `car-expenses_1.12.3.apk`, and
+the page and `version.json` link to that file. A copy under the old fixed
+name, `car-expenses.apk`, stays on every release, so links and QR codes
+handed out before keep downloading the newest one.
 since the last tag: a `feat` bumps the minor, anything else the patch, and a
 breaking change the major. The version in `pubspec.yaml` is a floor — raise
 it by hand to force a bigger number, such as a deliberate 2.0.0. Android's
