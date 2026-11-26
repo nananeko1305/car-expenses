@@ -40,8 +40,7 @@ Sign in with the email and password the admin handed out.
 
 1. **Header**, the accent block, with no back arrow:
    - "Troškovi automobila" as the title (shown in capitals);
-   - under it the app logo and beside it "Svaki servis i svaki dinar, na
-     jednom mestu".
+   - under it "Svaki servis i svaki dinar, na jednom mestu".
 2. "Koristi nalog koji ti je napravio admin."
 3. **"Email"**, with an @ icon. Emails used before are offered under it.
    Error: "Unesi ispravan email".
@@ -51,9 +50,6 @@ Sign in with the email and password the admin handed out.
 6. A text button **"Zaboravljena lozinka?"**.
 
 ![Login, light](../img/v2_prijava.png)
-
-In the picture the place of the logo, left of the tagline, is empty: tests do
-not draw it.
 
 ### Actions
 
@@ -74,8 +70,7 @@ onemogućen." and "Nema internet konekcije."
 ### Layout today
 
 - From the top: the header, then the form, which scrolls.
-- Header: the title bar, then a row with the logo 56×56 (radius 10); 12; the
-  tagline in w600, in `onPrimary`.
+- Header: the title bar, then the tagline in w600, in `onPrimary`.
 - Form: padding 24, 12, 24, 24, items stretched to full width. The hint; 16;
   the email; 14; the password; 24; the button; 4; the text button.
 - "Prijavi se" is the leaning button, 52 high, label 18, without an icon,
