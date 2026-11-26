@@ -6,8 +6,11 @@ import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 import 'l10n/locale_controller.dart';
+import 'classic/screens/auth_gate.dart' as classic;
+import 'classic/theme/app_theme.dart' as classic;
 import 'screens/auth_gate.dart';
 import 'services/euro_visibility.dart';
+import 'services/ui_choice.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_controller.dart';
 
@@ -20,6 +23,7 @@ Future<void> main() async {
   await themeController.load();
   await localeController.load();
   await euroVisibility.load();
+  await uiChoice.load();
   runApp(const CarExpensesApp());
 }
 
@@ -42,20 +46,39 @@ Locale? _latin(Locale? locale) => switch (locale?.languageCode) {
   _ => null,
 };
 
+/// The first screen, in whichever of the two interfaces this phone
+/// shows. The two gates are the same logic over their own screens, and
+/// swapping one for the other draws the whole app again.
+class _Root extends StatelessWidget {
+  const _Root();
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: uiChoice,
+    builder: (context, _) =>
+        uiChoice.isClassic ? const classic.AuthGate() : const AuthGate(),
+  );
+}
+
 class CarExpensesApp extends StatelessWidget {
   const CarExpensesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Rebuild the whole app when the theme or the language changes.
+    // Rebuild the whole app when the theme, the language or the choice
+    // of interface changes.
     return AnimatedBuilder(
-      animation: Listenable.merge([themeController, localeController]),
+      animation: Listenable.merge([
+        themeController,
+        localeController,
+        uiChoice,
+      ]),
       builder: (context, _) {
         return MaterialApp(
           onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
+          theme: uiChoice.isClassic ? classic.AppTheme.light : AppTheme.light,
+          darkTheme: uiChoice.isClassic ? classic.AppTheme.dark : AppTheme.dark,
           themeMode: themeController.mode,
           locale: _latin(localeController.locale),
           localeResolutionCallback: (phone, _) =>
@@ -71,7 +94,7 @@ class CarExpensesApp extends StatelessWidget {
             ),
             child: child!,
           ),
-          home: const AuthGate(),
+          home: const _Root(),
         );
       },
     );

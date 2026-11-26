@@ -283,6 +283,18 @@ class AppLocalizationsSr extends AppLocalizations {
   String get themeAutoHint => 'Auto prati temu telefona.';
 
   @override
+  String get uiStyle => 'Izgled';
+
+  @override
+  String get uiStyleNew => 'Novi';
+
+  @override
+  String get uiStyleClassic => 'Stari';
+
+  @override
+  String get uiStyleHint => 'Posle izbora se vraćaš na početni ekran.';
+
+  @override
   String get colorBlue => 'Plava';
 
   @override

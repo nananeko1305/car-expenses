@@ -95,24 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           SlantHeader(
             title: t.appTitle,
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/icon/logo.png',
-                    width: 56,
-                    height: 56,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    t.appTagline,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
+            child: Text(
+              t.appTagline,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           Expanded(

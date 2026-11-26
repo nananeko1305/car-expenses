@@ -14,6 +14,8 @@ import '../widgets/skewed.dart';
 import '../widgets/slant_header.dart';
 import '../widgets/theme_mode_picker.dart';
 import '../widgets/update_tiles.dart';
+import '../services/ui_choice.dart';
+import '../widgets/ui_style_picker.dart';
 
 /// Profile (name, password) plus language, color and light or dark
 /// (or whichever the phone is in). The look-and-feel settings are stored
@@ -72,6 +74,17 @@ class SettingsScreen extends StatelessWidget {
               ThemeModePicker(
                 value: themeController.mode,
                 onChanged: themeController.setMode,
+              ),
+              const SizedBox(height: 16),
+              _header(t.uiStyle),
+              UiStylePicker(
+                value: uiChoice.style,
+                onChanged: (style) {
+                  // The whole app is drawn again in the other interface,
+                  // so this screen cannot stay open over it.
+                  Navigator.of(context).popUntil((r) => r.isFirst);
+                  uiChoice.set(style);
+                },
               ),
               const SizedBox(height: 16),
               const UpdateTiles(),

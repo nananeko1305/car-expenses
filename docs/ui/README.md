@@ -4,6 +4,10 @@ What every screen of the app shows, what can be done on it, which dialogs it
 opens, which states it has, and how it is laid out. Read the page of a screen
 before changing it, instead of re-reading its code.
 
+The app has two interfaces, and a phone shows the one chosen in Settings.
+These pages describe the new one. The classic one, and the rule that a change
+to what a screen does goes into both, are in [classic.md](classic.md).
+
 Labels are quoted in Serbian, exactly as in `lib/l10n/app_sr.arb`, because that
 is what gets searched for. The English text of a label is in `app_en.arb` under
 the same key. Some labels are drawn in capitals (header titles, leaning
@@ -133,9 +137,8 @@ flutter test test/shots/more_screens.dart --update-goldens --dart-define=OUT=$PW
 How the pictures differ from a phone:
 
 - **Shadows show as dark outlines.** The floating buttons have a thick dark
-  line around them; on a phone it is a soft shadow.
-- **The logo is missing.** Its place is empty on the login screen.
-- Both are how Flutter draws in tests, not how the app looks.
+  line around them; on a phone it is a soft shadow. That is how Flutter
+  draws in tests, not how the app looks.
 - The dates are those of the month the scripts were run in. The month after
   "Servisi" in the Services pictures is written into the script.
 

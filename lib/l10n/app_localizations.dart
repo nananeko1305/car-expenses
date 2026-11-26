@@ -614,6 +614,30 @@ abstract class AppLocalizations {
   /// **'Auto follows the phone\'s theme.'**
   String get themeAutoHint;
 
+  /// No description provided for @uiStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface'**
+  String get uiStyle;
+
+  /// No description provided for @uiStyleNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get uiStyleNew;
+
+  /// No description provided for @uiStyleClassic.
+  ///
+  /// In en, this message translates to:
+  /// **'Classic'**
+  String get uiStyleClassic;
+
+  /// No description provided for @uiStyleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing one takes you back to the first screen.'**
+  String get uiStyleHint;
+
   /// No description provided for @colorBlue.
   ///
   /// In en, this message translates to:

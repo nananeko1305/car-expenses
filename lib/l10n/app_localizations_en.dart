@@ -282,6 +282,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeAutoHint => 'Auto follows the phone\'s theme.';
 
   @override
+  String get uiStyle => 'Interface';
+
+  @override
+  String get uiStyleNew => 'New';
+
+  @override
+  String get uiStyleClassic => 'Classic';
+
+  @override
+  String get uiStyleHint => 'Choosing one takes you back to the first screen.';
+
+  @override
   String get colorBlue => 'Blue';
 
   @override

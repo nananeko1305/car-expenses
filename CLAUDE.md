@@ -56,6 +56,7 @@ disabled, or the one-time admin claim) → `HomeScreen`. `AuthGate` keys
 | `lib/widgets/` | Reusable pieces, dialogs and form fields; the leaning look lives in `skewed.dart`, `slant_header.dart` and `race_row.dart` |
 | `lib/l10n/` | `app_en.arb` (template) and `app_sr.arb`; the generated Dart is committed |
 | `lib/theme/` | Palettes and `context.colors`; use these, not hard-coded colors. The one typeface, Exo 2, is bundled in `assets/fonts/` |
+| `lib/classic/` | The second interface: `screens/`, `widgets/` and `theme/` as they were in 1.12.3, over the same models and services. `services/ui_choice.dart` holds which one a phone shows |
 | `push_worker/src/` | `index.js` routes and rules, `google.js` Firestore and FCM calls, `message.js` pure text and dates |
 | `android/app/src/main/` | `MainActivity.kt` creates notification channels; `res/values*/strings.xml` holds push titles |
 
@@ -65,6 +66,12 @@ disabled, or the one-time admin claim) → `HomeScreen`. `AuthGate` keys
 states, and how it is laid out, with the Serbian labels as they appear. When
 planning a change, read the screen's page there instead of its code; start at
 `docs/ui/README.md`. A change to a screen updates its page in the same commit.
+
+**There are two interfaces, and a phone shows the one chosen in Settings.** A
+change to what a screen does or shows goes into both, in the same commit: the
+file under `lib/screens/` or `lib/widgets/`, and the one of the same name under
+`lib/classic/`. Their widget tests are `test/` and `test/classic/`. Only a
+change of look belongs to one of them. See `docs/ui/classic.md`.
 
 ## How the app works
 
