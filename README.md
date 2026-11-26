@@ -21,7 +21,9 @@ There is no public registration and no emails are sent to new users.
 
 Users change their own name and password in Settings. The language, the
 color and the theme are kept on each phone; the theme is light, dark, or
-auto, which follows the phone and is where a new install starts.
+auto, which follows the phone and is where a new install starts. So is the
+choice of interface: the new one, which a phone starts with, or the classic
+one from before 2.0. Both do the same things.
 
 ## How data is shared
 

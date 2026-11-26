@@ -4,6 +4,10 @@ What every screen of the app shows, what can be done on it, which dialogs it
 opens, which states it has, and how it is laid out. Read the page of a screen
 before changing it, instead of re-reading its code.
 
+The app has two interfaces, and a phone shows the one chosen in Settings.
+These pages describe the new one. The classic one, and the rule that a change
+to what a screen does goes into both, are in [classic.md](classic.md).
+
 Labels are quoted in Serbian, exactly as in `lib/l10n/app_sr.arb`, because that
 is what gets searched for. The English text of a label is in `app_en.arb` under
 the same key. Some labels are drawn in capitals (header titles, leaning

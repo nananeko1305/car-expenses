@@ -28,8 +28,14 @@ section headings below are shown in capitals too.
    chosen one has a tick.
 4. **"Tema"**: three choices side by side, each with an icon: "Auto",
    "Svetla", "Tamna". Under them: "Auto prati temu telefona."
-5. A row **"Proveri ažuriranja"** with "Verzija {x}" under it.
-6. A row **"Odjavi se"**.
+5. **"Izgled"**: two choices side by side, each with an icon: "Novi" and
+   "Stari". Under them: "Posle izbora se vraćaš na početni ekran." It picks
+   which of the app's two interfaces this phone shows; see
+   [classic.md](../classic.md). Choosing the other one closes Settings and
+   every other open screen, and the app is drawn again from its first
+   screen. The classic interface has the same chooser in its Settings.
+6. A row **"Proveri ažuriranja"** with "Verzija {x}" under it.
+7. A row **"Odjavi se"**.
 
 There is no picture of this screen. The "Tema" chooser alone is drawn in the
 lower part of the [calendar picture](../img/v2_kalendar.png).

@@ -13,14 +13,20 @@ class ThemeController extends ChangeNotifier {
   static const _oldDarkKey = 'dark_mode';
 
   AppPalette _current = kPalettes.first;
+  bool _chosen = false;
   ThemeMode _mode = ThemeMode.system;
 
   AppPalette get current => _current;
+
+  /// Whether [current] was picked by someone, or is just where the app
+  /// starts. The classic interface starts on a color of its own.
+  bool get colorChosen => _chosen;
   ThemeMode get mode => _mode;
 
   Future<void> load() async {
     final prefs = await SharedPreferences.getInstance();
     final id = prefs.getString(_key);
+    _chosen = kPalettes.any((p) => p.id == id);
     _current = kPalettes.firstWhere(
       (p) => p.id == id,
       orElse: () => kPalettes.first,
@@ -38,6 +44,7 @@ class ThemeController extends ChangeNotifier {
 
   Future<void> select(AppPalette palette) async {
     _current = palette;
+    _chosen = true;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_key, palette.id);
